@@ -40,12 +40,7 @@ public class Laje {
 	BigDecimal y;
 	BigDecimal xLinha;
 	BigDecimal yLinha;
-	BigDecimal areaDeAcoX;
-	BigDecimal areaDeAcoXLinha;
-	BigDecimal areaDeAcoY;
-	BigDecimal areaDeAcoYLinha;
-	BigDecimal areaDeAcoMinima;
-	
+
 	Services services = new Services();
 
 	public Laje() {
@@ -128,14 +123,6 @@ public class Laje {
 		this.d = espessura.subtract(cobrimento).subtract(barraPadrao.divide(new BigDecimal(2.0)));		
 		
 		return d;
-		
-	}
-	
-	public BigDecimal calculaAcoMinimo() {
-		
-		this.areaDeAcoMinima = new BigDecimal(0.0015).multiply(new BigDecimal(100.0)).multiply(this.espessura);
-		
-		return areaDeAcoMinima;
 		
 	}
 
@@ -401,46 +388,6 @@ public class Laje {
 
 	public void setyLinha(BigDecimal yLinha) {
 		this.yLinha = yLinha;
-	}
-
-	public BigDecimal getAreaDeAcoX() {
-		return areaDeAcoX;
-	}
-
-	public BigDecimal getAreaDeAcoXLinha() {
-		return areaDeAcoXLinha;
-	}
-
-	public BigDecimal getAreaDeAcoY() {
-		return areaDeAcoY;
-	}
-
-	public BigDecimal getAreaDeAcoYLinha() {
-		return areaDeAcoYLinha;
-	}
-
-	public void setAreaDeAcoX(BigDecimal areaDeAcoX) {
-		this.areaDeAcoX = areaDeAcoX;
-	}
-
-	public void setAreaDeAcoXLinha(BigDecimal areaDeAcoXLinha) {
-		this.areaDeAcoXLinha = areaDeAcoXLinha;
-	}
-
-	public void setAreaDeAcoY(BigDecimal areaDeAcoY) {
-		this.areaDeAcoY = areaDeAcoY;
-	}
-
-	public void setAreaDeAcoYLinha(BigDecimal areaDeAcoYLinha) {
-		this.areaDeAcoYLinha = areaDeAcoYLinha;
-	}
-
-	public BigDecimal getAreaDeAcoMinima() {
-		return areaDeAcoMinima;
-	}
-
-	public void setAreaDeAcoMinima(BigDecimal areaDeAcoMinima) {
-		this.areaDeAcoMinima = areaDeAcoMinima;
 	}
 
 }

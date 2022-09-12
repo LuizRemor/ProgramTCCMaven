@@ -153,7 +153,6 @@ public class PrimaryController implements Initializable {
 		calculaMomentoDeProjeto();
 		calculaX();
 		calculaAco();
-		calculaArmaduraDeDistribuicao();
 
 	}
 	
@@ -882,24 +881,9 @@ public class PrimaryController implements Initializable {
 		
 	}
 	
-	//FALAR COM O DAVI
 	public void defineAreaDeAco() {
 		
-		if(laje.getAreaDeAcoX().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
-			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
-			
-		}
-		else if(laje.getAreaDeAcoXLinha().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
-			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
-			
-		}
-		else if(laje.getAreaDeAcoY().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
-			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
-			
-		}
+		
 		
 	}
 	
@@ -910,23 +894,7 @@ public class PrimaryController implements Initializable {
 		BigDecimal definicaoNBR = new BigDecimal(0.9);
 		
 		calculoAreaDeAcoPrincipal = laje.getAreaDeAcoX().divide(new BigDecimal(5.0));
-		calculoAreaDeAcoMinima = laje.getAreaDeAcoMinima().divide(new BigDecimal(2.0));
-		
-		if(calculoAreaDeAcoPrincipal.doubleValue() > calculoAreaDeAcoMinima.doubleValue() &&
-		   calculoAreaDeAcoPrincipal.doubleValue() > definicaoNBR.doubleValue()) {
-			
-			laje.setAreaDeAcoY(calculoAreaDeAcoPrincipal);
-			
-		}
-		else if(calculoAreaDeAcoMinima.doubleValue() > calculoAreaDeAcoPrincipal.doubleValue() && 
-				calculoAreaDeAcoMinima.doubleValue() > definicaoNBR.doubleValue()) {
-			
-			laje.setAreaDeAcoY(calculoAreaDeAcoMinima);
-			
-		}
-		else {
-			laje.setAreaDeAcoY(definicaoNBR);
-		}
+		calculoAreaDeAcoMinima = laje.getAreaDeAcoMinima();
 		
 	}
 

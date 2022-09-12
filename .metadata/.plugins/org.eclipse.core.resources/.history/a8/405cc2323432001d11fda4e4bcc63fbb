@@ -27,10 +27,6 @@ public class Materiais {
 	
 	BigDecimal fckConcreto = new BigDecimal(25.0);
 	
-	BigDecimal fykAco = new BigDecimal(500);
-	
-	BigDecimal fydAco = new BigDecimal(43.48);
-	
 	BigDecimal agregado;
 	
 	BigDecimal eci;
@@ -235,22 +231,6 @@ public class Materiais {
 
 	public void setFcd(BigDecimal fcd) {
 		this.fcd = fcd;
-	}
-
-	public BigDecimal getFykAco() {
-		return fykAco;
-	}
-
-	public BigDecimal getFydAco() {
-		return fydAco;
-	}
-
-	public void setFykAco(BigDecimal fykAco) {
-		this.fykAco = fykAco;
-	}
-
-	public void setFydAco(BigDecimal fydAco) {
-		this.fydAco = fydAco;
 	}
 
 }

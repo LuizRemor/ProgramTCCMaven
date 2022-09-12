@@ -133,7 +133,7 @@ public class Laje {
 	
 	public BigDecimal calculaAcoMinimo() {
 		
-		this.areaDeAcoMinima = new BigDecimal(0.0015).multiply(new BigDecimal(100.0)).multiply(this.espessura);
+		
 		
 		return areaDeAcoMinima;
 		

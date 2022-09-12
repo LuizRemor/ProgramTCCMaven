@@ -882,22 +882,11 @@ public class PrimaryController implements Initializable {
 		
 	}
 	
-	//FALAR COM O DAVI
 	public void defineAreaDeAco() {
 		
-		if(laje.getAreaDeAcoX().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
+		if(laje.getAreaDeAcoX().doubleValue() > laje.getAreaDeAcoMinima().doubleValue()) {
 			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
 			
-		}
-		else if(laje.getAreaDeAcoXLinha().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
-			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
-			
-		}
-		else if(laje.getAreaDeAcoY().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
-			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
 			
 		}
 		

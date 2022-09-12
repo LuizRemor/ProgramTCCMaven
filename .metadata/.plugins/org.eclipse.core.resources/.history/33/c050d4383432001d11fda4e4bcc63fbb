@@ -237,20 +237,4 @@ public class Materiais {
 		this.fcd = fcd;
 	}
 
-	public BigDecimal getFykAco() {
-		return fykAco;
-	}
-
-	public BigDecimal getFydAco() {
-		return fydAco;
-	}
-
-	public void setFykAco(BigDecimal fykAco) {
-		this.fykAco = fykAco;
-	}
-
-	public void setFydAco(BigDecimal fydAco) {
-		this.fydAco = fydAco;
-	}
-
 }
