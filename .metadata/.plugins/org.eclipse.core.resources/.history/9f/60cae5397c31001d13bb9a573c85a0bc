@@ -1,9 +1,0 @@
-package br.com.eng.laje;
-
-import java.io.IOException;
-import javafx.fxml.FXML;
-
-public class PrimaryController {
-
-
-}

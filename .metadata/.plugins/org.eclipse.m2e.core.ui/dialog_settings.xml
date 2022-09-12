@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectWizardLocationPage">
 		<list key="location">
+			<item value="C:\Users\luiz.neto\Desktop\ENG. CIVIL\TCC\Programa laje TCC mvn\laje\src\main\resources\br\com\eng\laje"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>
@@ -25,13 +26,10 @@
 	</section>
 	<section name="Maven2ProjectWizardArchifactPage">
 		<list key="package">
-			<item value="br.com.eng.laje"/>
 		</list>
 		<list key="groupId">
-			<item value="br.com.eng"/>
 		</list>
 		<list key="artifactId">
-			<item value="laje"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>

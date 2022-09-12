@@ -125,6 +125,7 @@ public class PrimaryController implements Initializable {
 		leCoeficientes();
 		verificaDirecoes();
 		defineCaso();
+		calculaAreaDeAcoMinima();
 		areaDeInfluenciaDaParedePositiva();
 		cargaPermanentePositiva();
 		cargaTotalPositiva();
@@ -165,7 +166,7 @@ public class PrimaryController implements Initializable {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
-			String line= br.readLine();
+			String line = br.readLine();
 			
 			while(line!= null) {
 				
@@ -194,6 +195,10 @@ public class PrimaryController implements Initializable {
 			System.out.println(e.getMessage());
 		}
 
+	}
+	
+	public void calculaAreaDeAcoMinima() {
+		laje.calculaAcoMinimo();
 	}
 	
 	public void verificaDirecoes() {
@@ -910,7 +915,7 @@ public class PrimaryController implements Initializable {
 		BigDecimal definicaoNBR = new BigDecimal(0.9);
 		
 		calculoAreaDeAcoPrincipal = laje.getAreaDeAcoX().divide(new BigDecimal(5.0));
-		calculoAreaDeAcoMinima = laje.getAreaDeAcoMinima().divide(new BigDecimal(2.0));
+		calculoAreaDeAcoMinima    = laje.getAreaDeAcoMinima().divide(new BigDecimal(2.0));
 		
 		if(calculoAreaDeAcoPrincipal.doubleValue() > calculoAreaDeAcoMinima.doubleValue() &&
 		   calculoAreaDeAcoPrincipal.doubleValue() > definicaoNBR.doubleValue()) {
