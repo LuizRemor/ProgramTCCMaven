@@ -1,0 +1,9 @@
+module br.com.eng.laje {
+	
+	requires javafx.controls;
+	requires javafx.fxml;
+
+	opens br.com.eng.laje to javafx.fxml;
+
+	exports br.com.eng.laje;
+}
