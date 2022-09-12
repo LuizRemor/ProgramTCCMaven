@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.com.eng.entities.Coeficientes;
+import br.com.eng.entities.EspacamentoAco;
 import br.com.eng.entities.Laje;
 import br.com.eng.entities.Materiais;
 import br.com.eng.entities.Parede;
@@ -34,6 +35,8 @@ public class PrimaryController implements Initializable {
 	private Coeficientes coeficientes;
 	
 	List<Coeficientes> coeficientesList = new ArrayList<>();
+	
+	List<EspacamentoAco> espacamentoAcoList = new ArrayList<>();
 
 	private Services services = new Services();
 
@@ -102,17 +105,21 @@ public class PrimaryController implements Initializable {
 
 	@FXML
 	private CheckBox checkXDireita = new CheckBox();
-
-	public void btCalcular() {
-
+	
+	public void montaUmaDirecaoComParede() {
+		
 		this.ladoX.setText("3");
 		this.ladoY.setText("8");
 		this.espessuraLaje.setText("10");
 		this.espessuraParede.setText("14");
 		this.alturaParede.setText("2.9");
-		this.cargaAcidental.setText("8");
+		this.cargaAcidental.setText("1.5");
+		this.paredeSim.setSelected(true);
+		this.tijoloFuradoSim.setSelected(true);
 		this.psi0_4.setSelected(true);
 		this.agregadoGranitoGnaisse.setSelected(true);
+		this.checkYCima.setSelected(true);
+		this.checkYBaixo.setSelected(true);
 
 		laje = new Laje(this.ladoX, this.ladoY, this.espessuraLaje);
 
@@ -121,8 +128,13 @@ public class PrimaryController implements Initializable {
 		materiais = new Materiais();
 
 		laje.setCargaAcidental(services.conversor(this.cargaAcidental));
+		
+	}
 
-		leCoeficientes();
+	public void btCalcular() {
+
+		populaCoeficientes();
+		populaEspacamentoAco();
 		verificaDirecoes();
 		defineCaso();
 		calculaAreaDeAcoMinima();
@@ -155,10 +167,11 @@ public class PrimaryController implements Initializable {
 		calculaX();
 		calculaAco();
 		calculaArmaduraDeDistribuicao();
+		defineAreaDeAco();
 
 	}
 	
-	public void leCoeficientes() {
+	public void populaCoeficientes() {
 		
 		coeficientesList = new ArrayList<>();
 		
@@ -186,6 +199,40 @@ public class PrimaryController implements Initializable {
 				Coeficientes coeficientes = new Coeficientes(caso, lambda, miX, miY, miX1, miY1, kx, ky, kx1, ky1);
 				
 				coeficientesList.add(coeficientes);
+				
+				line = br.readLine();
+			}
+			
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+	
+	public void populaEspacamentoAco() {
+		
+		espacamentoAcoList = new ArrayList<>();
+		
+		File file = new File("src/main/resources/EspacamentoAco.txt");
+
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+			String line = br.readLine();
+			
+			while(line!= null) {
+				
+				String[] vect = line.split(";");
+				
+				BigDecimal bitola = new BigDecimal(vect[0]);
+				BigDecimal espacamento = new BigDecimal(vect[1]);
+				BigDecimal areaDeAco = new BigDecimal(vect[2]);
+				
+				EspacamentoAco aco = new EspacamentoAco(bitola, espacamento, areaDeAco);
+				
+				System.out.println(aco.toString());
+				
+				espacamentoAcoList.add(aco);
 				
 				line = br.readLine();
 			}
@@ -699,6 +746,12 @@ public class PrimaryController implements Initializable {
 		
 	}
 	
+	public void defineEspacamentosAco() {
+		
+		
+		
+	}
+	
 	public BigDecimal defineCargaDoMomentoDeProjetoXEsquerda(BigDecimal carga) {
 		
 		if(checkXEsquerda.selectedProperty().getValue()) {
@@ -887,7 +940,6 @@ public class PrimaryController implements Initializable {
 		
 	}
 	
-	//FALAR COM O DAVI
 	public void defineAreaDeAco() {
 		
 		if(laje.getAreaDeAcoX().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
@@ -897,14 +949,19 @@ public class PrimaryController implements Initializable {
 		}
 		else if(laje.getAreaDeAcoXLinha().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
 			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
+			laje.setAreaDeAcoXLinha(laje.getAreaDeAcoMinima());
 			
 		}
-		else if(laje.getAreaDeAcoY().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
+		else if(laje.getAreaDeAcoYLinha().doubleValue() < laje.getAreaDeAcoMinima().doubleValue()) {
 			
-			laje.setAreaDeAcoX(laje.getAreaDeAcoMinima());
+			laje.setAreaDeAcoYLinha(laje.getAreaDeAcoMinima());
 			
 		}
+		
+		System.out.printf("Area de aco final X = %.2f%n", laje.getAreaDeAcoX());
+		System.out.printf("Area de aco final X' = %.2f%n", laje.getAreaDeAcoXLinha());
+		System.out.printf("Area de aco final Y (distribuicao) = %.2f%n", laje.getAreaDeAcoY());
+		System.out.printf("Area de aco final Y' = %.2f%n", laje.getAreaDeAcoYLinha());
 		
 	}
 	

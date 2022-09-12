@@ -11,10 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="316.0" prefWidth="898.0"
-	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="br.com.eng.laje.PrimaryController">
+<AnchorPane prefHeight="316.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.eng.laje.PrimaryController">
 	<children>
 		<Label layoutX="573.0" layoutY="16.0" text="Lado X (m)" />
 		<Label layoutX="574.0" layoutY="42.0" text="Lado Y (m)" />
@@ -72,7 +69,7 @@
 		<Label layoutX="730.0" layoutY="179.0" text="N" />
 		<Label layoutX="664.0" layoutY="205.0" text="S" />
 		<Label layoutX="730.0" layoutY="205.0" text="N" />
-      <Button layoutX="396.0" layoutY="264.0" mnemonicParsing="false" onAction="#btCalcular" text="Calcular" />
+      <Button layoutX="399.0" layoutY="281.0" mnemonicParsing="false" onAction="#btCalcular" text="Calcular" />
       <RadioButton fx:id="paredeSim" layoutX="679.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
          <toggleGroup>
             <ToggleGroup fx:id="parede" />
@@ -105,6 +102,7 @@
       <CheckBox fx:id="checkYBaixo" layoutX="221.0" layoutY="253.0" mnemonicParsing="false" text="Engaste" />
       <CheckBox fx:id="checkXDireita" layoutX="428.0" layoutY="141.0" mnemonicParsing="false" text="Engaste" />
       <CheckBox fx:id="checkXEsquerda" layoutX="14.0" layoutY="141.0" mnemonicParsing="false" text="Engaste" />
+      <Button layoutX="26.0" layoutY="281.0" mnemonicParsing="false" onAction="#montaUmaDirecaoComParede" text="1D - C/P" />
 	</children>
 
 </AnchorPane>
