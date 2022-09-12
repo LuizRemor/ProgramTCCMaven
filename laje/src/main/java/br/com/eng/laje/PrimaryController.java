@@ -105,12 +105,12 @@ public class PrimaryController implements Initializable {
 
 	public void btCalcular() {
 
-		this.ladoX = new TextField("3");
-		this.ladoY = new TextField("8");
-		this.espessuraLaje = new TextField("10");
-		this.espessuraParede = new TextField("14");
-		this.alturaParede = new TextField("2.9");
-		this.cargaAcidental = new TextField("1.5");
+		this.ladoX.setText("3");
+		this.ladoY.setText("8");
+		this.espessuraLaje.setText("10");
+		this.espessuraParede.setText("14");
+		this.alturaParede.setText("2.9");
+		this.cargaAcidental.setText("8");
 		this.psi0_4.setSelected(true);
 		this.agregadoGranitoGnaisse.setSelected(true);
 

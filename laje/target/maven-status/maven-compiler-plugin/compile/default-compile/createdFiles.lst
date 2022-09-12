@@ -1,7 +1,1 @@
-br\com\eng\entities\Materiais.class
-br\com\eng\laje\PrimaryController.class
 module-info.class
-br\com\eng\entities\Laje.class
-br\com\eng\entities\Parede.class
-br\com\eng\util\Services.class
-br\com\eng\laje\App.class
