@@ -9,17 +9,18 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	private static Scene mainScene;
-
+	
 	@Override
 	public void start(Stage primaryStage) {
 
 		try {
-			
+						
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+			
 			Parent parent = loader.load();
-
+			
 			Scene mainScene = new Scene(parent);
-
+			
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Programa para Cálculo de Lajes");
 			primaryStage.show();
@@ -33,6 +34,7 @@ public class App extends Application {
 	}
 
 	public static Scene getMainScene() {
+		
 		return mainScene;
 	}
 

@@ -21,7 +21,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 
 public class PrimaryController implements Initializable {
@@ -39,6 +41,18 @@ public class PrimaryController implements Initializable {
 	List<EspacamentoAco> espacamentoAcoList = new ArrayList<>();
 
 	private Services services = new Services();
+	
+	@FXML
+	private Text engasteCheckXEsquerda = new Text();
+	
+	@FXML
+	private Text engasteCheckYCima = new Text();
+	
+	@FXML
+	private Text engasteCheckXDireita = new Text();
+	
+	@FXML
+	private Text engastecheckYBaixo = new Text();
 
 	@FXML
 	private TextField ladoX = new TextField();
@@ -59,40 +73,40 @@ public class PrimaryController implements Initializable {
 	private TextField cargaAcidental = new TextField();
 
 	@FXML
-	private RadioButton psi0_3;
+	private RadioButton psi0_3 = new RadioButton();
 
 	@FXML
-	private RadioButton psi0_4;
+	private RadioButton psi0_4 = new RadioButton();
 
 	@FXML
-	private RadioButton psi0_5;
+	private RadioButton psi0_5 = new RadioButton();
 
 	@FXML
-	private RadioButton psi0_6;
+	private RadioButton psi0_6 = new RadioButton();
 
 	@FXML
-	private RadioButton paredeSim;
+	private RadioButton paredeSim = new RadioButton();
 
 	@FXML
-	private RadioButton paredeNao;
+	private RadioButton paredeNao = new RadioButton();
 
 	@FXML
-	private RadioButton tijoloFuradoSim;
+	private RadioButton tijoloFuradoSim = new RadioButton();
 
 	@FXML
-	private RadioButton tijoloFuradoNao;
+	private RadioButton tijoloFuradoNao = new RadioButton();
 
 	@FXML
-	private RadioButton agregadoBasaltoDiabasio;
+	private RadioButton agregadoBasaltoDiabasio = new RadioButton();
 
 	@FXML
-	private RadioButton agregadoGranitoGnaisse;
+	private RadioButton agregadoGranitoGnaisse = new RadioButton();
 
 	@FXML
-	private RadioButton agregadoCalcario;
+	private RadioButton agregadoCalcario = new RadioButton();
 
 	@FXML
-	private RadioButton agregadoArenito;
+	private RadioButton agregadoArenito = new RadioButton();
 
 	@FXML
 	private CheckBox checkYCima = new CheckBox();
@@ -105,6 +119,9 @@ public class PrimaryController implements Initializable {
 
 	@FXML
 	private CheckBox checkXDireita = new CheckBox();
+	
+	@FXML
+	private TextArea imprimeResultados = new TextArea();
 	
 	public void montaUmaDirecaoComParede() {
 		
@@ -119,7 +136,9 @@ public class PrimaryController implements Initializable {
 		this.psi0_4.setSelected(true);
 		this.agregadoGranitoGnaisse.setSelected(true);
 		this.checkYCima.setSelected(true);
+		this.engasteCheckYCima.setVisible(true);
 		this.checkYBaixo.setSelected(true);
+		this.engastecheckYBaixo.setVisible(true);
 
 		laje = new Laje(this.ladoX, this.ladoY, this.espessuraLaje);
 
@@ -169,6 +188,42 @@ public class PrimaryController implements Initializable {
 		calculaArmaduraDeDistribuicao();
 		defineAreaDeAco();
 
+	}
+	
+	public void mostraEngastes() {
+		
+		if (checkXEsquerda.selectedProperty().getValue()) {
+			engasteCheckXEsquerda.setVisible(true);
+		} 
+		
+		else {
+			engasteCheckXEsquerda.setVisible(false);
+		}
+
+		if (checkYCima.selectedProperty().getValue()) {
+			engasteCheckYCima.setVisible(true);
+		} 
+		
+		else {
+			engasteCheckYCima.setVisible(false);
+		}
+
+		if (checkXDireita.selectedProperty().getValue()) {
+			engasteCheckXDireita.setVisible(true);
+		} 
+		
+		else {
+			engasteCheckXDireita.setVisible(false);
+		}
+
+		if (checkYBaixo.selectedProperty().getValue()) {
+			engastecheckYBaixo.setVisible(true);
+		} 
+		
+		else {
+			engastecheckYBaixo.setVisible(false);
+		}
+		
 	}
 	
 	public void populaCoeficientes() {
@@ -230,8 +285,6 @@ public class PrimaryController implements Initializable {
 				
 				EspacamentoAco aco = new EspacamentoAco(bitola, espacamento, areaDeAco);
 				
-				System.out.println(aco.toString());
-				
 				espacamentoAcoList.add(aco);
 				
 				line = br.readLine();
@@ -256,11 +309,17 @@ public class PrimaryController implements Initializable {
 			
 			laje.setLambda(new BigDecimal(99999.0));
 			
-			System.out.println("LAJE ARMADA EM UMA DIRECAO");
+			String string = "LAJE ARMADA EM UMA DIRECAO %n";
+			
+			this.imprimeResultados.setText(string);
 			
 		}
 		else {
-			System.out.println("LAJE ARMADA EM DUAS DIRECOES");
+			
+			String string = "LAJE ARMADA EM DUAS DIRECOES";
+			
+			//AJUSTAR, TEM QUE CONCATENAR PARA SAIR NA TEXTAREA
+			this.imprimeResultados.setText(string.concat(parede.getAreaDeInfluenciaPositiva().toString()));
 		}
 		
 	}
@@ -1054,6 +1113,214 @@ public class PrimaryController implements Initializable {
 
 	public void setAlturaParede(TextField alturaParede) {
 		this.alturaParede = alturaParede;
+	}
+
+	public Laje getLaje() {
+		return laje;
+	}
+
+	public Parede getParede() {
+		return parede;
+	}
+
+	public Materiais getMateriais() {
+		return materiais;
+	}
+
+	public Coeficientes getCoeficientes() {
+		return coeficientes;
+	}
+
+	public List<Coeficientes> getCoeficientesList() {
+		return coeficientesList;
+	}
+
+	public List<EspacamentoAco> getEspacamentoAcoList() {
+		return espacamentoAcoList;
+	}
+
+	public Text getEngasteCheckXEsquerda() {
+		return engasteCheckXEsquerda;
+	}
+
+	public Text getEngasteCheckYCima() {
+		return engasteCheckYCima;
+	}
+
+	public Text getEngasteCheckXDireita() {
+		return engasteCheckXDireita;
+	}
+
+	public Text getEngastecheckYBaixo() {
+		return engastecheckYBaixo;
+	}
+
+	public RadioButton getPsi0_3() {
+		return psi0_3;
+	}
+
+	public RadioButton getPsi0_4() {
+		return psi0_4;
+	}
+
+	public RadioButton getPsi0_5() {
+		return psi0_5;
+	}
+
+	public RadioButton getPsi0_6() {
+		return psi0_6;
+	}
+
+	public RadioButton getParedeSim() {
+		return paredeSim;
+	}
+
+	public RadioButton getParedeNao() {
+		return paredeNao;
+	}
+
+	public RadioButton getTijoloFuradoSim() {
+		return tijoloFuradoSim;
+	}
+
+	public RadioButton getTijoloFuradoNao() {
+		return tijoloFuradoNao;
+	}
+
+	public RadioButton getAgregadoBasaltoDiabasio() {
+		return agregadoBasaltoDiabasio;
+	}
+
+	public RadioButton getAgregadoGranitoGnaisse() {
+		return agregadoGranitoGnaisse;
+	}
+
+	public RadioButton getAgregadoCalcario() {
+		return agregadoCalcario;
+	}
+
+	public RadioButton getAgregadoArenito() {
+		return agregadoArenito;
+	}
+
+	public CheckBox getCheckYCima() {
+		return checkYCima;
+	}
+
+	public CheckBox getCheckYBaixo() {
+		return checkYBaixo;
+	}
+
+	public CheckBox getCheckXEsquerda() {
+		return checkXEsquerda;
+	}
+
+	public CheckBox getCheckXDireita() {
+		return checkXDireita;
+	}
+
+	public void setLaje(Laje laje) {
+		this.laje = laje;
+	}
+
+	public void setParede(Parede parede) {
+		this.parede = parede;
+	}
+
+	public void setMateriais(Materiais materiais) {
+		this.materiais = materiais;
+	}
+
+	public void setCoeficientes(Coeficientes coeficientes) {
+		this.coeficientes = coeficientes;
+	}
+
+	public void setCoeficientesList(List<Coeficientes> coeficientesList) {
+		this.coeficientesList = coeficientesList;
+	}
+
+	public void setEspacamentoAcoList(List<EspacamentoAco> espacamentoAcoList) {
+		this.espacamentoAcoList = espacamentoAcoList;
+	}
+
+	public void setEngasteCheckXEsquerda(Text engasteCheckXEsquerda) {
+		this.engasteCheckXEsquerda = engasteCheckXEsquerda;
+	}
+
+	public void setEngasteCheckYCima(Text engasteCheckYCima) {
+		this.engasteCheckYCima = engasteCheckYCima;
+	}
+
+	public void setEngasteCheckXDireita(Text engasteCheckXDireita) {
+		this.engasteCheckXDireita = engasteCheckXDireita;
+	}
+
+	public void setEngastecheckYBaixo(Text engastecheckYBaixo) {
+		this.engastecheckYBaixo = engastecheckYBaixo;
+	}
+
+	public void setPsi0_3(RadioButton psi0_3) {
+		this.psi0_3 = psi0_3;
+	}
+
+	public void setPsi0_4(RadioButton psi0_4) {
+		this.psi0_4 = psi0_4;
+	}
+
+	public void setPsi0_5(RadioButton psi0_5) {
+		this.psi0_5 = psi0_5;
+	}
+
+	public void setPsi0_6(RadioButton psi0_6) {
+		this.psi0_6 = psi0_6;
+	}
+
+	public void setParedeSim(RadioButton paredeSim) {
+		this.paredeSim = paredeSim;
+	}
+
+	public void setParedeNao(RadioButton paredeNao) {
+		this.paredeNao = paredeNao;
+	}
+
+	public void setTijoloFuradoSim(RadioButton tijoloFuradoSim) {
+		this.tijoloFuradoSim = tijoloFuradoSim;
+	}
+
+	public void setTijoloFuradoNao(RadioButton tijoloFuradoNao) {
+		this.tijoloFuradoNao = tijoloFuradoNao;
+	}
+
+	public void setAgregadoBasaltoDiabasio(RadioButton agregadoBasaltoDiabasio) {
+		this.agregadoBasaltoDiabasio = agregadoBasaltoDiabasio;
+	}
+
+	public void setAgregadoGranitoGnaisse(RadioButton agregadoGranitoGnaisse) {
+		this.agregadoGranitoGnaisse = agregadoGranitoGnaisse;
+	}
+
+	public void setAgregadoCalcario(RadioButton agregadoCalcario) {
+		this.agregadoCalcario = agregadoCalcario;
+	}
+
+	public void setAgregadoArenito(RadioButton agregadoArenito) {
+		this.agregadoArenito = agregadoArenito;
+	}
+
+	public void setCheckYCima(CheckBox checkYCima) {
+		this.checkYCima = checkYCima;
+	}
+
+	public void setCheckYBaixo(CheckBox checkYBaixo) {
+		this.checkYBaixo = checkYBaixo;
+	}
+
+	public void setCheckXEsquerda(CheckBox checkXEsquerda) {
+		this.checkXEsquerda = checkXEsquerda;
+	}
+
+	public void setCheckXDireita(CheckBox checkXDireita) {
+		this.checkXDireita = checkXDireita;
 	}
 
 	@Override
