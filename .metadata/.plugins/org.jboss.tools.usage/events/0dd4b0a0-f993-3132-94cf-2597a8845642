@@ -1,11 +1,11 @@
-#Tue Sep 13 08:19:12 BRT 2022
+#Tue Sep 13 20:45:33 BRT 2022
 a=finishWizard
 c=0
 cl=org.eclipse.jdt.internal.ui.jarpackagerfat.FatJarPackageWizard
 cmp=usage
 ct=jbt
-d=1663067952432
+d=1663112733638
 l=Wizard class name
-s=0
+s=2
 v=2.2.400
 vl=How many times the 'Finish' button pressed during the day

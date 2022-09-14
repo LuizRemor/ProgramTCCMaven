@@ -12,11 +12,11 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="br.com.eng.entities.Coeficientes"/>
     <fullyQualifiedTypeName name="java.lang.Math"/>
-    <fullyQualifiedTypeName name="java.math.MathContext"/>
     <fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
-    <fullyQualifiedTypeName name="java.math.BigDecimal"/>
     <fullyQualifiedTypeName name="br.com.eng.entities.EspacamentoAco"/>
     <fullyQualifiedTypeName name="javafx.scene.text.Text"/>
     <fullyQualifiedTypeName name="br.com.eng.laje.PrimaryController"/>
+    <fullyQualifiedTypeName name="java.math.MathContext"/>
+    <fullyQualifiedTypeName name="java.math.BigDecimal"/>
     <fullyQualifiedTypeName name="javafx.scene.control.TextArea"/>
 </qualifiedTypeNameHistroy>
