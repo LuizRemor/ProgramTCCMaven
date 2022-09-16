@@ -45,9 +45,7 @@ public class EspacamentoAco {
 
 	@Override
 	public String toString() {
-		return "[bitola = " + bitola + ", espacamento = " + espacamento + ", areaDeAco = " + areaDeAco + "]";
+		return "Bitola = " + bitola + " Espacamento = " + espacamento + " Área de Aço = " + areaDeAco;
 	}
-	
-	
 
 }

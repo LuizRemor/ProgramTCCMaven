@@ -1,9 +1,9 @@
 br\com\eng\entities\Materiais.class
-br\com\eng\entities\Laje.class
 br\com\eng\entities\EspacamentoAco.class
 br\com\eng\entities\Parede.class
 br\com\eng\laje\App.class
 br\com\eng\laje\PrimaryController.class
 module-info.class
+br\com\eng\laje\Main.class
 br\com\eng\entities\Coeficientes.class
 br\com\eng\util\Services.class

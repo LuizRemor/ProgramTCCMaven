@@ -14,10 +14,10 @@ public class App extends Application {
 	public void start(Stage primaryStage) {
 
 		try {
-						
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
 			
-			Parent parent = loader.load();
+			String pasta = "primary.fxml";
+			
+			Parent parent = FXMLLoader.load(getClass().getResource(pasta));
 			
 			Scene mainScene = new Scene(parent);
 			

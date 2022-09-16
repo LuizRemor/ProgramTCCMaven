@@ -35,38 +35,38 @@ public class Parede {
 
 	}
 
-	public BigDecimal calculaAreaDeInfluenciaDaParedePositiva(Laje laje) {
+	public BigDecimal calculaAreaDeInfluenciaDaParedePositiva(LajeComParede lajeComParede) {
 
-		laje.setLadoX(services.metrosEmCentimetros(laje.getLadoX()));
+		lajeComParede.setLadoX(services.metrosEmCentimetros(lajeComParede.getLadoX()));
 
-		BigDecimal a1 = laje.getLadoX().divide(new BigDecimal(2.0));
+		BigDecimal a1 = lajeComParede.getLadoX().divide(new BigDecimal(2.0));
 
-		BigDecimal b = laje.getEspessura().add(this.espessuraParede);
+		BigDecimal b = lajeComParede.getEspessura().add(this.espessuraParede);
 
-		BigDecimal deltaVNumerador1 = new BigDecimal(2.0).multiply(a1).multiply(laje.getLadoX().subtract(a1));
+		BigDecimal deltaVNumerador1 = new BigDecimal(2.0).multiply(a1).multiply(lajeComParede.getLadoX().subtract(a1));
 
-		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(laje.getLadoX()));
+		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(lajeComParede.getLadoX()));
 
-		BigDecimal deltaV = (deltaVNumerador1.multiply(deltaVNumerador2)).divide(laje.getLadoX());
+		BigDecimal deltaV = (deltaVNumerador1.multiply(deltaVNumerador2)).divide(lajeComParede.getLadoX());
 
 		this.areaDeInfluenciaPositiva = b.add(deltaV);
 
 		return this.areaDeInfluenciaPositiva.setScale(4);
 	}
 
-	public BigDecimal calculaAreaDeInfluenciaDaParedeNegativa(Laje laje) {
+	public BigDecimal calculaAreaDeInfluenciaDaParedeNegativa(LajeComParede lajeComParede) {
 
-		BigDecimal a1 = laje.getLadoX().divide(new BigDecimal(2.0));
+		BigDecimal a1 = lajeComParede.getLadoX().divide(new BigDecimal(2.0));
 
-		BigDecimal b = laje.getEspessura().add(this.espessuraParede);
+		BigDecimal b = lajeComParede.getEspessura().add(this.espessuraParede);
 		
 		b = services.metrosEmCentimetros(b);
 
-		BigDecimal deltaVNumerador1 = a1.multiply(new BigDecimal(2.0).multiply(laje.getLadoX()).subtract(a1));
+		BigDecimal deltaVNumerador1 = a1.multiply(new BigDecimal(2.0).multiply(lajeComParede.getLadoX()).subtract(a1));
 
-		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(laje.getLadoX()));
+		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(lajeComParede.getLadoX()));
 
-		BigDecimal deltaV = (deltaVNumerador1.multiply(deltaVNumerador2)).divide(laje.getLadoX());
+		BigDecimal deltaV = (deltaVNumerador1.multiply(deltaVNumerador2)).divide(lajeComParede.getLadoX());
 
 		this.areaDeInfluenciaNegativa = b.add(deltaV);
 
