@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import br.com.eng.entities.Coeficientes;
 import br.com.eng.entities.EspacamentoAco;
 import br.com.eng.entities.LajeComParede;
+import br.com.eng.entities.LajeSemParede;
 import br.com.eng.entities.Materiais;
 import br.com.eng.entities.Parede;
 import br.com.eng.util.Services;
@@ -21,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -31,27 +33,44 @@ public class PrimaryController implements Initializable {
 
 	private LajeComParede lajeComParede;
 
+	private LajeSemParede lajeSemParede;
+
 	private Parede parede;
 
 	private Materiais materiais;
-	
+
 	private Coeficientes coeficientes;
-	
+
 	List<Coeficientes> coeficientesList = new ArrayList<>();
-	
+
 	List<EspacamentoAco> espacamentoAcoList = new ArrayList<>();
 
 	private Services services = new Services();
-	
+
+	@FXML
+	private Label tijoloFurado = new Label();
+
+	@FXML
+	private Label tijoloFuradoS = new Label();
+
+	@FXML
+	private Label tijoloFuradoN = new Label();
+
+	@FXML
+	private Label textEspessuraDaParede = new Label();
+
+	@FXML
+	private Label textAlturaDaParede = new Label();
+
 	@FXML
 	private Text engasteCheckXEsquerda = new Text();
-	
+
 	@FXML
 	private Text engasteCheckYCima = new Text();
-	
+
 	@FXML
 	private Text engasteCheckXDireita = new Text();
-	
+
 	@FXML
 	private Text engastecheckYBaixo = new Text();
 
@@ -120,24 +139,74 @@ public class PrimaryController implements Initializable {
 
 	@FXML
 	private CheckBox checkXDireita = new CheckBox();
-	
+
 	@FXML
 	private TextArea imprimeResultados = new TextArea();
-	
+
 	@FXML
 	private ChoiceBox<EspacamentoAco> acoXPositivo = new ChoiceBox<EspacamentoAco>();
-	
+
 	@FXML
 	private ChoiceBox<EspacamentoAco> acoXNegativo = new ChoiceBox<EspacamentoAco>();
-	
+
 	@FXML
 	private ChoiceBox<EspacamentoAco> acoYPositivo = new ChoiceBox<EspacamentoAco>();
-	
+
 	@FXML
 	private ChoiceBox<EspacamentoAco> acoYNegativo = new ChoiceBox<EspacamentoAco>();
-	
-	public void montaUmaDirecaoComParede() {
+
+	private BigDecimal lajeDirecao = new BigDecimal(0.0);
+
+	private BigDecimal caso = new BigDecimal(0.0);
+
+	public void btNovaLaje() {
+
+		this.ladoX.clear();
+		this.ladoY.clear();
+		this.espessuraLaje.clear();
+		this.cargaAcidental.clear();
+		this.espessuraParede.clear();
+		this.alturaParede.clear();
+		this.imprimeResultados.clear();
+		this.acoXPositivo.getItems().clear();
+		this.acoXNegativo.getItems().clear();
+		this.acoYPositivo.getItems().clear();
+		this.acoYNegativo.getItems().clear();
 		
+		this.checkYCima.setSelected(false);
+		this.engasteCheckYCima.setVisible(false);
+		this.checkXDireita.setSelected(false);
+		this.engasteCheckXDireita.setVisible(false);
+		this.checkYBaixo.setSelected(false);
+		this.engastecheckYBaixo.setVisible(false);
+		this.checkXEsquerda.setSelected(false);
+		this.engasteCheckXEsquerda.setVisible(false);
+		this.paredeSim.setSelected(false);
+		this.paredeNao.setSelected(false);
+		this.tijoloFuradoSim.setSelected(false);
+		this.tijoloFuradoNao.setSelected(false);
+		this.psi0_3.setSelected(false);
+		this.psi0_4.setSelected(false);
+		this.psi0_5.setSelected(false);
+		this.psi0_6.setSelected(false);
+		this.agregadoBasaltoDiabasio.setSelected(false);
+		this.agregadoGranitoGnaisse.setSelected(false);
+		this.agregadoCalcario.setSelected(false);
+		this.agregadoArenito.setSelected(false);
+		this.tijoloFuradoSim.setVisible(true);
+		this.tijoloFuradoNao.setVisible(true);
+		this.espessuraParede.setVisible(true);
+		this.alturaParede.setVisible(true);
+		this.tijoloFurado.setVisible(true);
+		this.tijoloFuradoS.setVisible(true);
+		this.tijoloFuradoN.setVisible(true);
+		this.textEspessuraDaParede.setVisible(true);
+		this.textAlturaDaParede.setVisible(true);
+
+	}
+
+	public void btMontaUmaDirecaoComParede() {
+
 		this.ladoX.setText("3");
 		this.ladoY.setText("8");
 		this.espessuraLaje.setText("10");
@@ -160,27 +229,114 @@ public class PrimaryController implements Initializable {
 		materiais = new Materiais();
 
 		lajeComParede.setCargaAcidental(services.conversor(this.cargaAcidental));
-		
+
 	}
-	
+
+	public void btMontaUmaDirecaoSemParede() {
+
+		this.ladoX.setText("2.5");
+		this.ladoY.setText("5.2");
+		this.espessuraLaje.setText("11");
+		this.cargaAcidental.setText("3");
+		this.paredeNao.setSelected(true);
+		this.psi0_4.setSelected(true);
+		this.agregadoGranitoGnaisse.setSelected(true);
+		this.checkYCima.setSelected(true);
+		this.engasteCheckYCima.setVisible(true);
+		this.checkXDireita.setSelected(true);
+		this.engasteCheckXDireita.setVisible(true);
+		this.checkYBaixo.setSelected(true);
+		this.engastecheckYBaixo.setVisible(true);
+		this.checkXEsquerda.setSelected(true);
+		this.engasteCheckXEsquerda.setVisible(true);
+
+		lajeSemParede = new LajeSemParede(this.ladoX, this.ladoY, this.espessuraLaje);
+
+		materiais = new Materiais();
+
+		lajeSemParede.setCargaAcidental(services.conversor(this.cargaAcidental));
+
+	}
+
+	public void invalidaCamposParede() {
+
+		if (this.paredeNao.selectedProperty().getValue()) {
+
+			this.tijoloFuradoSim.setVisible(false);
+			this.tijoloFuradoNao.setVisible(false);
+			this.espessuraParede.setVisible(false);
+			this.alturaParede.setVisible(false);
+			this.tijoloFurado.setVisible(false);
+			this.tijoloFuradoS.setVisible(false);
+			this.tijoloFuradoN.setVisible(false);
+			this.textEspessuraDaParede.setVisible(false);
+			this.textAlturaDaParede.setVisible(false);
+
+		} else {
+			this.tijoloFuradoSim.setVisible(true);
+			this.tijoloFuradoNao.setVisible(true);
+			this.espessuraParede.setVisible(true);
+			this.alturaParede.setVisible(true);
+			this.tijoloFurado.setVisible(true);
+			this.tijoloFuradoS.setVisible(true);
+			this.tijoloFuradoN.setVisible(true);
+			this.textEspessuraDaParede.setVisible(true);
+			this.textAlturaDaParede.setVisible(true);
+			this.tijoloFuradoSim.setVisible(true);
+			this.tijoloFuradoNao.setVisible(true);
+		}
+	}
+
 	public void limpaResultados() {
-		
+
 		this.imprimeResultados.clear();
-		
+
 	}
 
 	public void btCalcular() {
-		
+
+		verificaDirecoes();
+
+		if (this.lajeDirecao.doubleValue() == 2.0) {
+
+		} else {
+
+			if (paredeSim.selectedProperty().getValue() == true) {
+
+				String string = "COM PAREDE\n";
+
+				this.imprimeResultados.appendText(string);
+
+				calculosLajeComParedeUmaDirecao();
+
+			} else {
+
+				String string = "SEM PAREDE\n";
+
+				this.imprimeResultados.appendText(string);
+
+				calculosLajeSemParedeUmaDirecao();
+
+			}
+		}
+
+	}
+
+	public void calculosLajeSemParedeUmaDirecao() {
+
+		acoXPositivo.getItems().clear();
+		acoXNegativo.getItems().clear();
+		acoYPositivo.getItems().clear();
+		acoYNegativo.getItems().clear();
+
 		populaCoeficientes();
 		populaEspacamentoAco();
-		verificaDirecoes();
 		defineCaso();
 		calculaAreaDeAcoMinima();
-		areaDeInfluenciaDaParedePositiva();
-		cargaPermanentePositivaComParede();
-		cargaTotalPositivaComParede();
+		cargaPermanenteSemParede();
+		cargaTotalSemParede();
 		definePsi();
-		cargaDeServicoPositivaComParede();
+		cargaDeServico();
 		defineAgregado();
 		calculaEci();
 		calculaAlphaI();
@@ -189,7 +345,52 @@ public class PrimaryController implements Initializable {
 		calculaFctkInf();
 		calculaFctd();
 		calculaMomentoDeFissuracao();
-		defineECalculaEquacaoMomentoDeServico();
+		defineECalculaEquacaoMomentoDeServicoSemParede();
+		verificaMomentoDeFissuracao();
+		inercia();
+		defineCoeficienteKParaUmaDirecao();
+		calculaFlechaDeCurtaDuracao();
+		calculaFlechaDeLongaDuracao();
+		calculaFlechaAdmissivel();
+		comparaFlecha();
+		defineCoeficientes();
+		calculaMomentoDeProjetoSemParede();
+		calculaXSemParede();
+		calculaAcoSemParede();
+		calculaArmaduraDeDistribuicao();
+		defineAreaDeAcoSemParede();
+		montaOpcoesDeEspacamentoX();
+		montaOpcoesDeEspacamentoXNegativo();
+		montaOpcoesDeEspacamentoY();
+		montaOpcoesDeEspacamentoYNegativo();
+
+	}
+
+	public void calculosLajeComParedeUmaDirecao() {
+
+		acoXPositivo.getItems().clear();
+		acoXNegativo.getItems().clear();
+		acoYPositivo.getItems().clear();
+		acoYNegativo.getItems().clear();
+
+		populaCoeficientes();
+		populaEspacamentoAco();
+		defineCaso();
+		calculaAreaDeAcoMinima();
+		areaDeInfluenciaDaParedePositiva();
+		cargaPermanentePositivaComParede();
+		cargaTotalPositivaComParede();
+		definePsi();
+		cargaDeServico();
+		defineAgregado();
+		calculaEci();
+		calculaAlphaI();
+		calculaEcs();
+		calculaFctm();
+		calculaFctkInf();
+		calculaFctd();
+		calculaMomentoDeFissuracao();
+		defineECalculaEquacaoMomentoDeServicoComParede();
 		verificaMomentoDeFissuracao();
 		inercia();
 		defineCoeficienteKParaUmaDirecao();
@@ -201,66 +402,111 @@ public class PrimaryController implements Initializable {
 		cargaPermanenteNegativaComParede();
 		cargaTotalNegativa();
 		defineCoeficientes();
-		calculaMomentoDeProjeto();
-		calculaX();
-		calculaAco();
+		calculaMomentoDeProjetoComParede();
+		calculaXComParede();
+		calculaAcoComParede();
 		calculaArmaduraDeDistribuicao();
-		defineAreaDeAco();
-		acoXPositivo.getItems().clear();
+		defineAreaDeAcoComParede();
 		montaOpcoesDeEspacamentoX();
-		acoXNegativo.getItems().clear();
 		montaOpcoesDeEspacamentoXNegativo();
-		acoYPositivo.getItems().clear();
 		montaOpcoesDeEspacamentoY();
-		acoYNegativo.getItems().clear();
 		montaOpcoesDeEspacamentoYNegativo();
 
 	}
-	
+
 	public void calculaAreaDeAcoMinima() {
-		lajeComParede.calculaAcoMinimo();
+
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			lajeComParede.calculaAcoMinimo();
+
+		} else {
+
+			lajeSemParede.calculaAcoMinimo();
+		}
+
 	}
-	
+
 	public void verificaDirecoes() {
-		
-		lajeComParede.setLambda(lajeComParede.getLadoY().divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
-		
-		if(lajeComParede.getLambda().doubleValue() > 2.0) {
-			
-			lajeComParede.setLambda(new BigDecimal(99999.0));
-			
-			String string = "LAJE ARMADA EM UMA DIRECAO\n";
-			
-			this.imprimeResultados.appendText(string);
-			
+
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			lajeComParede.setLambda(lajeComParede.getLadoY().divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
+
+			if (lajeComParede.getLambda().doubleValue() > 2.0) {
+
+				lajeComParede.setLambda(new BigDecimal(99999.0));
+
+				this.lajeDirecao = new BigDecimal(1.0);
+
+				String string = "LAJE ARMADA EM UMA DIRECAO\n";
+
+				this.imprimeResultados.appendText(string);
+
+			} else {
+
+				this.lajeDirecao = new BigDecimal(2.0);
+
+				String string = "LAJE ARMADA EM DUAS DIRECOES\n";
+
+				this.imprimeResultados.appendText(string);
+			}
+
+		} else {
+
+			lajeSemParede.setLambda(lajeSemParede.getLadoY().divide(lajeSemParede.getLadoX(), MathContext.DECIMAL128));
+
+			if (lajeSemParede.getLambda().doubleValue() > 2.0) {
+
+				lajeSemParede.setLambda(new BigDecimal(99999.0));
+
+				this.lajeDirecao = new BigDecimal(1.0);
+
+				String string = "LAJE ARMADA EM UMA DIRECAO\n";
+
+				this.imprimeResultados.appendText(string);
+
+			} else {
+
+				this.lajeDirecao = new BigDecimal(2.0);
+
+				String string = "LAJE ARMADA EM DUAS DIRECOES\n";
+
+				this.imprimeResultados.appendText(string);
+			}
+
 		}
-		else {
-			
-			String string = "LAJE ARMADA EM DUAS DIRECOES\n";
-			
-			this.imprimeResultados.appendText(string);
-		}
-		
+
 	}
 
 	public void areaDeInfluenciaDaParedePositiva() {
 
 		parede.calculaAreaDeInfluenciaDaParedePositiva(lajeComParede);
 
-		services.imprimeResultados("Area de influencia: " 
-								  + parede.getAreaDeInfluenciaPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								  + "\n", this.imprimeResultados);
+		services.imprimeResultados("Area de influencia: "
+				+ parede.getAreaDeInfluenciaPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
-	
 	public void areaDeInfluenciaDaParedeNegativa() {
 
 		parede.calculaAreaDeInfluenciaDaParedeNegativa(lajeComParede);
 
-		services.imprimeResultados("Area de influencia Negativa: " 
-								   + parede.getAreaDeInfluenciaNegativa().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados(
+				"Area de influencia Negativa: "
+						+ parede.getAreaDeInfluenciaNegativa().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+	}
+
+	public void cargaPermanenteSemParede() {
+
+		lajeSemParede.setCargaPermanente(lajeSemParede.calculaCargaPermanente(materiais));
+
+		services.imprimeResultados("Carga permamente: "
+				+ lajeSemParede.getCargaPermanente().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
@@ -268,19 +514,33 @@ public class PrimaryController implements Initializable {
 
 		lajeComParede.setCargaPermanentePositiva(lajeComParede.calculaCargaPermanentePositiva(materiais, parede));
 
-		services.imprimeResultados("Carga permamente: " 
-								   + lajeComParede.getCargaPermanentePositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
-		
+		services.imprimeResultados(
+				"Carga permamente: "
+						+ lajeComParede.getCargaPermanentePositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
 	}
 
 	public void cargaPermanenteNegativaComParede() {
 
 		lajeComParede.setCargaPermanenteNegativa(lajeComParede.calculaCargaPermanenteNegativa(materiais, parede));
 
-		services.imprimeResultados("Carga permamente Negativa: " + 
-									lajeComParede.getCargaPermanenteNegativa().setScale(2, BigDecimal.ROUND_HALF_EVEN) 
-									+ "\n", this.imprimeResultados);
+		services.imprimeResultados(
+				"Carga permamente Negativa: "
+						+ lajeComParede.getCargaPermanenteNegativa().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+	}
+
+	public void cargaTotalSemParede() {
+
+		BigDecimal cargaAcidental = services.conversor(this.cargaAcidental);
+
+		lajeSemParede.setCargaTotal(lajeSemParede.getCargaPermanente().add(cargaAcidental));
+
+		services.imprimeResultados(
+				"Carga Total: " + lajeSemParede.getCargaTotal().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
 	}
 
 	public void cargaTotalPositivaComParede() {
@@ -289,9 +549,9 @@ public class PrimaryController implements Initializable {
 
 		lajeComParede.setCargaTotalPositiva(lajeComParede.getCargaPermanentePositiva().add(cargaAcidental));
 
-		services.imprimeResultados("Carga Total: " 
-								   + lajeComParede.getCargaTotalPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados(
+				"Carga Total: " + lajeComParede.getCargaTotalPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
@@ -301,20 +561,33 @@ public class PrimaryController implements Initializable {
 
 		lajeComParede.setCargaTotalNegativa(lajeComParede.getCargaPermanenteNegativa().add(cargaAcidental));
 
-		services.imprimeResultados("Carga Total Negativa: " 
-								   + lajeComParede.getCargaTotalNegativa().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados("Carga Total Negativa: "
+				+ lajeComParede.getCargaTotalNegativa().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
-	public void cargaDeServicoPositivaComParede() {
+	public void cargaDeServico() {
 
-		lajeComParede.setCargaDeServicoPositiva(lajeComParede.calculaCargaDeServico(materiais, parede));
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		services.imprimeResultados("Carga de Servico: " 
-					     		   + lajeComParede.getCargaDeServicoPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-					     		   + "\n", this.imprimeResultados);
-		
+			lajeComParede.setCargaDeServicoPositiva(lajeComParede.calculaCargaDeServico(materiais, parede));
+
+			services.imprimeResultados(
+					"Carga de Servico: "
+							+ lajeComParede.getCargaDeServicoPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		} else {
+
+			lajeSemParede.setCargaDeServico(lajeSemParede.calculaCargaDeServico(materiais, parede));
+
+			services.imprimeResultados("Carga de Servico: "
+					+ lajeSemParede.getCargaDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
+
 	}
 
 	public void calculaEci() {
@@ -327,9 +600,8 @@ public class PrimaryController implements Initializable {
 
 		materiais.setEci(services.doubleEmBigDecimal(eci));
 
-		services.imprimeResultados("ECI: " 
-								   + materiais.getEci().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados("ECI: " + materiais.getEci().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
@@ -338,9 +610,8 @@ public class PrimaryController implements Initializable {
 		materiais.setAlphaI(new BigDecimal(0.8)
 				.add(new BigDecimal(0.2).multiply(materiais.getFckConcreto().divide(new BigDecimal(80)))));
 
-		services.imprimeResultados("Alpha I: " 
-								   + materiais.getAlphaI().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados("Alpha I: " + materiais.getAlphaI().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 	}
 
 	public void calculaEcs() {
@@ -349,9 +620,8 @@ public class PrimaryController implements Initializable {
 
 		materiais.setEcs(services.mpaParakNPorCmQuadrado(materiais.getEcs()));
 
-		services.imprimeResultados("ECS: " 
-								   + materiais.getEcs().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados("ECS: " + materiais.getEcs().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
@@ -363,9 +633,8 @@ public class PrimaryController implements Initializable {
 
 		materiais.setFctm(services.doubleEmBigDecimal(fctm));
 
-		services.imprimeResultados("Fctm: " 
-								   + materiais.getFctm().setScale(3, BigDecimal.ROUND_HALF_EVEN) 
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados("Fctm: " + materiais.getFctm().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
@@ -373,9 +642,8 @@ public class PrimaryController implements Initializable {
 
 		materiais.setFctkInf(new BigDecimal(0.7).multiply(materiais.getFctm()));
 
-		services.imprimeResultados("FctkInf: " 
-								   + materiais.getFctkInf().setScale(3, BigDecimal.ROUND_HALF_EVEN)
-							       + "\n", this.imprimeResultados);
+		services.imprimeResultados("FctkInf: " + materiais.getFctkInf().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
@@ -385,50 +653,97 @@ public class PrimaryController implements Initializable {
 
 		materiais.setFctd(services.mpaParakNPorCmQuadrado(materiais.getFctd()));
 
-		services.imprimeResultados("Fctd: " 
-								   + materiais.getFctd().setScale(3, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+		services.imprimeResultados("Fctd: " + materiais.getFctd().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 
 	}
 
 	public void calculaMomentoDeFissuracao() {
 
-		BigDecimal espessuraLaje = services.metrosEmCentimetros(lajeComParede.getEspessura());
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		BigDecimal fctm = services.mpaParakNPorCmQuadrado(materiais.getFctm());
+			BigDecimal espessuraLaje = services.metrosEmCentimetros(lajeComParede.getEspessura());
 
-		espessuraLaje = espessuraLaje.pow(2);
+			BigDecimal fctm = services.mpaParakNPorCmQuadrado(materiais.getFctm());
 
-		lajeComParede.setMomentoDeFissuracao(
-				new BigDecimal(0.25).multiply(fctm).multiply(new BigDecimal(100.0)).multiply(espessuraLaje));
+			espessuraLaje = espessuraLaje.pow(2);
 
-		services.imprimeResultados("Momento de fissuracao: " 
-								   + lajeComParede.getMomentoDeFissuracao().setScale(3, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+			lajeComParede.setMomentoDeFissuracao(
+					new BigDecimal(0.25).multiply(fctm).multiply(new BigDecimal(100.0)).multiply(espessuraLaje));
+
+			services.imprimeResultados(
+					"Momento de fissuracao: "
+							+ lajeComParede.getMomentoDeFissuracao().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		} else {
+
+			BigDecimal espessuraLaje = services.metrosEmCentimetros(lajeSemParede.getEspessura());
+
+			BigDecimal fctm = services.mpaParakNPorCmQuadrado(materiais.getFctm());
+
+			espessuraLaje = espessuraLaje.pow(2);
+
+			lajeSemParede.setMomentoDeFissuracao(
+					new BigDecimal(0.25).multiply(fctm).multiply(new BigDecimal(100.0)).multiply(espessuraLaje));
+
+			services.imprimeResultados(
+					"Momento de fissuracao: "
+							+ lajeSemParede.getMomentoDeFissuracao().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
 
 	}
 
 	public void verificaMomentoDeFissuracao() {
 
-		Double momentoDeServico = lajeComParede.getMomentoDeServico().doubleValue();
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		Double momentoDeFissuracao = lajeComParede.getMomentoDeFissuracao().doubleValue();
+			Double momentoDeServico = lajeComParede.getMomentoDeServico().doubleValue();
 
-		if (momentoDeServico < momentoDeFissuracao) {
+			Double momentoDeFissuracao = lajeComParede.getMomentoDeFissuracao().doubleValue();
 
-			services.imprimeResultados("OK, Segue o baile!" + "\n", this.imprimeResultados);
+			if (momentoDeServico < momentoDeFissuracao) {
 
+				services.imprimeResultados("OK, Segue o baile!" + "\n", this.imprimeResultados);
+
+			} else {
+
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("Aumentar a espessura da laje" + "\n", this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+
+			}
 		} else {
 
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("" + "\n", this.imprimeResultados);
-			services.imprimeResultados("Aumentar a espessura da laje"+ "\n", this.imprimeResultados);
-			services.imprimeResultados("" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
+			Double momentoDeServico = lajeSemParede.getMomentoDeServico().doubleValue();
+
+			Double momentoDeFissuracao = lajeSemParede.getMomentoDeFissuracao().doubleValue();
+
+			if (momentoDeServico < momentoDeFissuracao) {
+
+				services.imprimeResultados("OK, Segue o baile!" + "\n", this.imprimeResultados);
+
+			} else {
+
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("Aumentar a espessura da laje" + "\n", this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+
+			}
 
 		}
 
@@ -436,116 +751,221 @@ public class PrimaryController implements Initializable {
 
 	public void inercia() {
 
-		lajeComParede.calculaInercia();
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		services.imprimeResultados("Inercia: " 
-								   + lajeComParede.getInercia().setScale(3, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+			lajeComParede.calculaInercia();
 
+			services.imprimeResultados(
+					"Inercia: " + lajeComParede.getInercia().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		} else {
+
+			lajeSemParede.calculaInercia();
+
+			services.imprimeResultados(
+					"Inercia: " + lajeSemParede.getInercia().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
 	}
 
 	public void calculaFlechaDeCurtaDuracao() {
 
-		BigDecimal cargaDeServico;
-		BigDecimal numerador;
-		BigDecimal denominador;
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		cargaDeServico = lajeComParede.getCargaDeServicoPositiva().multiply(new BigDecimal(1.0).divide(new BigDecimal(10000.0)),
-				MathContext.DECIMAL128);
+			BigDecimal cargaDeServico;
+			BigDecimal numerador;
+			BigDecimal denominador;
+			BigDecimal ladoX = services.metrosEmCentimetros(lajeSemParede.getLadoX());
 
-		numerador = cargaDeServico.multiply(lajeComParede.getLadoX().pow(4), MathContext.DECIMAL128);
+			cargaDeServico = lajeComParede.getCargaDeServicoPositiva()
+					.multiply(new BigDecimal(1.0).divide(new BigDecimal(10000.0)), MathContext.DECIMAL128);
 
-		denominador = materiais.getEcs().multiply(lajeComParede.getInercia(), MathContext.DECIMAL128);
+			numerador = cargaDeServico.multiply(ladoX.pow(4), MathContext.DECIMAL128);
 
-		lajeComParede.setFlechaDeCurtaDuracao(lajeComParede.getCoeficienteK().multiply(numerador, MathContext.DECIMAL128)
-				.divide(denominador, MathContext.DECIMAL128));
+			denominador = materiais.getEcs().multiply(lajeComParede.getInercia(), MathContext.DECIMAL128);
 
-		services.imprimeResultados("Flecha de curta duracao: " 
-								   + lajeComParede.getFlechaDeCurtaDuracao().setScale(4, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+			lajeComParede.setFlechaDeCurtaDuracao(lajeComParede.getCoeficienteK()
+					.multiply(numerador, MathContext.DECIMAL128).divide(denominador, MathContext.DECIMAL128));
 
+			services.imprimeResultados(
+					"Flecha de curta duracao: "
+							+ lajeComParede.getFlechaDeCurtaDuracao().setScale(4, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		} else {
+
+			BigDecimal cargaDeServico;
+			BigDecimal numerador;
+			BigDecimal denominador;
+			BigDecimal ladoX = services.metrosEmCentimetros(lajeSemParede.getLadoX());
+
+			cargaDeServico = lajeSemParede.getCargaDeServico()
+					.multiply(new BigDecimal(1.0).divide(new BigDecimal(10000.0)), MathContext.DECIMAL128);
+
+			numerador = cargaDeServico.multiply(ladoX.pow(4), MathContext.DECIMAL128);
+
+			denominador = materiais.getEcs().multiply(lajeSemParede.getInercia(), MathContext.DECIMAL128);
+
+			lajeSemParede.setFlechaDeCurtaDuracao(lajeSemParede.getCoeficienteK()
+					.multiply(numerador, MathContext.DECIMAL128).divide(denominador, MathContext.DECIMAL128));
+
+			services.imprimeResultados(
+					"Flecha de curta duracao: "
+							+ lajeSemParede.getFlechaDeCurtaDuracao().setScale(4, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
 	}
 
 	public void calculaFlechaDeLongaDuracao() {
 
-		lajeComParede.setFlechaDeLongaDuracao(
-				new BigDecimal(2.32).multiply(lajeComParede.getFlechaDeCurtaDuracao(), MathContext.DECIMAL128));
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		services.imprimeResultados("Flecha de longa duracao: " 
-								   + lajeComParede.getFlechaDeLongaDuracao().setScale(4, BigDecimal.ROUND_HALF_EVEN)
-								   + "\n", this.imprimeResultados);
+			lajeComParede.setFlechaDeLongaDuracao(
+					new BigDecimal(2.32).multiply(lajeComParede.getFlechaDeCurtaDuracao(), MathContext.DECIMAL128));
 
+			services.imprimeResultados(
+					"Flecha de longa duracao: "
+							+ lajeComParede.getFlechaDeLongaDuracao().setScale(4, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		} else {
+
+			lajeSemParede.setFlechaDeLongaDuracao(
+					new BigDecimal(2.32).multiply(lajeSemParede.getFlechaDeCurtaDuracao(), MathContext.DECIMAL128));
+
+			services.imprimeResultados(
+					"Flecha de longa duracao: "
+							+ lajeSemParede.getFlechaDeLongaDuracao().setScale(4, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		}
 	}
 
 	public void calculaFlechaAdmissivel() {
 
-		lajeComParede.setFlechaAdmissivel(lajeComParede.getLadoX().divide(new BigDecimal(250.0)));
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		services.imprimeResultados("Flecha Admissivel: " 
-								+ lajeComParede.getFlechaAdmissivel().setScale(4, BigDecimal.ROUND_HALF_EVEN)
-								+ "\n", this.imprimeResultados);
+			lajeComParede.setFlechaAdmissivel(lajeComParede.getLadoX().divide(new BigDecimal(250.0)));
 
+			services.imprimeResultados("Flecha Admissivel: "
+					+ lajeComParede.getFlechaAdmissivel().setScale(4, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		} else {
+			
+			BigDecimal ladoX = services.metrosEmCentimetros(lajeSemParede.getLadoX());
+
+			lajeSemParede.setFlechaAdmissivel(ladoX.divide(new BigDecimal(250.0)));
+
+			services.imprimeResultados("Flecha Admissivel: "
+					+ lajeSemParede.getFlechaAdmissivel().setScale(4, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		}
 	}
 
 	public void comparaFlecha() {
 
-		Double flechaAdmissivel = lajeComParede.getFlechaAdmissivel().doubleValue();
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		Double flechaDeLongaDuracao = lajeComParede.getFlechaDeLongaDuracao().doubleValue();
+			Double flechaAdmissivel = lajeComParede.getFlechaAdmissivel().doubleValue();
 
-		if (flechaAdmissivel > flechaDeLongaDuracao) {
+			Double flechaDeLongaDuracao = lajeComParede.getFlechaDeLongaDuracao().doubleValue();
 
-			services.imprimeResultados("OK, Segue o baile! \n", this.imprimeResultados);
+			if (flechaAdmissivel > flechaDeLongaDuracao) {
 
+				services.imprimeResultados("OK, Segue o baile! \n", this.imprimeResultados);
+
+			} else {
+
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("Aumentar a espessura da laje" + "\n", this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+
+			}
 		} else {
 
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("" + "\n", this.imprimeResultados);
-			services.imprimeResultados("Aumentar a espessura da laje"+ "\n", this.imprimeResultados);
-			services.imprimeResultados("" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
-			services.imprimeResultados("-------------------------------------------------" + "\n", this.imprimeResultados);
+			Double flechaAdmissivel = lajeSemParede.getFlechaAdmissivel().doubleValue();
+
+			Double flechaDeLongaDuracao = lajeSemParede.getFlechaDeLongaDuracao().doubleValue();
+
+			if (flechaAdmissivel > flechaDeLongaDuracao) {
+
+				services.imprimeResultados("OK, Segue o baile! \n", this.imprimeResultados);
+
+			} else {
+
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("Aumentar a espessura da laje" + "\n", this.imprimeResultados);
+				services.imprimeResultados("" + "\n", this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+				services.imprimeResultados("-------------------------------------------------" + "\n",this.imprimeResultados);
+
+			}
 
 		}
-
 	}
 
 	public void definePsi() {
 
-		if (psi0_3.isSelected()) {
-			lajeComParede.setPsi(new BigDecimal(0.3));
-		}
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-		else if (psi0_4.isSelected()) {
-			lajeComParede.setPsi(new BigDecimal(0.4));
-		}
+			if (psi0_3.isSelected()) {
+				lajeComParede.setPsi(new BigDecimal(0.3));
+			}
 
-		else if (psi0_5.isSelected()) {
-			lajeComParede.setPsi(new BigDecimal(0.5));
-		}
+			else if (psi0_4.isSelected()) {
+				lajeComParede.setPsi(new BigDecimal(0.4));
+			}
 
-		else {
-			lajeComParede.setPsi(new BigDecimal(0.6));
+			else if (psi0_5.isSelected()) {
+				lajeComParede.setPsi(new BigDecimal(0.5));
+			}
+
+			else {
+				lajeComParede.setPsi(new BigDecimal(0.6));
+			}
+		} else {
+
+			if (psi0_3.isSelected()) {
+				lajeSemParede.setPsi(new BigDecimal(0.3));
+			}
+
+			else if (psi0_4.isSelected()) {
+				lajeSemParede.setPsi(new BigDecimal(0.4));
+			}
+
+			else if (psi0_5.isSelected()) {
+				lajeSemParede.setPsi(new BigDecimal(0.5));
+			}
+
+			else {
+				lajeSemParede.setPsi(new BigDecimal(0.6));
+			}
 		}
 
 	}
 
-	public void defineECalculaEquacaoMomentoDeServico() {
+	public void defineECalculaEquacaoMomentoDeServicoComParede() {
 
 		if (!checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
 			BigDecimal ladoX = services.CentimetrosEmMetros(lajeComParede.getLadoX());
 
-			lajeComParede.setMomentoDeServico(lajeComParede.getCargaDeServicoPositiva().multiply(ladoX.pow(2)).divide(new BigDecimal(8.0))
-					.multiply(new BigDecimal(100.0)));
+			lajeComParede.setMomentoDeServico(lajeComParede.getCargaDeServicoPositiva().multiply(ladoX.pow(2))
+					.divide(new BigDecimal(8.0)).multiply(new BigDecimal(100.0)));
 
 			services.imprimeResultados("Equacao M. Serv. = (Pserv*Lx^2)/8 \n", this.imprimeResultados);
-			services.imprimeResultados("Momento de Servico: " 
-										+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
 
 		}
 
@@ -557,9 +977,9 @@ public class PrimaryController implements Initializable {
 					.multiply(ladoX.pow(2)).divide(new BigDecimal(128.0)).multiply(new BigDecimal(100.0)));
 
 			services.imprimeResultados("Equacao M. Serv. = (9*Pserv*Lx^2)/128\n", this.imprimeResultados);
-			services.imprimeResultados("Momento de Servico: " 
-										+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
 
 		}
 
@@ -572,8 +992,8 @@ public class PrimaryController implements Initializable {
 
 			services.imprimeResultados("Equacao M. Serv. = (9*Pserv*Lx^2)/128\n", this.imprimeResultados);
 			services.imprimeResultados("Momento de Servico: "
-										+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+					+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
 
 		}
 
@@ -586,8 +1006,69 @@ public class PrimaryController implements Initializable {
 
 			services.imprimeResultados("Equacao M. Serv. = (Pserv*Lx^2)/24\n", this.imprimeResultados);
 			services.imprimeResultados("Momento de Servico: "
-										+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+					+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
+
+	}
+
+	public void defineECalculaEquacaoMomentoDeServicoSemParede() {
+
+		if (!checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
+
+			BigDecimal ladoX = lajeSemParede.getLadoX();
+
+			lajeSemParede.setMomentoDeServico(lajeSemParede.getCargaDeServico().multiply(ladoX.pow(2))
+					.divide(new BigDecimal(8.0)).multiply(new BigDecimal(100.0)));
+
+			services.imprimeResultados("Equacao M. Serv. = (Pserv*Lx^2)/8 \n", this.imprimeResultados);
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeSemParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
+
+		else if (checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
+
+			BigDecimal ladoX = lajeSemParede.getLadoX();
+
+			lajeSemParede.setMomentoDeServico(new BigDecimal(9.0).multiply(lajeSemParede.getCargaDeServico())
+					.multiply(ladoX.pow(2)).divide(new BigDecimal(128.0)).multiply(new BigDecimal(100.0)));
+
+			services.imprimeResultados("Equacao M. Serv. = (9*Pserv*Lx^2)/128\n", this.imprimeResultados);
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeSemParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
+
+		else if (!checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
+
+			BigDecimal ladoX = lajeSemParede.getLadoX();
+
+			lajeSemParede.setMomentoDeServico(new BigDecimal(9.0).multiply(lajeSemParede.getCargaDeServico())
+					.multiply(ladoX.pow(2)).divide(new BigDecimal(128.0)).multiply(new BigDecimal(100.0)));
+
+			services.imprimeResultados("Equacao M. Serv. = (9*Pserv*Lx^2)/128\n", this.imprimeResultados);
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeSemParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		}
+
+		else if (checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
+
+			BigDecimal ladoX = lajeSemParede.getLadoX();
+
+			lajeSemParede.setMomentoDeServico(lajeSemParede.getCargaDeServico()
+					.multiply(ladoX.pow(2), MathContext.DECIMAL128).divide(new BigDecimal(24.0), MathContext.DECIMAL128)
+					.multiply(new BigDecimal(100.0), MathContext.DECIMAL128));
+
+			services.imprimeResultados("Equacao M. Serv. = (Pserv*Lx^2)/24\n", this.imprimeResultados);
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeSemParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
 
 		}
 
@@ -598,97 +1079,97 @@ public class PrimaryController implements Initializable {
 		if (!checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(1.0));
+			this.caso = new BigDecimal(1.0);
 
 			services.imprimeResultados("CASO 1\n", this.imprimeResultados);
 
 		} else if (!checkXEsquerda.selectedProperty().getValue() && checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(2.0));
+			this.caso = new BigDecimal(2.0);
 
 			services.imprimeResultados("CASO 2\n", this.imprimeResultados);
 
 		} else if (checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(2.0));
+			this.caso = new BigDecimal(2.0);
 
 			services.imprimeResultados("CASO 2\n", this.imprimeResultados);
 
 		} else if (!checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(3.0));
+			this.caso = new BigDecimal(3.0);
 
 			services.imprimeResultados("CASO 3\n", this.imprimeResultados);
 
 		} else if (!checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
 				&& checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(3.0));
+			this.caso = new BigDecimal(3.0);
 
 			services.imprimeResultados("CASO 3\n", this.imprimeResultados);
 
 		} else if (checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
 				&& checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(4.0));
+			this.caso = new BigDecimal(4.0);
 
 			services.imprimeResultados("CASO 4\n", this.imprimeResultados);
 
 		} else if (!checkXEsquerda.selectedProperty().getValue() && checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(4.0));
+			this.caso = new BigDecimal(4.0);
 
 			services.imprimeResultados("CASO 4\n", this.imprimeResultados);
 
 		} else if (checkXEsquerda.selectedProperty().getValue() && checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(5.0));
+			this.caso = new BigDecimal(5.0);
 
 			services.imprimeResultados("CASO 5\n", this.imprimeResultados);
 
 		} else if (!checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
 				&& checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(6.0));
+			this.caso = new BigDecimal(6.0);
 
 			services.imprimeResultados("CASO 6\n", this.imprimeResultados);
 
 		} else if (checkXEsquerda.selectedProperty().getValue() && checkXDireita.selectedProperty().getValue()
 				&& checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(7.0));
+			this.caso = new BigDecimal(7.0);
 
 			services.imprimeResultados("CASO 7\n", this.imprimeResultados);
 
 		} else if (checkXEsquerda.selectedProperty().getValue() && checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(7.0));
+			this.caso = new BigDecimal(7.0);
 
 			services.imprimeResultados("CASO 7\n", this.imprimeResultados);
 
 		} else if (!checkXEsquerda.selectedProperty().getValue() && checkXDireita.selectedProperty().getValue()
 				&& checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(8.0));
+			this.caso = new BigDecimal(8.0);
 
 			services.imprimeResultados("CASO 8\n", this.imprimeResultados);
 
 		} else if (checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
 				&& checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			lajeComParede.setCaso(new BigDecimal(8.0));
+			this.caso = new BigDecimal(8.0);
 
 			services.imprimeResultados("CASO 8\n", this.imprimeResultados);
 
 		} else {
-			
-			lajeComParede.setCaso(new BigDecimal(9.0));
+
+			this.caso = new BigDecimal(9.0);
 
 			services.imprimeResultados("CASO 9\n", this.imprimeResultados);
 		}
@@ -717,567 +1198,785 @@ public class PrimaryController implements Initializable {
 
 	public void defineCoeficienteKParaUmaDirecao() {
 
-		if (!checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-			lajeComParede.setCoeficienteK(new BigDecimal(1.3));
+			if (!checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			services.imprimeResultados("Coeficiente K: "
-										+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+				lajeComParede.setCoeficienteK(new BigDecimal(1.3));
 
-		}
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
 
-		else if (checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
+			}
 
-			lajeComParede.setCoeficienteK(new BigDecimal(0.53));
+			else if (checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
-			services.imprimeResultados("Coeficiente K: "
-										+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+				lajeComParede.setCoeficienteK(new BigDecimal(0.53));
 
-		}
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
 
-		else if (!checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
+			}
 
-			lajeComParede.setCoeficienteK(new BigDecimal(0.53));
+			else if (!checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			services.imprimeResultados("Coeficiente K: "
-										+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+				lajeComParede.setCoeficienteK(new BigDecimal(0.53));
 
-		}
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
 
-		else if (checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
+			}
 
-			lajeComParede.setCoeficienteK(new BigDecimal(0.26));
+			else if (checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
 
-			services.imprimeResultados("Coeficiente K: "
-										+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-										+ "\n", this.imprimeResultados);
+				lajeComParede.setCoeficienteK(new BigDecimal(0.26));
+
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
+
+			}
+
+		} else {
+
+			if (!checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
+
+				lajeSemParede.setCoeficienteK(new BigDecimal(1.3));
+
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeSemParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
+
+			}
+
+			else if (checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
+
+				lajeSemParede.setCoeficienteK(new BigDecimal(0.53));
+
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeSemParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
+
+			}
+
+			else if (!checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
+
+				lajeSemParede.setCoeficienteK(new BigDecimal(0.53));
+
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeSemParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
+
+			}
+
+			else if (checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
+
+				lajeSemParede.setCoeficienteK(new BigDecimal(0.26));
+
+				services.imprimeResultados("Coeficiente K: "
+						+ lajeSemParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+						this.imprimeResultados);
+
+			}
 
 		}
 
 	}
-	
+
 	public void defineCoeficientes() {
+
+		if(paredeSim.selectedProperty().getValue() == true) {
 		
-		for(Coeficientes coef : coeficientesList) {
-			if(coef.getCaso().doubleValue()   == lajeComParede.getCaso().doubleValue() && 
-			   coef.getLambda().doubleValue() == lajeComParede.getLambda().doubleValue()) {
-				
+		for (Coeficientes coef : coeficientesList) {
+			if (coef.getCaso().doubleValue() == this.caso.doubleValue()
+					&& coef.getLambda().doubleValue() == lajeComParede.getLambda().doubleValue()) {
+
 				this.coeficientes = coef;
-				
-				//services.imprimeResultados("for each: " + coef.toString(), this.imprimeResultados);
-				//services.imprimeResultados("objeto: " + this.coeficientes.toString(), this.imprimeResultados);
-				
+
+				}
 			}
 		}
-		
-	}
-	
-	public void defineEspacamentosAco() {
-		
-		
-		
-	}
-	
-	public BigDecimal defineCargaDoMomentoDeProjetoXEsquerda(BigDecimal carga) {
-		
-		if(checkXEsquerda.selectedProperty().getValue()) {
-			
-			carga = lajeComParede.getCargaTotalNegativa();
-			
-		}
 		else {
+			for (Coeficientes coef : coeficientesList) {
+				if (coef.getCaso().doubleValue() == this.caso.doubleValue()
+						&& coef.getLambda().doubleValue() == lajeSemParede.getLambda().doubleValue()) {
+
+					this.coeficientes = coef;
+
+					}
+				}
+		}
+
+	}
+
+	public BigDecimal defineCargaDoMomentoDeProjetoComParedeXEsquerda(BigDecimal carga) {
+
+		if (checkXEsquerda.selectedProperty().getValue()) {
+
+			carga = lajeComParede.getCargaTotalNegativa();
+
+		} else {
 			carga = lajeComParede.getCargaTotalPositiva();
 		}
 
 		return carga;
-		
+
 	}
-	
-	public BigDecimal defineCargaDoMomentoDeProjetoXDireita(BigDecimal carga) {
-		
-		if(checkXDireita.selectedProperty().getValue()) {
-			
+
+	public BigDecimal defineCargaDoMomentoDeProjetoComParedeXDireita(BigDecimal carga) {
+
+		if (checkXDireita.selectedProperty().getValue()) {
+
 			carga = lajeComParede.getCargaTotalNegativa();
-			
-		}
-		else {
+
+		} else {
 			carga = lajeComParede.getCargaTotalPositiva();
 		}
 
 		return carga;
-		
+
 	}
-	
-	public BigDecimal defineCargaDoMomentoDeProjetoYCima(BigDecimal carga) {
-		
-		if(checkYCima.selectedProperty().getValue()) {
-			
+
+	public BigDecimal defineCargaDoMomentoDeProjetoComParedeYCima(BigDecimal carga) {
+
+		if (checkYCima.selectedProperty().getValue()) {
+
 			carga = lajeComParede.getCargaTotalNegativa();
-			
-		}
-		else {
+
+		} else {
 			carga = lajeComParede.getCargaTotalPositiva();
 		}
 
 		return carga;
-		
+
 	}
-	
-	public BigDecimal defineCargaDoMomentoDeProjetoYBaixo(BigDecimal carga) {
-		
-		if(checkYBaixo.selectedProperty().getValue()) {
-			
+
+	public BigDecimal defineCargaDoMomentoDeProjetoComParedeYBaixo(BigDecimal carga) {
+
+		if (checkYBaixo.selectedProperty().getValue()) {
+
 			carga = lajeComParede.getCargaTotalNegativa();
-			
-		}
-		else {
+
+		} else {
 			carga = lajeComParede.getCargaTotalPositiva();
 		}
 
 		return carga;
-		
+
 	}
-	
-	public void calculaMomentoDeProjeto() {
-		
+
+	public void calculaMomentoDeProjetoComParede() {
 
 		BigDecimal ladoX = services.CentimetrosEmMetros(lajeComParede.getLadoX());
 		BigDecimal coeficienteDeSeguranca = new BigDecimal(1.4);
-		
-		lajeComParede.setMomentoDeProjetoX(coeficientes.getMiX().
-								  multiply(lajeComParede.getCargaTotalPositiva()).
-								  multiply(ladoX.pow(2)).
-								  multiply(coeficienteDeSeguranca));
-		
-		services.imprimeResultados("Mx = "
-									+ lajeComParede.getMomentoDeProjetoX().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		lajeComParede.setMomentoDeProjetoXLinha(coeficientes.getMiX1().
-								  	   multiply(lajeComParede.getCargaTotalNegativa()).
-								  	   multiply(ladoX.pow(2)).
-									   multiply(coeficienteDeSeguranca));
-		
-		services.imprimeResultados("Mx' = "
-									+ lajeComParede.getMomentoDeProjetoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		lajeComParede.setMomentoDeProjetoY(coeficientes.getMiY().
-								  multiply(lajeComParede.getCargaTotalPositiva()).
-								  multiply(ladoX.pow(2)).
-								  multiply(coeficienteDeSeguranca));
-		
-		services.imprimeResultados("My = "
-									+ lajeComParede.getMomentoDeProjetoY().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		lajeComParede.setMomentoDeProjetoYLinha(coeficientes.getMiY1().
-									   multiply(lajeComParede.getCargaTotalNegativa()).
-									   multiply(ladoX.pow(2)).
-									   multiply(coeficienteDeSeguranca));
-		
-		services.imprimeResultados("My' = "
-									+ lajeComParede.getMomentoDeProjetoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
+
+		lajeComParede.setMomentoDeProjetoX(coeficientes.getMiX().multiply(lajeComParede.getCargaTotalPositiva())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"Mx = " + lajeComParede.getMomentoDeProjetoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeComParede.setMomentoDeProjetoXLinha(coeficientes.getMiX1().multiply(lajeComParede.getCargaTotalNegativa())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"Mx' = " + lajeComParede.getMomentoDeProjetoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeComParede.setMomentoDeProjetoY(coeficientes.getMiY().multiply(lajeComParede.getCargaTotalPositiva())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"My = " + lajeComParede.getMomentoDeProjetoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeComParede.setMomentoDeProjetoYLinha(coeficientes.getMiY1().multiply(lajeComParede.getCargaTotalNegativa())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"My' = " + lajeComParede.getMomentoDeProjetoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
 	}
 	
-	public void calculaX() {
-		
-		lajeComParede.calculaD();
+	public void calculaMomentoDeProjetoSemParede() {
+
+		BigDecimal ladoX = lajeSemParede.getLadoX();
+		BigDecimal coeficienteDeSeguranca = new BigDecimal(1.4);
+
+		lajeSemParede.setMomentoDeProjetoX(coeficientes.getMiX().multiply(lajeSemParede.getCargaTotal())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"Mx = " + lajeSemParede.getMomentoDeProjetoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeSemParede.setMomentoDeProjetoXLinha(coeficientes.getMiX1().multiply(lajeSemParede.getCargaTotal())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"Mx' = " + lajeSemParede.getMomentoDeProjetoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeSemParede.setMomentoDeProjetoY(coeficientes.getMiY().multiply(lajeSemParede.getCargaTotal())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"My = " + lajeSemParede.getMomentoDeProjetoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeSemParede.setMomentoDeProjetoYLinha(coeficientes.getMiY1().multiply(lajeSemParede.getCargaTotal())
+				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
+
+		services.imprimeResultados(
+				"My' = " + lajeSemParede.getMomentoDeProjetoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+	}
+	
+	public void calculaXSemParede() {
+
+		lajeSemParede.calculaD();
 		materiais.calculaFcd();
-		
+
 		Double numerador;
 		Double denominador;
 		Double raiz;
 		Double x;
-		
-		numerador = 2*lajeComParede.getMomentoDeProjetoX().doubleValue();
-		denominador = 0.85*materiais.getFcd().doubleValue()*100*lajeComParede.getD().pow(2).doubleValue();
-		
-		raiz = Math.sqrt(1-(numerador/denominador));
-		
-		x = lajeComParede.getD().doubleValue()/0.8*(1-raiz);
-		
+
+		numerador = 2 * lajeSemParede.getMomentoDeProjetoX().doubleValue();
+		denominador = 0.85 * materiais.getFcd().doubleValue() * 100 * lajeSemParede.getD().pow(2).doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeSemParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
+		lajeSemParede.setX(services.doubleEmBigDecimal(x));
+
+		services.imprimeResultados("X = " + lajeSemParede.getX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		numerador = 2 * lajeSemParede.getMomentoDeProjetoXLinha().doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeSemParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
+		lajeSemParede.setxLinha(services.doubleEmBigDecimal(x));
+
+		services.imprimeResultados("X' = " + lajeSemParede.getxLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		numerador = 2 * lajeSemParede.getMomentoDeProjetoY().doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeSemParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
+		lajeSemParede.setY(services.doubleEmBigDecimal(x));
+
+		services.imprimeResultados("Y = " + lajeSemParede.getY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		numerador = 2 * lajeSemParede.getMomentoDeProjetoYLinha().doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeSemParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
+		lajeSemParede.setyLinha(services.doubleEmBigDecimal(x));
+
+		services.imprimeResultados("Y' = " + lajeSemParede.getyLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+	}
+
+	public void calculaXComParede() {
+
+		lajeComParede.calculaD();
+		materiais.calculaFcd();
+
+		Double numerador;
+		Double denominador;
+		Double raiz;
+		Double x;
+
+		numerador = 2 * lajeComParede.getMomentoDeProjetoX().doubleValue();
+		denominador = 0.85 * materiais.getFcd().doubleValue() * 100 * lajeComParede.getD().pow(2).doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeComParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
 		lajeComParede.setX(services.doubleEmBigDecimal(x));
-		
-		services.imprimeResultados("X = "
-									+ lajeComParede.getX().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		
-		numerador = 2*lajeComParede.getMomentoDeProjetoXLinha().doubleValue();
-		
-		raiz = Math.sqrt(1-(numerador/denominador));
-		
-		x = lajeComParede.getD().doubleValue()/0.8*(1-raiz);
-		
+
+		services.imprimeResultados("X = " + lajeComParede.getX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		numerador = 2 * lajeComParede.getMomentoDeProjetoXLinha().doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeComParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
 		lajeComParede.setxLinha(services.doubleEmBigDecimal(x));
-		
-		services.imprimeResultados("X' = "
-									+ lajeComParede.getxLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		
-		numerador = 2*lajeComParede.getMomentoDeProjetoY().doubleValue();
-		
-		raiz = Math.sqrt(1-(numerador/denominador));
-		
-		x = lajeComParede.getD().doubleValue()/0.8*(1-raiz);
-		
+
+		services.imprimeResultados("X' = " + lajeComParede.getxLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		numerador = 2 * lajeComParede.getMomentoDeProjetoY().doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeComParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
 		lajeComParede.setY(services.doubleEmBigDecimal(x));
-		
-		services.imprimeResultados("Y = "
-									+ lajeComParede.getY().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		
-		numerador = 2*lajeComParede.getMomentoDeProjetoYLinha().doubleValue();
-		
-		raiz = Math.sqrt(1-(numerador/denominador));
-		
-		x = lajeComParede.getD().doubleValue()/0.8*(1-raiz);
-		
+
+		services.imprimeResultados("Y = " + lajeComParede.getY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		numerador = 2 * lajeComParede.getMomentoDeProjetoYLinha().doubleValue();
+
+		raiz = Math.sqrt(1 - (numerador / denominador));
+
+		x = lajeComParede.getD().doubleValue() / 0.8 * (1 - raiz);
+
 		lajeComParede.setyLinha(services.doubleEmBigDecimal(x));
-		
-		services.imprimeResultados("Y' = "
-									+ lajeComParede.getyLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
+
+		services.imprimeResultados("Y' = " + lajeComParede.getyLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
 	}
 	
-	public void calculaAco() {
-		
-		lajeComParede.setAreaDeAcoX(new BigDecimal(0.85).
-					       multiply(new BigDecimal(0.8)).
-					       multiply(materiais.getFcd(), MathContext.DECIMAL128).
-					       multiply(new BigDecimal(100.0)).
-					       multiply(lajeComParede.getX(), MathContext.DECIMAL128).
-					       divide(materiais.getFydAco(), MathContext.DECIMAL128));
-		
-		services.imprimeResultados("Area de aco X = "
-									+ lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		lajeComParede.setAreaDeAcoXLinha(new BigDecimal(0.85).
-			       multiply(new BigDecimal(0.8)).
-			       multiply(materiais.getFcd(), MathContext.DECIMAL128).
-			       multiply(new BigDecimal(100.0)).
-			       multiply(lajeComParede.getxLinha(), MathContext.DECIMAL128).
-			       divide(materiais.getFydAco(), MathContext.DECIMAL128));
-		
-		services.imprimeResultados("Area de aco X' = "
-									+ lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		lajeComParede.setAreaDeAcoY(new BigDecimal(0.85).
-			       multiply(new BigDecimal(0.8)).
-			       multiply(materiais.getFcd(), MathContext.DECIMAL128).
-			       multiply(new BigDecimal(100.0)).
-			       multiply(lajeComParede.getY(), MathContext.DECIMAL128).
-			       divide(materiais.getFydAco(), MathContext.DECIMAL128));
-		
-		services.imprimeResultados("Area de aco Y = "
-									+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
-		lajeComParede.setAreaDeAcoYLinha(new BigDecimal(0.85).
-			       multiply(new BigDecimal(0.8)).
-			       multiply(materiais.getFcd(), MathContext.DECIMAL128).
-			       multiply(new BigDecimal(100.0)).
-			       multiply(lajeComParede.getyLinha(), MathContext.DECIMAL128).
-			       divide(materiais.getFydAco(), MathContext.DECIMAL128));
-		
-		services.imprimeResultados("Area de aco Y' = "
-									+ lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
+	public void calculaAcoSemParede() {
+
+		lajeSemParede.setAreaDeAcoX(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getX(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco X = " + lajeSemParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeSemParede.setAreaDeAcoXLinha(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getxLinha(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco X' = " + lajeSemParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeSemParede.setAreaDeAcoY(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getY(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco Y = " + lajeSemParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeSemParede.setAreaDeAcoYLinha(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getyLinha(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco Y' = " + lajeSemParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
 	}
 	
-	public void defineAreaDeAco() {
-		
-		if(lajeComParede.getAreaDeAcoX().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
-			
-			lajeComParede.setAreaDeAcoX(lajeComParede.getAreaDeAcoMinima());
-			
+	
+	public void calculaAcoComParede() {
+
+		lajeComParede.setAreaDeAcoX(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getX(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco X = " + lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeComParede.setAreaDeAcoXLinha(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getxLinha(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco X' = " + lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeComParede.setAreaDeAcoY(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getY(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco Y = " + lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+		lajeComParede.setAreaDeAcoYLinha(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getyLinha(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
+
+		services.imprimeResultados(
+				"Area de aco Y' = " + lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+	}
+
+	public void defineAreaDeAcoSemParede() {
+
+		if (lajeSemParede.getAreaDeAcoX().doubleValue() < lajeSemParede.getAreaDeAcoMinima().doubleValue()) {
+
+			lajeSemParede.setAreaDeAcoX(lajeSemParede.getAreaDeAcoMinima());
+
+		} 
+		if (lajeSemParede.getAreaDeAcoXLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima()
+				.doubleValue()) {
+
+			lajeSemParede.setAreaDeAcoXLinha(lajeSemParede.getAreaDeAcoMinima());
+
+		} 
+
+		if (lajeSemParede.getAreaDeAcoYLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima()
+				.doubleValue()) {
+
+			lajeSemParede.setAreaDeAcoYLinha(lajeSemParede.getAreaDeAcoMinima());
+
 		}
-		else if(lajeComParede.getAreaDeAcoXLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
-			
-			lajeComParede.setAreaDeAcoXLinha(lajeComParede.getAreaDeAcoMinima());
-			
-		}
-		else if(lajeComParede.getAreaDeAcoYLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
-			
-			lajeComParede.setAreaDeAcoYLinha(lajeComParede.getAreaDeAcoMinima());
-			
-		}
-		
-		services.imprimeResultados("Area de aco final X = "
-									+ lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
+
+		services.imprimeResultados(
+				"Area de aco final X = " + lajeSemParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 		services.imprimeResultados("Area de aco final X' = "
-									+ lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		services.imprimeResultados("Area de aco final Y (distribuicao) = "
-									+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
+				+ lajeSemParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados(
+				"Area de aco final Y (distribuicao) = "
+						+ lajeSemParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 		services.imprimeResultados("Area de aco final Y' = "
-									+ lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN)
-									+ "\n", this.imprimeResultados);
-		
+				+ lajeSemParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
 	}
 	
+	public void defineAreaDeAcoComParede() {
+
+		if (lajeComParede.getAreaDeAcoX().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
+
+			lajeComParede.setAreaDeAcoX(lajeComParede.getAreaDeAcoMinima());
+
+		}
+		if (lajeComParede.getAreaDeAcoXLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima()
+				.doubleValue()) {
+
+			lajeComParede.setAreaDeAcoXLinha(lajeComParede.getAreaDeAcoMinima());
+
+		} 
+
+		if (lajeComParede.getAreaDeAcoYLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima()
+				.doubleValue()) {
+
+			lajeComParede.setAreaDeAcoYLinha(lajeComParede.getAreaDeAcoMinima());
+
+		}
+
+		services.imprimeResultados(
+				"Area de aco final X = " + lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados("Area de aco final X' = "
+				+ lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados(
+				"Area de aco final Y (distribuicao) = "
+						+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados("Area de aco final Y' = "
+				+ lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+
+	}
+
 	public void calculaArmaduraDeDistribuicao() {
+
+		if(paredeSim.selectedProperty().getValue() == true) {
 		
 		BigDecimal calculoAreaDeAcoPrincipal;
 		BigDecimal calculoAreaDeAcoMinima;
 		BigDecimal definicaoNBR = new BigDecimal(0.9);
-		
+
 		calculoAreaDeAcoPrincipal = lajeComParede.getAreaDeAcoX().divide(new BigDecimal(5.0));
-		calculoAreaDeAcoMinima    = lajeComParede.getAreaDeAcoMinima().divide(new BigDecimal(2.0));
-		
-		if(calculoAreaDeAcoPrincipal.doubleValue() > calculoAreaDeAcoMinima.doubleValue() &&
-		   calculoAreaDeAcoPrincipal.doubleValue() > definicaoNBR.doubleValue()) {
-			
+		calculoAreaDeAcoMinima = lajeComParede.getAreaDeAcoMinima().divide(new BigDecimal(2.0));
+
+		if (calculoAreaDeAcoPrincipal.doubleValue() > calculoAreaDeAcoMinima.doubleValue()
+				&& calculoAreaDeAcoPrincipal.doubleValue() > definicaoNBR.doubleValue()) {
+
 			lajeComParede.setAreaDeAcoY(calculoAreaDeAcoPrincipal);
-			
-		}
-		else if(calculoAreaDeAcoMinima.doubleValue() > calculoAreaDeAcoPrincipal.doubleValue() && 
-				calculoAreaDeAcoMinima.doubleValue() > definicaoNBR.doubleValue()) {
-			
+
+		} else if (calculoAreaDeAcoMinima.doubleValue() > calculoAreaDeAcoPrincipal.doubleValue()
+				&& calculoAreaDeAcoMinima.doubleValue() > definicaoNBR.doubleValue()) {
+
 			lajeComParede.setAreaDeAcoY(calculoAreaDeAcoMinima);
+
+		} else {
 			
+			lajeComParede.setAreaDeAcoY(definicaoNBR);
+			
+			}
 		}
 		else {
-			lajeComParede.setAreaDeAcoY(definicaoNBR);
+			
+			BigDecimal calculoAreaDeAcoPrincipal;
+			BigDecimal calculoAreaDeAcoMinima;
+			BigDecimal definicaoNBR = new BigDecimal(0.9);
+
+			calculoAreaDeAcoPrincipal = lajeSemParede.getAreaDeAcoX().divide(new BigDecimal(5.0));
+			calculoAreaDeAcoMinima = lajeSemParede.getAreaDeAcoMinima().divide(new BigDecimal(2.0));
+
+			if (calculoAreaDeAcoPrincipal.doubleValue() > calculoAreaDeAcoMinima.doubleValue()
+					&& calculoAreaDeAcoPrincipal.doubleValue() > definicaoNBR.doubleValue()) {
+
+				lajeSemParede.setAreaDeAcoY(calculoAreaDeAcoPrincipal);
+
+			} else if (calculoAreaDeAcoMinima.doubleValue() > calculoAreaDeAcoPrincipal.doubleValue()
+					&& calculoAreaDeAcoMinima.doubleValue() > definicaoNBR.doubleValue()) {
+
+				lajeSemParede.setAreaDeAcoY(calculoAreaDeAcoMinima);
+
+			} else {
+				
+				lajeSemParede.setAreaDeAcoY(definicaoNBR);
+				
+				}
+			
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public void montaOpcoesDeEspacamentoX() {
+
+		if(paredeSim.selectedProperty().getValue() == true) {
 		
-		for(EspacamentoAco espacamentoAco : espacamentoAcoList) {
-			if(espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoX().doubleValue() &&
-					espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoX().doubleValue() + 0.3) {
-				
+		for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+			if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoX().doubleValue()
+					&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoX().doubleValue()
+							+ 0.3) {
+
 				acoXPositivo.getItems().add(espacamentoAco);
 
-				
+				}
 			}
 		}
-		
+		else {
+			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoX().doubleValue()
+						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoX().doubleValue()
+								+ 0.3) {
+
+					acoXPositivo.getItems().add(espacamentoAco);
+
+					}
+				}
+		}
+
 	}
-	
+
 	public void montaOpcoesDeEspacamentoXNegativo() {
-		
-		for(EspacamentoAco espacamentoAco : espacamentoAcoList) {
-			if(espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoXLinha().doubleValue() &&
-					espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoXLinha().doubleValue() + 0.3) {
-				
-				acoXNegativo.getItems().add(espacamentoAco);
 
-				
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoXLinha().doubleValue()	&&
+						espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoXLinha().doubleValue() + 0.3) {
+
+					acoXNegativo.getItems().add(espacamentoAco);
+
+				}
 			}
 		}
-		
+		else {
+			
+			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoXLinha().doubleValue()	&&
+						espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoXLinha().doubleValue() + 0.3) {
+
+					acoXNegativo.getItems().add(espacamentoAco);
+
+				}
+			}
+		}
+
 	}
-	
+
 	public void montaOpcoesDeEspacamentoY() {
-		
-		for(EspacamentoAco espacamentoAco : espacamentoAcoList) {
-			if(espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoY().doubleValue() &&
-					espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoY().doubleValue() + 0.3) {
-				
-				acoYPositivo.getItems().add(espacamentoAco);
 
-				
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoY().doubleValue()
+						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoY().doubleValue() + 0.3) {
+
+					acoYPositivo.getItems().add(espacamentoAco);
+
+				}
 			}
 		}
-		
+		else {
+			
+			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoY().doubleValue()
+						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoY().doubleValue() + 0.3) {
+
+					acoYPositivo.getItems().add(espacamentoAco);
+
+				}
+			}
+			
+		}
 	}
-	
+
 	public void montaOpcoesDeEspacamentoYNegativo() {
 		
-		for(EspacamentoAco espacamentoAco : espacamentoAcoList) {
-			if(espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoYLinha().doubleValue() &&
-					espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoYLinha().doubleValue() + 0.3) {
-				
-				acoYNegativo.getItems().add(espacamentoAco);
+		if (paredeSim.selectedProperty().getValue() == true) {
 
-				
+			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoYLinha().doubleValue() &&
+						espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoYLinha().doubleValue() + 0.3) {
+
+					acoYNegativo.getItems().add(espacamentoAco);
+
+				}
 			}
 		}
-		
+		else {
+			
+			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoYLinha().doubleValue() &&
+						espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoYLinha().doubleValue() + 0.3) {
+
+					acoYNegativo.getItems().add(espacamentoAco);
+
+				}
+			}
+			
+		}
+
 	}
-	
+
 	public void mostraEngastes() {
-		
+
 		if (checkXEsquerda.selectedProperty().getValue()) {
 			engasteCheckXEsquerda.setVisible(true);
-		} 
-		
+		}
+
 		else {
 			engasteCheckXEsquerda.setVisible(false);
 		}
 
 		if (checkYCima.selectedProperty().getValue()) {
 			engasteCheckYCima.setVisible(true);
-		} 
-		
+		}
+
 		else {
 			engasteCheckYCima.setVisible(false);
 		}
 
 		if (checkXDireita.selectedProperty().getValue()) {
 			engasteCheckXDireita.setVisible(true);
-		} 
-		
+		}
+
 		else {
 			engasteCheckXDireita.setVisible(false);
 		}
 
 		if (checkYBaixo.selectedProperty().getValue()) {
 			engastecheckYBaixo.setVisible(true);
-		} 
-		
+		}
+
 		else {
 			engastecheckYBaixo.setVisible(false);
 		}
-		
+
 	}
-	
+
 	public void populaCoeficientes() {
-		
+
 		coeficientesList = new ArrayList<>();
-		
+
 		File file = new File("src/main/resources/CoeficientesCasos.txt");
 
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
 			String line = br.readLine();
-			
-			while(line!= null) {
-				
+
+			while (line != null) {
+
 				String[] vect = line.split(";");
-				
-				BigDecimal caso   = new BigDecimal(vect[0]);
+
+				BigDecimal caso = new BigDecimal(vect[0]);
 				BigDecimal lambda = new BigDecimal(vect[1]);
-				BigDecimal miX    = new BigDecimal(vect[2]);
-				BigDecimal miY    = new BigDecimal(vect[3]);
-				BigDecimal miX1   = new BigDecimal(vect[4]);
-				BigDecimal miY1   = new BigDecimal(vect[5]);
-				BigDecimal kx     = new BigDecimal(vect[6]);
-				BigDecimal ky     = new BigDecimal(vect[7]);
-				BigDecimal kx1    = new BigDecimal(vect[8]);
-				BigDecimal ky1    = new BigDecimal(vect[9]);
-				
+				BigDecimal miX = new BigDecimal(vect[2]);
+				BigDecimal miY = new BigDecimal(vect[3]);
+				BigDecimal miX1 = new BigDecimal(vect[4]);
+				BigDecimal miY1 = new BigDecimal(vect[5]);
+				BigDecimal kx = new BigDecimal(vect[6]);
+				BigDecimal ky = new BigDecimal(vect[7]);
+				BigDecimal kx1 = new BigDecimal(vect[8]);
+				BigDecimal ky1 = new BigDecimal(vect[9]);
+
 				Coeficientes coeficientes = new Coeficientes(caso, lambda, miX, miY, miX1, miY1, kx, ky, kx1, ky1);
-				
+
 				coeficientesList.add(coeficientes);
-				
+
 				line = br.readLine();
 			}
-			
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 
 	}
-	
+
 	public void populaEspacamentoAco() {
-		
+
 		espacamentoAcoList = new ArrayList<>();
-		
+
 		File file = new File("src/main/resources/EspacamentoAco.txt");
 
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
 			String line = br.readLine();
-			
-			while(line!= null) {
-				
+
+			while (line != null) {
+
 				String[] vect = line.split(";");
-				
+
 				BigDecimal bitola = new BigDecimal(vect[0]);
 				BigDecimal espacamento = new BigDecimal(vect[1]);
 				BigDecimal areaDeAco = new BigDecimal(vect[2]);
-				
+
 				EspacamentoAco aco = new EspacamentoAco(bitola, espacamento, areaDeAco);
-				
+
 				espacamentoAcoList.add(aco);
-				
+
 				line = br.readLine();
 			}
-			
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-
 
 	public LajeComParede getLajeComParede() {
 		return lajeComParede;

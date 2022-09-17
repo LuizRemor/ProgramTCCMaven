@@ -15,11 +15,13 @@
     <fullyQualifiedTypeName name="javafx.scene.text.Text"/>
     <fullyQualifiedTypeName name="br.com.eng.laje.PrimaryController"/>
     <fullyQualifiedTypeName name="java.math.MathContext"/>
-    <fullyQualifiedTypeName name="java.math.BigDecimal"/>
     <fullyQualifiedTypeName name="javafx.scene.control.TextArea"/>
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="javafx.scene.control.MenuButton"/>
     <fullyQualifiedTypeName name="javafx.scene.control.MenuItem"/>
     <fullyQualifiedTypeName name="br.com.eng.entities.EspacamentoAco"/>
     <fullyQualifiedTypeName name="javafx.scene.control.ChoiceBox"/>
+    <fullyQualifiedTypeName name="java.math.BigDecimal"/>
+    <fullyQualifiedTypeName name="br.com.eng.entities.LajeComParede"/>
+    <fullyQualifiedTypeName name="br.com.eng.entities.LajeSemParede"/>
 </qualifiedTypeNameHistroy>

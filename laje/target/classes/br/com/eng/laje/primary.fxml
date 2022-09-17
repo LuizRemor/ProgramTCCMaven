@@ -20,8 +20,8 @@
 		<Label layoutX="623.0" layoutY="42.0" text="Lado Y (m)" />
 		<Label layoutX="577.0" layoutY="69.0" text="Espessura Laje (cm)" />
 		<Label layoutX="597.0" layoutY="95.0" text="Carga Acidental" />
-		<Label layoutX="551.0" layoutY="121.0" text="Espessura da Parede (cm)" />
-		<Label layoutX="576.0" layoutY="149.0" text="Altura da parede (m)" />
+		<Label fx:id="textEspessuraDaParede" layoutX="552.0" layoutY="171.0" text="Espessura da Parede (cm)" />
+		<Label fx:id="textAlturaDaParede" layoutX="577.0" layoutY="199.0" text="Altura da parede (m)" />
 		<TextField id="inputLadoX" fx:id="ladoX" layoutX="704.0" layoutY="10.0" prefHeight="0.0" prefWidth="151.0">
 			<font>
 				<Font size="10.0" />
@@ -42,12 +42,12 @@
 				<Font size="10.0" />
 			</font>
 		</TextField>
-		<TextField id="inputEspessuraParede" fx:id="espessuraParede" layoutX="704.0" layoutY="119.0" prefHeight="10.0" prefWidth="82.0">
+		<TextField id="inputEspessuraParede" fx:id="espessuraParede" layoutX="705.0" layoutY="169.0" prefHeight="10.0" prefWidth="82.0">
 			<font>
 				<Font size="10.0" />
 			</font>
 		</TextField>
-		<TextField id="inputAlturaParede" fx:id="alturaParede" layoutX="704.0" layoutY="147.0" prefHeight="1.0" prefWidth="82.0">
+		<TextField id="inputAlturaParede" fx:id="alturaParede" layoutX="705.0" layoutY="197.0" prefHeight="1.0" prefWidth="82.0">
 			<font>
 				<Font size="10.0" />
 			</font>
@@ -57,55 +57,55 @@
 		<Label layoutX="208.0" layoutY="92.0" text="X" />
 		<Line endX="-16.20001220703125" endY="1.0999908447265625" layoutX="310.0" layoutY="186.0" startX="-97.29997253417969" startY="1.0999908447265625" />
 		<Label layoutX="302.0" layoutY="178.0" text="Y" />
-		<Label layoutX="611.0" layoutY="179.0" text="Possui Parede" />
-		<Label layoutX="618.0" layoutY="205.0" text="Tijolo Furado" />
-		<Label layoutX="654.0" layoutY="230.0" text="Ψ2" />
-		<Label layoutX="705.0" layoutY="230.0" text="0,3" />
-		<Label layoutX="776.0" layoutY="230.0" text="0,4" />
-		<Label layoutX="840.0" layoutY="230.0" text="0,5" />
-		<Label layoutX="897.0" layoutY="230.0" text="0,6" />
-		<Label layoutX="622.0" layoutY="258.0" text="Basalto e Diabásio" />
-		<Label layoutX="757.0" layoutY="259.0" text="Granito e Gnaisse" />
-		<Label layoutX="677.0" layoutY="294.0" prefHeight="18.0" prefWidth="50.0" text="Calcário" />
-		<Label layoutX="812.0" layoutY="294.0" text="Arenito" />
-		<Label layoutX="713.0" layoutY="179.0" text="S" />
-		<Label layoutX="779.0" layoutY="179.0" text="N" />
-		<Label layoutX="713.0" layoutY="205.0" text="S" />
-		<Label layoutX="779.0" layoutY="205.0" text="N" />
+		<Label layoutX="607.0" layoutY="119.0" text="Possui Parede" />
+		<Label fx:id="tijoloFurado" layoutX="614.0" layoutY="145.0" text="Tijolo Furado" />
+		<Label layoutX="651.0" layoutY="233.0" text="Ψ2" />
+		<Label layoutX="702.0" layoutY="233.0" text="0,3" />
+		<Label layoutX="773.0" layoutY="233.0" text="0,4" />
+		<Label layoutX="837.0" layoutY="233.0" text="0,5" />
+		<Label layoutX="894.0" layoutY="233.0" text="0,6" />
+		<Label layoutX="619.0" layoutY="265.0" text="Basalto e Diabásio" />
+		<Label layoutX="754.0" layoutY="266.0" text="Granito e Gnaisse" />
+		<Label layoutX="674.0" layoutY="301.0" prefHeight="18.0" prefWidth="50.0" text="Calcário" />
+		<Label layoutX="809.0" layoutY="301.0" text="Arenito" />
+		<Label layoutX="709.0" layoutY="119.0" text="S" />
+		<Label layoutX="775.0" layoutY="119.0" text="N" />
+		<Label fx:id="tijoloFuradoS" layoutX="709.0" layoutY="145.0" text="S" />
+		<Label fx:id="tijoloFuradoN" layoutX="775.0" layoutY="145.0" text="N" />
 		<Button layoutX="398.0" layoutY="303.0" mnemonicParsing="false" onAction="#btCalcular" text="Calcular" />
-		<RadioButton fx:id="paredeSim" layoutX="728.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
+		<RadioButton fx:id="paredeSim" layoutX="724.0" layoutY="115.0" mnemonicParsing="false" onAction="#invalidaCamposParede" prefHeight="25.0" prefWidth="26.0">
 			<toggleGroup>
 				<ToggleGroup fx:id="parede" />
 			</toggleGroup>
 		</RadioButton>
-		<RadioButton fx:id="paredeNao" layoutX="794.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$parede" />
-		<RadioButton fx:id="tijoloFuradoSim" layoutX="728.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
+		<RadioButton fx:id="paredeNao" layoutX="790.0" layoutY="115.0" mnemonicParsing="false" onAction="#invalidaCamposParede" prefHeight="25.0" prefWidth="26.0" toggleGroup="$parede" />
+		<RadioButton fx:id="tijoloFuradoSim" layoutX="724.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
 			<toggleGroup>
 				<ToggleGroup fx:id="tijolo" />
 			</toggleGroup>
 		</RadioButton>
-		<RadioButton fx:id="tijoloFuradoNao" layoutX="794.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$tijolo" />
-		<RadioButton fx:id="psi0_3" layoutX="728.0" layoutY="225.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
+		<RadioButton fx:id="tijoloFuradoNao" layoutX="790.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$tijolo" />
+		<RadioButton fx:id="psi0_3" layoutX="724.0" layoutY="228.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
 			<toggleGroup>
 				<ToggleGroup fx:id="psi" />
 			</toggleGroup>
 		</RadioButton>
-		<RadioButton fx:id="psi0_4" layoutX="794.0" layoutY="226.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$psi" />
-		<RadioButton fx:id="psi0_5" layoutX="857.0" layoutY="226.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$psi" />
-		<RadioButton fx:id="psi0_6" layoutX="915.0" layoutY="226.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$psi" />
-		<RadioButton fx:id="agregadoBasaltoDiabasio" layoutX="728.0" layoutY="253.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
+		<RadioButton fx:id="psi0_4" layoutX="790.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$psi" />
+		<RadioButton fx:id="psi0_5" layoutX="854.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$psi" />
+		<RadioButton fx:id="psi0_6" layoutX="912.0" layoutY="229.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$psi" />
+		<RadioButton fx:id="agregadoBasaltoDiabasio" layoutX="724.0" layoutY="260.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
 			<toggleGroup>
 				<ToggleGroup fx:id="agregado" />
 			</toggleGroup>
 		</RadioButton>
-		<RadioButton fx:id="agregadoGranitoGnaisse" layoutX="857.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
-		<RadioButton fx:id="agregadoCalcario" layoutX="728.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
-		<RadioButton fx:id="agregadoArenito" layoutX="857.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
+		<RadioButton fx:id="agregadoGranitoGnaisse" layoutX="854.0" layoutY="261.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
+		<RadioButton fx:id="agregadoCalcario" layoutX="724.0" layoutY="297.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
+		<RadioButton fx:id="agregadoArenito" layoutX="854.0" layoutY="297.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
 		<CheckBox fx:id="checkYCima" layoutX="223.0" layoutY="26.0" mnemonicParsing="false" onAction="#mostraEngastes" text="Engaste" />
 		<CheckBox fx:id="checkYBaixo" layoutX="223.0" layoutY="272.0" mnemonicParsing="false" onAction="#mostraEngastes" text="Engaste" />
 		<CheckBox fx:id="checkXDireita" layoutX="457.0" layoutY="141.0" mnemonicParsing="false" onAction="#mostraEngastes" text="Engaste" />
 		<CheckBox fx:id="checkXEsquerda" layoutX="7.0" layoutY="141.0" mnemonicParsing="false" onAction="#mostraEngastes" text="Engaste" />
-		<Button layoutX="26.0" layoutY="303.0" mnemonicParsing="false" onAction="#montaUmaDirecaoComParede" text="1D - C/P" />
+		<Button layoutX="26.0" layoutY="303.0" mnemonicParsing="false" onAction="#btMontaUmaDirecaoComParede" text="1D - C/P" />
 		<Text fx:id="engasteCheckYCima" layoutX="108.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /" visible="false" wrappingWidth="308.99999999999994" />
 		<Text fx:id="engasteCheckXDireita" layoutX="340.0" layoutY="160.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ / / / / / / / / / / / / / / / / / / /" visible="false" wrappingWidth="162.399981212616" />
 		<Text fx:id="engasteCheckXEsquerda" layoutX="22.0" layoutY="156.0" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ / / / / / / / / / / / / / / / / / / /" visible="false" wrappingWidth="162.399981212616" />
@@ -120,6 +120,8 @@
       <ChoiceBox fx:id="acoXNegativo" layoutX="339.0" layoutY="413.0" prefHeight="26.0" prefWidth="309.0" />
       <ChoiceBox fx:id="acoYPositivo" layoutX="339.0" layoutY="469.0" prefHeight="26.0" prefWidth="309.0" />
       <ChoiceBox fx:id="acoYNegativo" layoutX="339.0" layoutY="525.0" prefHeight="26.0" prefWidth="309.0" />
+      <Button layoutX="95.0" layoutY="303.0" mnemonicParsing="false" onAction="#btMontaUmaDirecaoSemParede" text="1D - S/P" />
+      <Button layoutX="480.0" layoutY="303.0" mnemonicParsing="false" onAction="#btNovaLaje" text="Nova Laje" />
 	</children>
 
 </AnchorPane>
