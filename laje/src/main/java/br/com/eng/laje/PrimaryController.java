@@ -40,8 +40,12 @@ public class PrimaryController implements Initializable {
 	private Materiais materiais;
 
 	private Coeficientes coeficientes;
+	
+	private Coeficientes coeficientesMxKx;
 
 	List<Coeficientes> coeficientesList = new ArrayList<>();
+	
+	List<Coeficientes> coeficientesMxKxList = new ArrayList<>();
 
 	List<EspacamentoAco> espacamentoAcoList = new ArrayList<>();
 
@@ -204,7 +208,56 @@ public class PrimaryController implements Initializable {
 		this.textAlturaDaParede.setVisible(true);
 
 	}
+	
+	public void btMontaDuasDirecoesSemParede() {
 
+		this.ladoX.setText("3.4");
+		this.ladoY.setText("4.8");
+		this.espessuraLaje.setText("9");
+		this.cargaAcidental.setText("5");
+		this.paredeNao.setSelected(true);
+		this.psi0_4.setSelected(true);
+		this.agregadoBasaltoDiabasio.setSelected(true);
+		this.checkYBaixo.setSelected(true);
+		this.engastecheckYBaixo.setVisible(true);
+		this.checkXEsquerda.setSelected(true);
+		this.engasteCheckXEsquerda.setVisible(true);
+
+		lajeSemParede = new LajeSemParede(this.ladoX, this.ladoY, this.espessuraLaje);
+
+		materiais = new Materiais();
+
+		lajeSemParede.setCargaAcidental(services.conversor(this.cargaAcidental));
+
+	}
+
+	public void btMontaDuasDirecoesComParede() {
+
+		this.ladoX.setText("2.95");
+		this.ladoY.setText("6.8");
+		this.espessuraLaje.setText("10");
+		this.espessuraParede.setText("14");
+		this.alturaParede.setText("2.9");
+		this.cargaAcidental.setText("1.5");
+		this.paredeSim.setSelected(true);
+		this.tijoloFuradoSim.setSelected(false);
+		this.psi0_4.setSelected(true);
+		this.agregadoGranitoGnaisse.setSelected(true);
+		this.checkYCima.setSelected(true);
+		this.engasteCheckYCima.setVisible(true);
+		this.checkYBaixo.setSelected(true);
+		this.engastecheckYBaixo.setVisible(true);
+
+		lajeComParede = new LajeComParede(this.ladoX, this.ladoY, this.espessuraLaje);
+
+		parede = new Parede(this.alturaParede, this.espessuraParede);
+
+		materiais = new Materiais();
+
+		lajeComParede.setCargaAcidental(services.conversor(this.cargaAcidental));
+
+	}
+	
 	public void btMontaUmaDirecaoComParede() {
 
 		this.ladoX.setText("3");
@@ -294,10 +347,46 @@ public class PrimaryController implements Initializable {
 	}
 
 	public void btCalcular() {
+		
+		lajeComParede = new LajeComParede(this.ladoX, this.ladoY, this.espessuraLaje);
+		
+		lajeSemParede = new LajeSemParede(this.ladoX, this.ladoY, this.espessuraLaje);
+
+		materiais = new Materiais();
+		
+		if(paredeSim.selectedProperty().getValue() == true) {
+			
+			parede = new Parede(this.alturaParede, this.espessuraParede);
+			
+		}
+
+		lajeSemParede.setCargaAcidental(services.conversor(this.cargaAcidental));
+		
+		lajeComParede.setCargaAcidental(services.conversor(this.cargaAcidental));
 
 		verificaDirecoes();
+		calculaLambdaInvertido();
+		ajustaLambda();
+		ajustaLambdaInvertido();
 
 		if (this.lajeDirecao.doubleValue() == 2.0) {
+			
+			if (paredeSim.selectedProperty().getValue() == true) {
+
+				String string = "COM PAREDE\n";
+
+				this.imprimeResultados.appendText(string);
+
+			} else {
+
+				String string = "SEM PAREDE\n";
+
+				this.imprimeResultados.appendText(string);
+
+				calculosLajeSemParedeDuasDirecoes();
+
+			}
+			
 
 		} else {
 
@@ -321,6 +410,51 @@ public class PrimaryController implements Initializable {
 		}
 
 	}
+	
+	public void calculosLajeSemParedeDuasDirecoes() {
+
+		acoXPositivo.getItems().clear();
+		acoXNegativo.getItems().clear();
+		acoYPositivo.getItems().clear();
+		acoYNegativo.getItems().clear();
+		
+		populaCoeficientes();
+		populaEspacamentoAco();
+		populaCoeficientesMxKx();
+		defineCaso();
+		decideGamaTijolo();
+		calculaAreaDeAcoMinima();
+		cargaPermanenteSemParede();
+		cargaTotalSemParede();
+		definePsi();
+		cargaDeServico();
+		defineAgregado();
+		calculaEci();
+		calculaAlphaI();
+		calculaEcs();
+		calculaFctm();
+		calculaFctkInf();
+		calculaFctd();
+		calculaMomentoDeFissuracao();
+		calculaMomentoDeServicoDuasDirecoes();
+		verificaMomentoDeFissuracao();
+		inercia();
+		defineCoeficienteKParaDuasDirecoes();
+		calculaFlechaDeCurtaDuracao();
+		calculaFlechaDeLongaDuracao();
+		calculaFlechaAdmissivel();
+		comparaFlecha();
+		defineCoeficientes();
+		calculaMomentoDeProjetoSemParede();
+		calculaXSemParede();
+		calculaAcoSemParede();
+		defineAreaDeAcoSemParede();
+		montaOpcoesDeEspacamentoX();
+		montaOpcoesDeEspacamentoXNegativo();
+		montaOpcoesDeEspacamentoY();
+		montaOpcoesDeEspacamentoYNegativo();
+
+	}
 
 	public void calculosLajeSemParedeUmaDirecao() {
 
@@ -332,6 +466,7 @@ public class PrimaryController implements Initializable {
 		populaCoeficientes();
 		populaEspacamentoAco();
 		defineCaso();
+		decideGamaTijolo();
 		calculaAreaDeAcoMinima();
 		cargaPermanenteSemParede();
 		cargaTotalSemParede();
@@ -375,6 +510,7 @@ public class PrimaryController implements Initializable {
 
 		populaCoeficientes();
 		populaEspacamentoAco();
+		decideGamaTijolo();
 		defineCaso();
 		calculaAreaDeAcoMinima();
 		areaDeInfluenciaDaParedePositiva();
@@ -414,6 +550,20 @@ public class PrimaryController implements Initializable {
 
 	}
 
+	public void decideGamaTijolo() {
+		
+		if(this.tijoloFuradoSim.selectedProperty().getValue() == true) {
+			
+			materiais.setGamaTijolo(new BigDecimal(13.0));
+			
+		} else {
+			
+			materiais.setGamaTijolo(new BigDecimal(18.0));
+			
+		}
+		
+	}
+	
 	public void calculaAreaDeAcoMinima() {
 
 		if (paredeSim.selectedProperty().getValue() == true) {
@@ -425,6 +575,13 @@ public class PrimaryController implements Initializable {
 			lajeSemParede.calculaAcoMinimo();
 		}
 
+	}
+	
+	public void calculaLambdaInvertido() {
+		
+		lajeComParede.setLambdaInvertido(lajeComParede.getLadoY().divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
+		lajeSemParede.setLambdaInvertido(lajeSemParede.getLadoX().divide(lajeSemParede.getLadoY(), MathContext.DECIMAL128));
+		
 	}
 
 	public void verificaDirecoes() {
@@ -1012,6 +1169,176 @@ public class PrimaryController implements Initializable {
 		}
 
 	}
+	
+	public void calculaMomentoDeServicoDuasDirecoes() {
+		
+		defineCoeficientesMxKx();
+		
+		if(paredeSim.selectedProperty().getValue() == true) {
+			
+			
+			
+		} else {
+			
+			BigDecimal ladoX = services.metrosEmCentimetros(lajeSemParede.getLadoX());
+			
+			lajeSemParede.setMomentoDeServico(this.coeficientesMxKx.getmX().
+					                   		multiply(lajeSemParede.getCargaDeServico().divide(new BigDecimal(10000.0))).
+					                   		multiply(ladoX.pow(2)).
+					                   		multiply(new BigDecimal(100.0)));
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeSemParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		}
+		
+		
+	}
+	
+	public void ajustaLambda() {
+
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			Double lambda = lajeComParede.getLambda().doubleValue();
+			
+			Double resto = lambda % 1;
+			
+			resto = resto * 10;
+			
+			resto = resto % 1;
+			
+			resto = resto * 10;
+			
+			if(resto < 5 && resto!= 0.0) {
+				
+				resto = 5.0/100.0;
+				
+				lambda = lambda * 10;
+				
+				lambda = Math.floor(lambda);
+				
+				lambda = lambda / 10;
+				
+				lambda = lambda + resto;
+				
+			}
+			
+			else if(resto > 5 && resto!= 0.0){
+				
+				lambda = lambda * 10;
+				
+				lambda = Math.ceil(lambda);
+				
+				lambda = lambda / 10;
+				
+			}
+			
+			lajeComParede.setLambda(services.doubleEmBigDecimal(lambda));
+			
+			System.out.printf("Lambda = %.2f%n", lajeComParede.getLambda().doubleValue());
+			
+		} else {
+			
+			Double lambda = lajeSemParede.getLambda().doubleValue();
+			
+			Double resto = lambda % 1;
+			
+			resto = resto * 10;
+			
+			resto = resto % 1;
+			
+			resto = resto * 10;
+			
+			if(resto < 5 && resto!= 0.0) {
+				
+				resto = 5.0/100.0;
+				
+				lambda = lambda * 10;
+				
+				lambda = Math.floor(lambda);
+				
+				lambda = lambda / 10;
+				
+				lambda = lambda + resto;
+				
+			}
+			
+			else if(resto > 5 && resto!= 0.0){
+				
+				lambda = lambda * 10;
+				
+				lambda = Math.ceil(lambda);
+				
+				lambda = lambda / 10;
+				
+			}
+			
+			lajeSemParede.setLambda(services.doubleEmBigDecimal(lambda));
+			
+			System.out.printf("Lambda = %.2f%n", lajeSemParede.getLambda().doubleValue());
+			
+		}
+
+	}
+	
+	public void ajustaLambdaInvertido() {
+
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			Double lambda = lajeComParede.getLambdaInvertido().doubleValue();
+			
+			lambda = lambda * 10;
+			
+			lambda = Math.floor(lambda);
+			
+			lambda = lambda / 10;
+			
+			lajeComParede.setLambdaInvertido(services.doubleEmBigDecimal(lambda));
+			
+			System.out.printf("Lambda Invertido = %.2f%n", lajeComParede.getLambdaInvertido().doubleValue());
+			
+		} else {
+			
+			Double lambda = lajeSemParede.getLambdaInvertido().doubleValue();
+			
+			lambda = lambda * 10;
+			
+			lambda = Math.floor(lambda);
+			
+			lambda = lambda / 10;
+			
+			lajeSemParede.setLambdaInvertido(services.doubleEmBigDecimal(lambda));
+			
+			System.out.printf("Lambda Invertido = %.2f%n", lajeSemParede.getLambdaInvertido().doubleValue());
+			
+		}
+
+	}
+	
+	public void defineCoeficientesMxKx() {
+		
+		if(paredeSim.selectedProperty().getValue() == true) {
+		
+		for (Coeficientes coef : coeficientesMxKxList) {
+			if (coef.getCaso().doubleValue() == this.caso.doubleValue()
+					&& coef.getLambda().doubleValue() == lajeComParede.getLambdaInvertido().doubleValue()) {
+
+				this.coeficientesMxKx = coef;
+
+				}
+			}
+		}
+		else {
+			for (Coeficientes coef : coeficientesMxKxList) {
+				if (coef.getCaso().doubleValue() == this.caso.doubleValue()
+						&& coef.getLambda().doubleValue() == lajeSemParede.getLambdaInvertido().doubleValue()) {
+
+					this.coeficientesMxKx = coef;
+
+					}
+				}
+		}
+
+	}
 
 	public void defineECalculaEquacaoMomentoDeServicoSemParede() {
 
@@ -1125,6 +1452,13 @@ public class PrimaryController implements Initializable {
 
 			services.imprimeResultados("CASO 4\n", this.imprimeResultados);
 
+		}else if (checkXEsquerda.selectedProperty().getValue() && !checkXDireita.selectedProperty().getValue()
+				&& !checkYCima.selectedProperty().getValue() && checkYBaixo.selectedProperty().getValue()) {
+
+			this.caso = new BigDecimal(4.0);
+
+			services.imprimeResultados("CASO 4\n", this.imprimeResultados);
+
 		} else if (checkXEsquerda.selectedProperty().getValue() && checkXDireita.selectedProperty().getValue()
 				&& !checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
@@ -1194,6 +1528,30 @@ public class PrimaryController implements Initializable {
 			materiais.setAgregado(materiais.getAgregadoArenito());
 		}
 
+	}
+	
+	public void defineCoeficienteKParaDuasDirecoes() {
+		
+		if(paredeSim.selectedProperty().getValue() == true) {
+			
+			lajeComParede.setCoeficienteK(this.coeficientesMxKx.getkX());
+			
+			services.imprimeResultados("Coeficiente K: "
+					+ lajeComParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			
+		} else {
+			
+			lajeSemParede.setCoeficienteK(this.coeficientesMxKx.getkX());
+			
+			services.imprimeResultados("Coeficiente K: "
+					+ lajeSemParede.getCoeficienteK().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			
+		}
+	
+		
+		
 	}
 
 	public void defineCoeficienteKParaUmaDirecao() {
@@ -1947,6 +2305,38 @@ public class PrimaryController implements Initializable {
 
 	}
 
+	public void populaCoeficientesMxKx() {
+
+		coeficientesMxKxList = new ArrayList<>();
+
+		File file = new File("src/main/resources/CoeficientesMxKx.txt");
+
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+			String line = br.readLine();
+
+			while (line != null) {
+
+				String[] vect = line.split(";");
+
+				BigDecimal caso = new BigDecimal(vect[0]);
+				BigDecimal lambda = new BigDecimal(vect[1]);
+				BigDecimal mX = new BigDecimal(vect[2]);
+				BigDecimal kX = new BigDecimal(vect[3]);
+
+				Coeficientes coeficientes = new Coeficientes(caso, lambda, mX, kX);
+
+				coeficientesMxKxList.add(coeficientes);
+
+				line = br.readLine();
+			}
+
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+	
 	public void populaEspacamentoAco() {
 
 		espacamentoAcoList = new ArrayList<>();

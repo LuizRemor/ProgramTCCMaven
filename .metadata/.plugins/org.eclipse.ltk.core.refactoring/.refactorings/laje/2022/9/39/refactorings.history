@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;laje/src/main/resources/CoeficientesMxKx&apos; to &apos;CoeficientesMxKx.txt&apos;" description="Rename resource &apos;CoeficientesMxKx&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/CoeficientesMxKx" name="CoeficientesMxKx.txt" stamp="1663459526746" updateReferences="true"/>
+</session>

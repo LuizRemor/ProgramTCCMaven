@@ -8,6 +8,8 @@ public class Coeficientes implements Serializable {
 
 	private BigDecimal caso;
 	private BigDecimal lambda;
+	private BigDecimal mX;
+	private BigDecimal kX;
 	private BigDecimal miX;
 	private BigDecimal miY;
 	private BigDecimal miX1;
@@ -23,7 +25,7 @@ public class Coeficientes implements Serializable {
 
 	public Coeficientes(BigDecimal caso, BigDecimal lambda, BigDecimal miX, BigDecimal miY, BigDecimal miX1,
 			BigDecimal miY1, BigDecimal kx, BigDecimal ky, BigDecimal kx1, BigDecimal ky1) {
-		super();
+
 		this.caso = caso;
 		this.lambda = lambda;
 		this.miX = miX;
@@ -34,6 +36,16 @@ public class Coeficientes implements Serializable {
 		this.ky = ky;
 		this.kx1 = kx1;
 		this.ky1 = ky1;
+	}
+	
+	
+
+	public Coeficientes(BigDecimal caso, BigDecimal lambda, BigDecimal mX, BigDecimal kX) {
+
+		this.caso = caso;
+		this.lambda = lambda;
+		this.mX = mX;
+		this.kX = kX;
 	}
 
 	public BigDecimal getCaso() {
@@ -116,10 +128,27 @@ public class Coeficientes implements Serializable {
 		this.ky1 = ky1;
 	}
 
+	public BigDecimal getmX() {
+		return mX;
+	}
+
+	public BigDecimal getkX() {
+		return kX;
+	}
+
+	public void setmX(BigDecimal mX) {
+		this.mX = mX;
+	}
+
+	public void setkX(BigDecimal kX) {
+		this.kX = kX;
+	}
+
 	@Override
 	public String toString() {
-		return "caso = " + caso + ", lambda = " + lambda + ", miX = " + miX + ", miY = " + miY + ", miX1 = " + miX1
-				+ ", miY1 = " + miY1 + ", Kx = " + kx + ", Ky = " + ky + ", Kx1 = " + kx1 + ", Ky1 = " + ky1 + "]";
+		return "Coeficientes [caso=" + caso + ", lambda=" + lambda + ", mX=" + mX + ", kX=" + kX + ", miX=" + miX
+				+ ", miY=" + miY + ", miX1=" + miX1 + ", miY1=" + miY1 + ", kx=" + kx + ", ky=" + ky + ", kx1=" + kx1
+				+ ", ky1=" + ky1 + "]";
 	}
 
 }

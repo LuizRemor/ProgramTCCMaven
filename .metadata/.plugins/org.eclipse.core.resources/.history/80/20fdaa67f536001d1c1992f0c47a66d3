@@ -1,0 +1,13 @@
+package br.com.eng.laje;
+
+public class Testes {
+
+	public static void main(String[] args) {
+		
+		Double lambda = 1.41;
+		
+		Double resto = 1.41 % 1;
+
+	}
+
+}

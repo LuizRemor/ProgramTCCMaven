@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 public class LajeComParede {
 
 	BigDecimal lambda;
+	BigDecimal lambdaInvertido;
 	BigDecimal ladoX;
 	BigDecimal ladoY;
 	BigDecimal caso;
@@ -441,6 +442,14 @@ public class LajeComParede {
 
 	public void setAreaDeAcoMinima(BigDecimal areaDeAcoMinima) {
 		this.areaDeAcoMinima = areaDeAcoMinima;
+	}
+
+	public BigDecimal getLambdaInvertido() {
+		return lambdaInvertido;
+	}
+
+	public void setLambdaInvertido(BigDecimal lambdaInvertido) {
+		this.lambdaInvertido = lambdaInvertido;
 	}
 
 }

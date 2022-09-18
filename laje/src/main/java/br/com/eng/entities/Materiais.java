@@ -15,99 +15,84 @@ public class Materiais {
 
 	BigDecimal pesoForro = new BigDecimal(0.5);
 
-	BigDecimal gamaTijolo = new BigDecimal(13.0);
-	
+	BigDecimal gamaTijolo = new BigDecimal(0.0);
+
 	BigDecimal agregadoBasaltoDiabasio = new BigDecimal(1.2);
-	
+
 	BigDecimal agregadoGranitoGnaisse = new BigDecimal(1.0);
-	
+
 	BigDecimal agregadoCalcario = new BigDecimal(0.9);
-	
+
 	BigDecimal agregadoArenito = new BigDecimal(0.7);
-	
+
 	BigDecimal fckConcreto = new BigDecimal(25.0);
-	
+
 	BigDecimal fykAco = new BigDecimal(500);
-	
+
 	BigDecimal fydAco = new BigDecimal(43.48);
-	
+
 	BigDecimal agregado;
-	
+
 	BigDecimal eci;
-	
+
 	BigDecimal alphaI;
-	
+
 	BigDecimal ecs;
-	
+
 	BigDecimal fctm;
-	
+
 	BigDecimal fctkInf;
-	
+
 	BigDecimal fctd;
-	
+
 	BigDecimal fcd;
-	
+
 	Services services = new Services();
-	
+
 	public Materiais() {
 
 	}
-	
+
 	public BigDecimal calculaFcd() {
-		
-		this.fcd = this.fckConcreto.divide(new BigDecimal(1.4), MathContext.DECIMAL128).divide(new BigDecimal(10.0), MathContext.DECIMAL128);
-		
+
+		this.fcd = this.fckConcreto.divide(new BigDecimal(1.4), MathContext.DECIMAL128).divide(new BigDecimal(10.0),
+				MathContext.DECIMAL128);
+
 		return fcd;
-		
+
 	}
-	
+
 	public BigDecimal getAgregadoBasaltoDiabasio() {
 		return agregadoBasaltoDiabasio;
 	}
-
-
 
 	public void setAgregadoBasaltoDiabasio(BigDecimal agregadoBasaltoDiabasio) {
 		this.agregadoBasaltoDiabasio = agregadoBasaltoDiabasio;
 	}
 
-
-
 	public BigDecimal getAgregadoGranitoGnaisse() {
 		return agregadoGranitoGnaisse;
 	}
-
-
 
 	public void setAgregadoGranitoGnaisse(BigDecimal agregadoGranitoGnaisse) {
 		this.agregadoGranitoGnaisse = agregadoGranitoGnaisse;
 	}
 
-
-
 	public BigDecimal getAgregadoCalcario() {
 		return agregadoCalcario;
 	}
-
-
 
 	public void setAgregadoCalcario(BigDecimal agregadoCalcario) {
 		this.agregadoCalcario = agregadoCalcario;
 	}
 
-
-
 	public BigDecimal getAgregadoArenito() {
 		return agregadoArenito;
 	}
 
-
-
 	public void setAgregadoArenito(BigDecimal agregadoArenito) {
 		this.agregadoArenito = agregadoArenito;
 	}
-
-
 
 	public BigDecimal getGamaConcreto() {
 
@@ -154,15 +139,11 @@ public class Materiais {
 	}
 
 	public BigDecimal getGamaTijolo() {
-
 		return gamaTijolo;
-
 	}
 
 	public void setGamaTijolo(BigDecimal gamaTijolo) {
-
 		this.gamaTijolo = gamaTijolo;
-
 	}
 
 	public BigDecimal getFckConcreto() {
