@@ -79,7 +79,7 @@ public class LajeSemParede {
 		
 	}
 	
-	public BigDecimal calculaCargaDeServico(Materiais materiais, Parede parede) {
+	public BigDecimal calculaCargaDeServico(Materiais materiais) {
 		
 		this.cargaDeServico = cargaPermanente.add(this.psi.multiply(this.cargaAcidental));
 		

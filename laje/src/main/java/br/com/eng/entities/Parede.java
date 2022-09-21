@@ -45,13 +45,13 @@ public class Parede {
 
 		BigDecimal deltaVNumerador1 = new BigDecimal(2.0).multiply(a1).multiply(lajeComParede.getLadoX().subtract(a1));
 
-		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(lajeComParede.getLadoX()));
+		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
 
 		BigDecimal deltaV = (deltaVNumerador1.multiply(deltaVNumerador2)).divide(lajeComParede.getLadoX());
 
 		this.areaDeInfluenciaPositiva = b.add(deltaV);
 
-		return this.areaDeInfluenciaPositiva.setScale(4);
+		return this.areaDeInfluenciaPositiva;
 	}
 
 	public BigDecimal calculaAreaDeInfluenciaDaParedeNegativa(LajeComParede lajeComParede) {
@@ -64,16 +64,16 @@ public class Parede {
 
 		BigDecimal deltaVNumerador1 = a1.multiply(new BigDecimal(2.0).multiply(lajeComParede.getLadoX()).subtract(a1));
 
-		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(lajeComParede.getLadoX()));
+		BigDecimal deltaVNumerador2 = new BigDecimal(1.0).subtract(b.divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
 
 		BigDecimal deltaV = (deltaVNumerador1.multiply(deltaVNumerador2)).divide(lajeComParede.getLadoX());
 
 		this.areaDeInfluenciaNegativa = b.add(deltaV);
 
-		return this.areaDeInfluenciaNegativa.setScale(4);
+		return this.areaDeInfluenciaNegativa;
 	}
 
-	public BigDecimal calculaPesoDaParedePositiva() {
+	public BigDecimal calculaPesoDaParedePositiva(Materiais materiais) {
 
 		this.setEspessuraParede(services.CentimetrosEmMetros(this.espessuraParede));
 
@@ -86,7 +86,7 @@ public class Parede {
 		return this.pesoDaParedePositiva;
 	}
 
-	public BigDecimal calculaPesoDaParedeNegativa() {
+	public BigDecimal calculaPesoDaParedeNegativa(Materiais materiais) {
 
 		BigDecimal numerador = materiais.gamaTijolo.multiply(this.espessuraParede.multiply(this.altura));
 

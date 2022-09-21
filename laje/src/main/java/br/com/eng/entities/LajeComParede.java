@@ -21,8 +21,7 @@ public class LajeComParede {
 	BigDecimal cargaTotalNegativa;
 	BigDecimal cargaPermanentePositiva;
 	BigDecimal cargaPermanenteNegativa;
-	BigDecimal cargaDeServicoPositiva;
-	BigDecimal cargaDeServicoNegativa;
+	BigDecimal cargaDeServico;
 	BigDecimal cargaAcidental;
 	BigDecimal psi;
 	BigDecimal momentoDeFissuracao;
@@ -82,7 +81,7 @@ public class LajeComParede {
 		BigDecimal pesoPiso = materiais.gamaPiso.multiply(this.alturaPiso);
 		BigDecimal pesoContraPiso = materiais.gamaContraPiso.multiply(this.alturaContraPiso);
 		BigDecimal pesoForro = materiais.pesoForro;
-		BigDecimal pesoParede = parede.calculaPesoDaParedePositiva();
+		BigDecimal pesoParede = parede.calculaPesoDaParedePositiva(materiais);
 		
 		this.cargaPermanentePositiva = pesoProprio.add(pesoPiso).add(pesoContraPiso).add(pesoForro).add(pesoParede);
 		
@@ -96,7 +95,7 @@ public class LajeComParede {
 		BigDecimal pesoPiso = materiais.gamaPiso.multiply(this.alturaPiso);
 		BigDecimal pesoContraPiso = materiais.gamaContraPiso.multiply(this.alturaContraPiso);
 		BigDecimal pesoForro = materiais.pesoForro;
-		BigDecimal pesoParede = parede.calculaPesoDaParedeNegativa();
+		BigDecimal pesoParede = parede.calculaPesoDaParedeNegativa(materiais);
 		
 		this.cargaPermanenteNegativa = pesoProprio.add(pesoPiso).add(pesoContraPiso).add(pesoForro).add(pesoParede);
 		
@@ -106,9 +105,9 @@ public class LajeComParede {
 	
 	public BigDecimal calculaCargaDeServico(Materiais materiais, Parede parede) {
 		
-		this.cargaDeServicoPositiva = cargaPermanentePositiva.add(this.psi.multiply(this.cargaAcidental));
+		this.cargaDeServico = cargaPermanentePositiva.add(this.psi.multiply(this.cargaAcidental));
 		
-		return cargaDeServicoPositiva;
+		return cargaDeServico;
 	}
 	
 	public BigDecimal calculaInercia() {
@@ -212,20 +211,12 @@ public class LajeComParede {
 		this.cargaPermanenteNegativa = cargaPermanenteNegativa;
 	}
 
-	public BigDecimal getCargaDeServicoPositiva() {
-		return cargaDeServicoPositiva;
+	public BigDecimal getCargaDeServico() {
+		return cargaDeServico;
 	}
 
-	public void setCargaDeServicoPositiva(BigDecimal cargaDeServicoPositiva) {
-		this.cargaDeServicoPositiva = cargaDeServicoPositiva;
-	}
-
-	public BigDecimal getCargaDeServicoNegativa() {
-		return cargaDeServicoNegativa;
-	}
-
-	public void setCargaDeServicoNegativa(BigDecimal cargaDeServicoNegativa) {
-		this.cargaDeServicoNegativa = cargaDeServicoNegativa;
+	public void setCargaDeServico(BigDecimal cargaDeServico) {
+		this.cargaDeServico = cargaDeServico;
 	}
 
 	public BigDecimal getCargaAcidental() {
@@ -251,7 +242,7 @@ public class LajeComParede {
 	public void setMomentoDeFissuracao(BigDecimal momentoDeFissuracao) {
 		this.momentoDeFissuracao = momentoDeFissuracao;
 	}
-
+	
 	public BigDecimal getMomentoDeServico() {
 		return momentoDeServico;
 	}

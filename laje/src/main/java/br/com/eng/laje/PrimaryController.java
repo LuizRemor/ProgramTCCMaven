@@ -233,28 +233,30 @@ public class PrimaryController implements Initializable {
 
 	public void btMontaDuasDirecoesComParede() {
 
-		this.ladoX.setText("2.95");
-		this.ladoY.setText("6.8");
+		this.ladoX.setText("3");
+		this.ladoY.setText("5.9");
 		this.espessuraLaje.setText("10");
-		this.espessuraParede.setText("14");
-		this.alturaParede.setText("2.9");
-		this.cargaAcidental.setText("1.5");
+		this.espessuraParede.setText("12");
+		this.alturaParede.setText("3");
+		this.cargaAcidental.setText("2");
 		this.paredeSim.setSelected(true);
-		this.tijoloFuradoSim.setSelected(false);
+		this.tijoloFuradoSim.setSelected(true);
 		this.psi0_4.setSelected(true);
-		this.agregadoGranitoGnaisse.setSelected(true);
+		this.agregadoBasaltoDiabasio.setSelected(true);
 		this.checkYCima.setSelected(true);
 		this.engasteCheckYCima.setVisible(true);
 		this.checkYBaixo.setSelected(true);
 		this.engastecheckYBaixo.setVisible(true);
 
 		lajeComParede = new LajeComParede(this.ladoX, this.ladoY, this.espessuraLaje);
+		lajeSemParede = new LajeSemParede(this.ladoX, this.ladoY, this.espessuraLaje);
 
 		parede = new Parede(this.alturaParede, this.espessuraParede);
 
 		materiais = new Materiais();
 
 		lajeComParede.setCargaAcidental(services.conversor(this.cargaAcidental));
+		lajeSemParede.setCargaAcidental(services.conversor(this.cargaAcidental));
 
 	}
 	
@@ -353,35 +355,31 @@ public class PrimaryController implements Initializable {
 		lajeSemParede = new LajeSemParede(this.ladoX, this.ladoY, this.espessuraLaje);
 
 		materiais = new Materiais();
+
+		lajeSemParede.setCargaAcidental(services.conversor(this.cargaAcidental));
+		
+		lajeComParede.setCargaAcidental(services.conversor(this.cargaAcidental));
 		
 		if(paredeSim.selectedProperty().getValue() == true) {
 			
 			parede = new Parede(this.alturaParede, this.espessuraParede);
 			
 		}
-
-		lajeSemParede.setCargaAcidental(services.conversor(this.cargaAcidental));
 		
-		lajeComParede.setCargaAcidental(services.conversor(this.cargaAcidental));
-
-		verificaDirecoes();
+		calculaLambda();
 		calculaLambdaInvertido();
-		ajustaLambda();
-		ajustaLambdaInvertido();
+		verificaDirecoes();
 
 		if (this.lajeDirecao.doubleValue() == 2.0) {
 			
+			ajustaLambda();
+			ajustaLambdaInvertido();
+			
 			if (paredeSim.selectedProperty().getValue() == true) {
-
-				String string = "COM PAREDE\n";
-
-				this.imprimeResultados.appendText(string);
+				
+				calculosLajeComParedeDuasDirecoes();
 
 			} else {
-
-				String string = "SEM PAREDE\n";
-
-				this.imprimeResultados.appendText(string);
 
 				calculosLajeSemParedeDuasDirecoes();
 
@@ -391,72 +389,29 @@ public class PrimaryController implements Initializable {
 		} else {
 
 			if (paredeSim.selectedProperty().getValue() == true) {
-
-				String string = "COM PAREDE\n";
-
-				this.imprimeResultados.appendText(string);
+				
+				lajeComParede.setLambda(new BigDecimal(99999.0));
 
 				calculosLajeComParedeUmaDirecao();
 
 			} else {
 
-				String string = "SEM PAREDE\n";
-
-				this.imprimeResultados.appendText(string);
-
+				lajeSemParede.setLambda(new BigDecimal(99999.0));
+				
 				calculosLajeSemParedeUmaDirecao();
 
 			}
 		}
 
 	}
-	
-	public void calculosLajeSemParedeDuasDirecoes() {
-
-		acoXPositivo.getItems().clear();
-		acoXNegativo.getItems().clear();
-		acoYPositivo.getItems().clear();
-		acoYNegativo.getItems().clear();
-		
-		populaCoeficientes();
-		populaEspacamentoAco();
-		populaCoeficientesMxKx();
-		defineCaso();
-		decideGamaTijolo();
-		calculaAreaDeAcoMinima();
-		cargaPermanenteSemParede();
-		cargaTotalSemParede();
-		definePsi();
-		cargaDeServico();
-		defineAgregado();
-		calculaEci();
-		calculaAlphaI();
-		calculaEcs();
-		calculaFctm();
-		calculaFctkInf();
-		calculaFctd();
-		calculaMomentoDeFissuracao();
-		calculaMomentoDeServicoDuasDirecoes();
-		verificaMomentoDeFissuracao();
-		inercia();
-		defineCoeficienteKParaDuasDirecoes();
-		calculaFlechaDeCurtaDuracao();
-		calculaFlechaDeLongaDuracao();
-		calculaFlechaAdmissivel();
-		comparaFlecha();
-		defineCoeficientes();
-		calculaMomentoDeProjetoSemParede();
-		calculaXSemParede();
-		calculaAcoSemParede();
-		defineAreaDeAcoSemParede();
-		montaOpcoesDeEspacamentoX();
-		montaOpcoesDeEspacamentoXNegativo();
-		montaOpcoesDeEspacamentoY();
-		montaOpcoesDeEspacamentoYNegativo();
-
-	}
 
 	public void calculosLajeSemParedeUmaDirecao() {
+		
+		String string = "-----------------------------\n"
+					  + "LAJE SEM PAREDE - UMA DIRECAO\n"
+					  + "-----------------------------\n";
+		
+		this.imprimeResultados.appendText(string);
 
 		acoXPositivo.getItems().clear();
 		acoXNegativo.getItems().clear();
@@ -502,6 +457,12 @@ public class PrimaryController implements Initializable {
 	}
 
 	public void calculosLajeComParedeUmaDirecao() {
+		
+		String string = "-----------------------------\n"
+				      + "LAJE COM PAREDE - UMA DIRECAO\n"
+				      + "-----------------------------\n";
+	
+		this.imprimeResultados.appendText(string);
 
 		acoXPositivo.getItems().clear();
 		acoXNegativo.getItems().clear();
@@ -526,7 +487,7 @@ public class PrimaryController implements Initializable {
 		calculaFctkInf();
 		calculaFctd();
 		calculaMomentoDeFissuracao();
-		defineECalculaEquacaoMomentoDeServicoComParede();
+		defineECalculaEquacaoMomentoDeServicoUmaDirecaoComParede();
 		verificaMomentoDeFissuracao();
 		inercia();
 		defineCoeficienteKParaUmaDirecao();
@@ -547,6 +508,117 @@ public class PrimaryController implements Initializable {
 		montaOpcoesDeEspacamentoXNegativo();
 		montaOpcoesDeEspacamentoY();
 		montaOpcoesDeEspacamentoYNegativo();
+		
+		this.paredeSim.setSelected(false);
+		calculosLajeSemParedeUmaDirecao();
+
+	}
+	
+	public void calculosLajeSemParedeDuasDirecoes() {
+		
+		String string = "-------------------------------\n"
+				  	  + "LAJE SEM PAREDE - DUAS DIRECOES\n"
+				  	  + "-------------------------------\n";
+	
+		this.imprimeResultados.appendText(string);
+
+		acoXPositivo.getItems().clear();
+		acoXNegativo.getItems().clear();
+		acoYPositivo.getItems().clear();
+		acoYNegativo.getItems().clear();
+		
+		populaCoeficientes();
+		populaEspacamentoAco();
+		populaCoeficientesMxKx();
+		defineCaso();
+		calculaAreaDeAcoMinima();
+		cargaPermanenteSemParede();
+		cargaTotalSemParede();
+		definePsi();
+		cargaDeServico();
+		defineAgregado();
+		calculaEci();
+		calculaAlphaI();
+		calculaEcs();
+		calculaFctm();
+		calculaFctkInf();
+		calculaFctd();
+		calculaMomentoDeFissuracao();
+		calculaMomentoDeServicoDuasDirecoes();
+		verificaMomentoDeFissuracao();
+		inercia();
+		defineCoeficienteKParaDuasDirecoes();
+		calculaFlechaDeCurtaDuracao();
+		calculaFlechaDeLongaDuracao();
+		calculaFlechaAdmissivel();
+		comparaFlecha();
+		defineCoeficientes();
+		calculaMomentoDeProjetoSemParede();
+		calculaXSemParede();
+		calculaAcoSemParede();
+		defineAreaDeAcoSemParede();
+		montaOpcoesDeEspacamentoX();
+		montaOpcoesDeEspacamentoXNegativo();
+		montaOpcoesDeEspacamentoY();
+		montaOpcoesDeEspacamentoYNegativo();
+
+	}
+	
+	public void calculosLajeComParedeDuasDirecoes() {
+		
+		String string = "-------------------------------\n"
+			  	      + "LAJE COM PAREDE - DUAS DIRECOES\n"
+			  	      + "-------------------------------\n";
+
+		this.imprimeResultados.appendText(string);
+
+		acoXPositivo.getItems().clear();
+		acoXNegativo.getItems().clear();
+		acoYPositivo.getItems().clear();
+		acoYNegativo.getItems().clear();
+
+		populaCoeficientes();
+		populaEspacamentoAco();
+		populaCoeficientesMxKx();
+		defineCaso();
+		decideGamaTijolo();
+		calculaAreaDeAcoMinima();
+		areaDeInfluenciaDaParedePositiva();
+		cargaPermanentePositivaComParede();
+		cargaTotalPositivaComParede();
+		definePsi();
+		cargaDeServico();
+		defineAgregado();
+		calculaEci();
+		calculaAlphaI();
+		calculaEcs();
+		calculaFctm();
+		calculaFctkInf();
+		calculaFctd();
+		calculaMomentoDeFissuracao();
+		calculaMomentoDeServicoDuasDirecoes();
+		verificaMomentoDeFissuracao();
+		inercia();
+		defineCoeficienteKParaDuasDirecoes();
+		calculaFlechaDeCurtaDuracao();
+		calculaFlechaDeLongaDuracao();
+		calculaFlechaAdmissivel();
+		comparaFlecha();
+		areaDeInfluenciaDaParedeNegativa();
+		cargaPermanenteNegativaComParede();
+		cargaTotalNegativa();
+		defineCoeficientes();
+		calculaMomentoDeProjetoComParede();
+		calculaXComParede();
+		calculaAcoComParede();
+		defineAreaDeAcoComParede();
+		montaOpcoesDeEspacamentoX();
+		montaOpcoesDeEspacamentoXNegativo();
+		montaOpcoesDeEspacamentoY();
+		montaOpcoesDeEspacamentoYNegativo();
+		
+		this.paredeSim.setSelected(false);
+		calculosLajeSemParedeDuasDirecoes();
 
 	}
 
@@ -569,6 +641,7 @@ public class PrimaryController implements Initializable {
 		if (paredeSim.selectedProperty().getValue() == true) {
 
 			lajeComParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimo();
 
 		} else {
 
@@ -577,9 +650,27 @@ public class PrimaryController implements Initializable {
 
 	}
 	
+	public void calculaLambda() {
+		
+		lajeComParede.setLambda(lajeComParede.getLadoY().divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
+		lajeSemParede.setLambda(lajeSemParede.getLadoY().divide(lajeSemParede.getLadoX(), MathContext.DECIMAL128));
+		
+		if(lajeComParede.getLambda().doubleValue() > 2.0) {
+			
+			lajeComParede.setLambda(new BigDecimal(99999.0));
+			
+		}
+		if(lajeSemParede.getLambda().doubleValue() > 2.0) {
+			
+			lajeSemParede.setLambda(new BigDecimal(99999.0));
+			
+		}
+		
+	}
+	
 	public void calculaLambdaInvertido() {
 		
-		lajeComParede.setLambdaInvertido(lajeComParede.getLadoY().divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
+		lajeComParede.setLambdaInvertido(lajeComParede.getLadoX().divide(lajeComParede.getLadoY(), MathContext.DECIMAL128));
 		lajeSemParede.setLambdaInvertido(lajeSemParede.getLadoX().divide(lajeSemParede.getLadoY(), MathContext.DECIMAL128));
 		
 	}
@@ -588,48 +679,26 @@ public class PrimaryController implements Initializable {
 
 		if (paredeSim.selectedProperty().getValue() == true) {
 
-			lajeComParede.setLambda(lajeComParede.getLadoY().divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
-
 			if (lajeComParede.getLambda().doubleValue() > 2.0) {
 
-				lajeComParede.setLambda(new BigDecimal(99999.0));
-
 				this.lajeDirecao = new BigDecimal(1.0);
-
-				String string = "LAJE ARMADA EM UMA DIRECAO\n";
-
-				this.imprimeResultados.appendText(string);
 
 			} else {
 
 				this.lajeDirecao = new BigDecimal(2.0);
-
-				String string = "LAJE ARMADA EM DUAS DIRECOES\n";
-
-				this.imprimeResultados.appendText(string);
+				
 			}
 
 		} else {
 
-			lajeSemParede.setLambda(lajeSemParede.getLadoY().divide(lajeSemParede.getLadoX(), MathContext.DECIMAL128));
-
 			if (lajeSemParede.getLambda().doubleValue() > 2.0) {
 
-				lajeSemParede.setLambda(new BigDecimal(99999.0));
-
 				this.lajeDirecao = new BigDecimal(1.0);
-
-				String string = "LAJE ARMADA EM UMA DIRECAO\n";
-
-				this.imprimeResultados.appendText(string);
 
 			} else {
 
 				this.lajeDirecao = new BigDecimal(2.0);
 
-				String string = "LAJE ARMADA EM DUAS DIRECOES\n";
-
-				this.imprimeResultados.appendText(string);
 			}
 
 		}
@@ -673,7 +742,7 @@ public class PrimaryController implements Initializable {
 
 		services.imprimeResultados(
 				"Carga permamente: "
-						+ lajeComParede.getCargaPermanentePositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				+ lajeComParede.getCargaPermanentePositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
 
 	}
@@ -728,16 +797,16 @@ public class PrimaryController implements Initializable {
 
 		if (paredeSim.selectedProperty().getValue() == true) {
 
-			lajeComParede.setCargaDeServicoPositiva(lajeComParede.calculaCargaDeServico(materiais, parede));
+			lajeComParede.setCargaDeServico(lajeComParede.calculaCargaDeServico(materiais, parede));
 
 			services.imprimeResultados(
 					"Carga de Servico: "
-							+ lajeComParede.getCargaDeServicoPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+							+ lajeComParede.getCargaDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 					this.imprimeResultados);
 
 		} else {
 
-			lajeSemParede.setCargaDeServico(lajeSemParede.calculaCargaDeServico(materiais, parede));
+			lajeSemParede.setCargaDeServico(lajeSemParede.calculaCargaDeServico(materiais));
 
 			services.imprimeResultados("Carga de Servico: "
 					+ lajeSemParede.getCargaDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
@@ -935,7 +1004,7 @@ public class PrimaryController implements Initializable {
 			BigDecimal denominador;
 			BigDecimal ladoX = services.metrosEmCentimetros(lajeSemParede.getLadoX());
 
-			cargaDeServico = lajeComParede.getCargaDeServicoPositiva()
+			cargaDeServico = lajeComParede.getCargaDeServico()
 					.multiply(new BigDecimal(1.0).divide(new BigDecimal(10000.0)), MathContext.DECIMAL128);
 
 			numerador = cargaDeServico.multiply(ladoX.pow(4), MathContext.DECIMAL128);
@@ -1110,13 +1179,13 @@ public class PrimaryController implements Initializable {
 
 	}
 
-	public void defineECalculaEquacaoMomentoDeServicoComParede() {
+	public void defineECalculaEquacaoMomentoDeServicoUmaDirecaoComParede() {
 
 		if (!checkYCima.selectedProperty().getValue() && !checkYBaixo.selectedProperty().getValue()) {
 
 			BigDecimal ladoX = services.CentimetrosEmMetros(lajeComParede.getLadoX());
 
-			lajeComParede.setMomentoDeServico(lajeComParede.getCargaDeServicoPositiva().multiply(ladoX.pow(2))
+			lajeComParede.setMomentoDeServico(lajeComParede.getCargaDeServico().multiply(ladoX.pow(2))
 					.divide(new BigDecimal(8.0)).multiply(new BigDecimal(100.0)));
 
 			services.imprimeResultados("Equacao M. Serv. = (Pserv*Lx^2)/8 \n", this.imprimeResultados);
@@ -1130,7 +1199,7 @@ public class PrimaryController implements Initializable {
 
 			BigDecimal ladoX = services.CentimetrosEmMetros(lajeComParede.getLadoX());
 
-			lajeComParede.setMomentoDeServico(new BigDecimal(9.0).multiply(lajeComParede.getCargaDeServicoPositiva())
+			lajeComParede.setMomentoDeServico(new BigDecimal(9.0).multiply(lajeComParede.getCargaDeServico())
 					.multiply(ladoX.pow(2)).divide(new BigDecimal(128.0)).multiply(new BigDecimal(100.0)));
 
 			services.imprimeResultados("Equacao M. Serv. = (9*Pserv*Lx^2)/128\n", this.imprimeResultados);
@@ -1144,7 +1213,7 @@ public class PrimaryController implements Initializable {
 
 			BigDecimal ladoX = services.CentimetrosEmMetros(lajeComParede.getLadoX());
 
-			lajeComParede.setMomentoDeServico(new BigDecimal(9.0).multiply(lajeComParede.getCargaDeServicoPositiva())
+			lajeComParede.setMomentoDeServico(new BigDecimal(9.0).multiply(lajeComParede.getCargaDeServico())
 					.multiply(ladoX.pow(2)).divide(new BigDecimal(128.0)).multiply(new BigDecimal(100.0)));
 
 			services.imprimeResultados("Equacao M. Serv. = (9*Pserv*Lx^2)/128\n", this.imprimeResultados);
@@ -1158,7 +1227,7 @@ public class PrimaryController implements Initializable {
 
 			BigDecimal ladoX = services.CentimetrosEmMetros(lajeComParede.getLadoX());
 
-			lajeComParede.setMomentoDeServico(lajeComParede.getCargaDeServicoPositiva().multiply(ladoX.pow(2))
+			lajeComParede.setMomentoDeServico(lajeComParede.getCargaDeServico().multiply(ladoX.pow(2))
 					.divide(new BigDecimal(24.0)).multiply(new BigDecimal(100.0)));
 
 			services.imprimeResultados("Equacao M. Serv. = (Pserv*Lx^2)/24\n", this.imprimeResultados);
@@ -1172,10 +1241,21 @@ public class PrimaryController implements Initializable {
 	
 	public void calculaMomentoDeServicoDuasDirecoes() {
 		
+		//Tem que verificar onde tem engaste para usar a carga de serviço negativa.
+		
 		defineCoeficientesMxKx();
 		
 		if(paredeSim.selectedProperty().getValue() == true) {
 			
+			BigDecimal ladoX = lajeComParede.getLadoX();
+			
+			lajeComParede.setMomentoDeServico(this.coeficientesMxKx.getmX().
+					                   		multiply(lajeComParede.getCargaDeServico().divide(new BigDecimal(10000.0))).
+					                   		multiply(ladoX.pow(2)).
+					                   		multiply(new BigDecimal(100.0)));
+			services.imprimeResultados("Momento de Servico: "
+					+ lajeComParede.getMomentoDeServico().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
 			
 			
 		} else {
@@ -1199,83 +1279,83 @@ public class PrimaryController implements Initializable {
 		if (paredeSim.selectedProperty().getValue() == true) {
 
 			Double lambda = lajeComParede.getLambda().doubleValue();
-			
+
 			Double resto = lambda % 1;
-			
+
 			resto = resto * 10;
-			
+
 			resto = resto % 1;
-			
+
 			resto = resto * 10;
-			
-			if(resto < 5 && resto!= 0.0) {
-				
-				resto = 5.0/100.0;
-				
+
+			if (resto < 5 && resto != 0.0) {
+
+				resto = 5.0 / 100.0;
+
 				lambda = lambda * 10;
-				
+
 				lambda = Math.floor(lambda);
-				
+
 				lambda = lambda / 10;
-				
+
 				lambda = lambda + resto;
-				
+
 			}
-			
-			else if(resto > 5 && resto!= 0.0){
-				
+
+			else if (resto > 5 && resto != 0.0) {
+
 				lambda = lambda * 10;
-				
+
 				lambda = Math.ceil(lambda);
-				
+
 				lambda = lambda / 10;
-				
+
 			}
-			
+
 			lajeComParede.setLambda(services.doubleEmBigDecimal(lambda));
-			
+
 			System.out.printf("Lambda = %.2f%n", lajeComParede.getLambda().doubleValue());
-			
+
 		} else {
-			
+
 			Double lambda = lajeSemParede.getLambda().doubleValue();
-			
+
 			Double resto = lambda % 1;
-			
+
 			resto = resto * 10;
-			
+
 			resto = resto % 1;
-			
+
 			resto = resto * 10;
-			
-			if(resto < 5 && resto!= 0.0) {
-				
-				resto = 5.0/100.0;
-				
+
+			if (resto < 5 && resto != 0.0) {
+
+				resto = 5.0 / 100.0;
+
 				lambda = lambda * 10;
-				
+
 				lambda = Math.floor(lambda);
-				
+
 				lambda = lambda / 10;
-				
+
 				lambda = lambda + resto;
-				
+
 			}
-			
-			else if(resto > 5 && resto!= 0.0){
-				
+
+			else if (resto > 5 && resto != 0.0) {
+
 				lambda = lambda * 10;
-				
+
 				lambda = Math.ceil(lambda);
-				
+
 				lambda = lambda / 10;
-				
+
 			}
-			
+
 			lajeSemParede.setLambda(services.doubleEmBigDecimal(lambda));
-			
+
 			System.out.printf("Lambda = %.2f%n", lajeSemParede.getLambda().doubleValue());
-			
+
 		}
 
 	}
@@ -2056,8 +2136,8 @@ public class PrimaryController implements Initializable {
 				+ lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
 		services.imprimeResultados(
-				"Area de aco final Y (distribuicao) = "
-						+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				"Area de aco final Y = "
+				+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
 		services.imprimeResultados("Area de aco final Y' = "
 				+ lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",

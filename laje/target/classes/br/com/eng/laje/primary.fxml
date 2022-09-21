@@ -122,7 +122,8 @@
       <ChoiceBox fx:id="acoYNegativo" layoutX="339.0" layoutY="525.0" prefHeight="26.0" prefWidth="309.0" />
       <Button layoutX="85.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaUmaDirecaoSemParede" text="1D - S/P" />
       <Button layoutX="480.0" layoutY="303.0" mnemonicParsing="false" onAction="#btNovaLaje" text="Nova Laje" />
-      <Button layoutX="156.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaDuasDirecoesSemParede" text="2D - S/P" />
+      <Button layoutX="225.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaDuasDirecoesSemParede" text="2D - S/P" />
+      <Button layoutX="155.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaDuasDirecoesComParede" text="2D - C/P" />
 	</children>
 
 </AnchorPane>

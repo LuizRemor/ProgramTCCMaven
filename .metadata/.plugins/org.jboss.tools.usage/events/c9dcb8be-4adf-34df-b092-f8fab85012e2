@@ -1,11 +1,11 @@
-#Sat Sep 17 20:34:41 BRT 2022
+#Tue Sep 20 19:12:20 BRT 2022
 a=finishWizard
 c=0
 cl=org.eclipse.ui.internal.dialogs.NewWizard
 cmp=usage
 ct=jbt
-d=1663457681349
+d=1663711940732
 l=Wizard class name
-s=1
+s=0
 v=2.2.400
 vl=How many times the 'Finish' button pressed during the day
