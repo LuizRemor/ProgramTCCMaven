@@ -504,6 +504,8 @@ public class PrimaryController implements Initializable {
 		calculaAcoComParede();
 		calculaArmaduraDeDistribuicao();
 		defineAreaDeAcoComParede();
+		calculaReacoes();
+		decideReacoes();
 		montaOpcoesDeEspacamentoX();
 		montaOpcoesDeEspacamentoXNegativo();
 		montaOpcoesDeEspacamentoY();
@@ -2199,6 +2201,80 @@ public class PrimaryController implements Initializable {
 			
 		}
 
+	}
+	
+	public void calculaReacoes() {
+		
+		if(this.paredeSim.selectedProperty().getValue() == true) {
+			
+			BigDecimal ladoX = services.CentimetrosEmMetros(lajeComParede.getLadoX());
+			
+			lajeComParede.setReacaoX(this.coeficientes.getKx().
+									multiply(lajeComParede.getCargaTotalPositiva()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+			
+			lajeComParede.setReacaoXLinha(this.coeficientes.getKx1().
+									multiply(lajeComParede.getCargaTotalPositiva()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+			
+			lajeComParede.setReacaoY(this.coeficientes.getKy().
+									multiply(lajeComParede.getCargaTotalPositiva()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+			
+			lajeComParede.setReacaoYLinha(this.coeficientes.getKy1().
+									multiply(lajeComParede.getCargaTotalPositiva()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+
+		}
+		
+	}
+	
+	public void decideReacoes() {
+		
+		if(lajeComParede.getReacaoX().doubleValue() == 0.0) {
+			
+			lajeComParede.setReacaoX(lajeComParede.getReacaoXLinha());
+			
+		}
+		
+		if(lajeComParede.getReacaoXLinha().doubleValue() == 0.0) {
+			
+			lajeComParede.setReacaoXLinha(lajeComParede.getReacaoX());
+			
+		}
+		
+		if(lajeComParede.getReacaoY().doubleValue() == 0.0) {
+			
+			lajeComParede.setReacaoY(lajeComParede.getReacaoYLinha());
+			
+		}
+		
+		if(lajeComParede.getReacaoYLinha().doubleValue() == 0.0) {
+			
+			lajeComParede.setReacaoYLinha(lajeComParede.getReacaoY());
+			
+		}
+		
+		services.imprimeResultados(
+				"Reacao X = " + lajeComParede.getReacaoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados(
+				"Reacao X' = " + lajeComParede.getReacaoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados(
+				"Reacao Y = " + lajeComParede.getReacaoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados(
+				"Reacao Y' = " + lajeComParede.getReacaoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
 	}
 
 	public void montaOpcoesDeEspacamentoX() {

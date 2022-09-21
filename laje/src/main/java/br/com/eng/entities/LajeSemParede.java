@@ -43,6 +43,11 @@ public class LajeSemParede {
 	BigDecimal areaDeAcoY;
 	BigDecimal areaDeAcoYLinha;
 	BigDecimal areaDeAcoMinima;
+	BigDecimal reacaoX;
+	BigDecimal reacaoXLinha;
+	BigDecimal reacaoY;
+	BigDecimal reacaoYLinha;
+	
 	
 	Services services = new Services();
 
@@ -393,6 +398,38 @@ public class LajeSemParede {
 
 	public void setLambdaInvertido(BigDecimal lambdaInvertido) {
 		this.lambdaInvertido = lambdaInvertido;
+	}
+
+	public BigDecimal getReacaoX() {
+		return reacaoX;
+	}
+
+	public BigDecimal getReacaoXLinha() {
+		return reacaoXLinha;
+	}
+
+	public BigDecimal getReacaoY() {
+		return reacaoY;
+	}
+
+	public BigDecimal getReacaoYLinha() {
+		return reacaoYLinha;
+	}
+
+	public void setReacaoX(BigDecimal reacaoX) {
+		this.reacaoX = reacaoX;
+	}
+
+	public void setReacaoXLinha(BigDecimal reacaoXLinha) {
+		this.reacaoXLinha = reacaoXLinha;
+	}
+
+	public void setReacaoY(BigDecimal reacaoY) {
+		this.reacaoY = reacaoY;
+	}
+
+	public void setReacaoYLinha(BigDecimal reacaoYLinha) {
+		this.reacaoYLinha = reacaoYLinha;
 	}
 	
 }
