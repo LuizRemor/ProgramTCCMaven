@@ -42,6 +42,18 @@
 				<Font size="10.0" />
 			</font>
 		</TextField>
+		<RadioButton fx:id="paredeSim" layoutX="724.0" layoutY="115.0" mnemonicParsing="false" onAction="#invalidaCamposParede" prefHeight="25.0" prefWidth="26.0">
+			<toggleGroup>
+				<ToggleGroup fx:id="parede" />
+			</toggleGroup>
+		</RadioButton>
+		<RadioButton fx:id="paredeNao" layoutX="790.0" layoutY="115.0" mnemonicParsing="false" onAction="#invalidaCamposParede" prefHeight="25.0" prefWidth="26.0" toggleGroup="$parede" />
+		<RadioButton fx:id="tijoloFuradoSim" layoutX="724.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
+			<toggleGroup>
+				<ToggleGroup fx:id="tijolo" />
+			</toggleGroup>
+		</RadioButton>
+		<RadioButton fx:id="tijoloFuradoNao" layoutX="790.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$tijolo" />
 		<TextField id="inputEspessuraParede" fx:id="espessuraParede" layoutX="705.0" layoutY="169.0" prefHeight="10.0" prefWidth="82.0">
 			<font>
 				<Font size="10.0" />
@@ -72,19 +84,6 @@
 		<Label layoutX="775.0" layoutY="119.0" text="N" />
 		<Label fx:id="tijoloFuradoS" layoutX="709.0" layoutY="145.0" text="S" />
 		<Label fx:id="tijoloFuradoN" layoutX="775.0" layoutY="145.0" text="N" />
-		<Button layoutX="398.0" layoutY="303.0" mnemonicParsing="false" onAction="#btCalcular" text="Calcular" />
-		<RadioButton fx:id="paredeSim" layoutX="724.0" layoutY="115.0" mnemonicParsing="false" onAction="#invalidaCamposParede" prefHeight="25.0" prefWidth="26.0">
-			<toggleGroup>
-				<ToggleGroup fx:id="parede" />
-			</toggleGroup>
-		</RadioButton>
-		<RadioButton fx:id="paredeNao" layoutX="790.0" layoutY="115.0" mnemonicParsing="false" onAction="#invalidaCamposParede" prefHeight="25.0" prefWidth="26.0" toggleGroup="$parede" />
-		<RadioButton fx:id="tijoloFuradoSim" layoutX="724.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
-			<toggleGroup>
-				<ToggleGroup fx:id="tijolo" />
-			</toggleGroup>
-		</RadioButton>
-		<RadioButton fx:id="tijoloFuradoNao" layoutX="790.0" layoutY="140.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$tijolo" />
 		<RadioButton fx:id="psi0_3" layoutX="724.0" layoutY="228.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0">
 			<toggleGroup>
 				<ToggleGroup fx:id="psi" />
@@ -101,6 +100,7 @@
 		<RadioButton fx:id="agregadoGranitoGnaisse" layoutX="854.0" layoutY="261.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
 		<RadioButton fx:id="agregadoCalcario" layoutX="724.0" layoutY="297.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
 		<RadioButton fx:id="agregadoArenito" layoutX="854.0" layoutY="297.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" toggleGroup="$agregado" />
+		<Button layoutX="398.0" layoutY="303.0" mnemonicParsing="false" onAction="#btCalcular" text="Calcular" />
 		<CheckBox fx:id="checkYCima" layoutX="223.0" layoutY="26.0" mnemonicParsing="false" onAction="#mostraEngastes" text="Engaste" />
 		<CheckBox fx:id="checkYBaixo" layoutX="223.0" layoutY="272.0" mnemonicParsing="false" onAction="#mostraEngastes" text="Engaste" />
 		<CheckBox fx:id="checkXDireita" layoutX="457.0" layoutY="141.0" mnemonicParsing="false" onAction="#mostraEngastes" text="Engaste" />

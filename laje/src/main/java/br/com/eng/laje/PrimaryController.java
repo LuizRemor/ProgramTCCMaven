@@ -449,6 +449,8 @@ public class PrimaryController implements Initializable {
 		calculaAcoSemParede();
 		calculaArmaduraDeDistribuicao();
 		defineAreaDeAcoSemParede();
+		calculaReacoes();
+		decideReacoes();
 		montaOpcoesDeEspacamentoX();
 		montaOpcoesDeEspacamentoXNegativo();
 		montaOpcoesDeEspacamentoY();
@@ -559,10 +561,13 @@ public class PrimaryController implements Initializable {
 		calculaXSemParede();
 		calculaAcoSemParede();
 		defineAreaDeAcoSemParede();
+		calculaReacoes();
+		decideReacoes();
 		montaOpcoesDeEspacamentoX();
 		montaOpcoesDeEspacamentoXNegativo();
 		montaOpcoesDeEspacamentoY();
 		montaOpcoesDeEspacamentoYNegativo();
+
 
 	}
 	
@@ -614,6 +619,8 @@ public class PrimaryController implements Initializable {
 		calculaXComParede();
 		calculaAcoComParede();
 		defineAreaDeAcoComParede();
+		calculaReacoes();
+		decideReacoes();
 		montaOpcoesDeEspacamentoX();
 		montaOpcoesDeEspacamentoXNegativo();
 		montaOpcoesDeEspacamentoY();
@@ -644,10 +651,14 @@ public class PrimaryController implements Initializable {
 
 			lajeComParede.calculaAcoMinimo();
 			lajeSemParede.calculaAcoMinimo();
+			lajeComParede.calculaAcoMinimoPositivo();
+			lajeSemParede.calculaAcoMinimoPositivo();
+			
 
 		} else {
 
 			lajeSemParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimoPositivo();
 		}
 
 	}
@@ -901,7 +912,7 @@ public class PrimaryController implements Initializable {
 
 			services.imprimeResultados(
 					"Momento de fissuracao: "
-							+ lajeComParede.getMomentoDeFissuracao().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+							+ lajeComParede.getMomentoDeFissuracao().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 					this.imprimeResultados);
 
 		} else {
@@ -917,7 +928,7 @@ public class PrimaryController implements Initializable {
 
 			services.imprimeResultados(
 					"Momento de fissuracao: "
-							+ lajeSemParede.getMomentoDeFissuracao().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+							+ lajeSemParede.getMomentoDeFissuracao().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 					this.imprimeResultados);
 
 		}
@@ -984,14 +995,14 @@ public class PrimaryController implements Initializable {
 			lajeComParede.calculaInercia();
 
 			services.imprimeResultados(
-					"Inercia: " + lajeComParede.getInercia().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					"Inercia: " + lajeComParede.getInercia().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 					this.imprimeResultados);
 		} else {
 
 			lajeSemParede.calculaInercia();
 
 			services.imprimeResultados(
-					"Inercia: " + lajeSemParede.getInercia().setScale(3, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					"Inercia: " + lajeSemParede.getInercia().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 					this.imprimeResultados);
 
 		}
@@ -1816,27 +1827,27 @@ public class PrimaryController implements Initializable {
 		lajeComParede.setMomentoDeProjetoX(coeficientes.getMiX().multiply(lajeComParede.getCargaTotalPositiva())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
 
-		services.imprimeResultados(
-				"Mx = " + lajeComParede.getMomentoDeProjetoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		lajeComParede.setMomentoDeProjetoXLinha(coeficientes.getMiX1().multiply(lajeComParede.getCargaTotalNegativa())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
-
-		services.imprimeResultados(
-				"Mx' = " + lajeComParede.getMomentoDeProjetoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
 
 		lajeComParede.setMomentoDeProjetoY(coeficientes.getMiY().multiply(lajeComParede.getCargaTotalPositiva())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
 
-		services.imprimeResultados(
-				"My = " + lajeComParede.getMomentoDeProjetoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		lajeComParede.setMomentoDeProjetoYLinha(coeficientes.getMiY1().multiply(lajeComParede.getCargaTotalNegativa())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
 
+		services.imprimeResultados(
+				"Mx = " + lajeComParede.getMomentoDeProjetoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados(
+				"My = " + lajeComParede.getMomentoDeProjetoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados(
+				"Mx' = " + lajeComParede.getMomentoDeProjetoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
 		services.imprimeResultados(
 				"My' = " + lajeComParede.getMomentoDeProjetoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
@@ -1851,27 +1862,27 @@ public class PrimaryController implements Initializable {
 		lajeSemParede.setMomentoDeProjetoX(coeficientes.getMiX().multiply(lajeSemParede.getCargaTotal())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
 
-		services.imprimeResultados(
-				"Mx = " + lajeSemParede.getMomentoDeProjetoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		lajeSemParede.setMomentoDeProjetoXLinha(coeficientes.getMiX1().multiply(lajeSemParede.getCargaTotal())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
-
-		services.imprimeResultados(
-				"Mx' = " + lajeSemParede.getMomentoDeProjetoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
 
 		lajeSemParede.setMomentoDeProjetoY(coeficientes.getMiY().multiply(lajeSemParede.getCargaTotal())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
 
-		services.imprimeResultados(
-				"My = " + lajeSemParede.getMomentoDeProjetoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		lajeSemParede.setMomentoDeProjetoYLinha(coeficientes.getMiY1().multiply(lajeSemParede.getCargaTotal())
 				.multiply(ladoX.pow(2)).multiply(coeficienteDeSeguranca));
 
+		services.imprimeResultados(
+				"Mx = " + lajeSemParede.getMomentoDeProjetoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados(
+				"My = " + lajeSemParede.getMomentoDeProjetoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados(
+				"Mx' = " + lajeSemParede.getMomentoDeProjetoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
 		services.imprimeResultados(
 				"My' = " + lajeSemParede.getMomentoDeProjetoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
@@ -1897,9 +1908,6 @@ public class PrimaryController implements Initializable {
 
 		lajeSemParede.setX(services.doubleEmBigDecimal(x));
 
-		services.imprimeResultados("X = " + lajeSemParede.getX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		numerador = 2 * lajeSemParede.getMomentoDeProjetoXLinha().doubleValue();
 
 		raiz = Math.sqrt(1 - (numerador / denominador));
@@ -1907,9 +1915,6 @@ public class PrimaryController implements Initializable {
 		x = lajeSemParede.getD().doubleValue() / 0.8 * (1 - raiz);
 
 		lajeSemParede.setxLinha(services.doubleEmBigDecimal(x));
-
-		services.imprimeResultados("X' = " + lajeSemParede.getxLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
 
 		numerador = 2 * lajeSemParede.getMomentoDeProjetoY().doubleValue();
 
@@ -1919,9 +1924,6 @@ public class PrimaryController implements Initializable {
 
 		lajeSemParede.setY(services.doubleEmBigDecimal(x));
 
-		services.imprimeResultados("Y = " + lajeSemParede.getY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		numerador = 2 * lajeSemParede.getMomentoDeProjetoYLinha().doubleValue();
 
 		raiz = Math.sqrt(1 - (numerador / denominador));
@@ -1930,6 +1932,15 @@ public class PrimaryController implements Initializable {
 
 		lajeSemParede.setyLinha(services.doubleEmBigDecimal(x));
 
+		services.imprimeResultados("X = " + lajeSemParede.getX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados("Y = " + lajeSemParede.getY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados("X' = " + lajeSemParede.getxLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
 		services.imprimeResultados("Y' = " + lajeSemParede.getyLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
 
@@ -1954,9 +1965,6 @@ public class PrimaryController implements Initializable {
 
 		lajeComParede.setX(services.doubleEmBigDecimal(x));
 
-		services.imprimeResultados("X = " + lajeComParede.getX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		numerador = 2 * lajeComParede.getMomentoDeProjetoXLinha().doubleValue();
 
 		raiz = Math.sqrt(1 - (numerador / denominador));
@@ -1964,9 +1972,6 @@ public class PrimaryController implements Initializable {
 		x = lajeComParede.getD().doubleValue() / 0.8 * (1 - raiz);
 
 		lajeComParede.setxLinha(services.doubleEmBigDecimal(x));
-
-		services.imprimeResultados("X' = " + lajeComParede.getxLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
 
 		numerador = 2 * lajeComParede.getMomentoDeProjetoY().doubleValue();
 
@@ -1976,9 +1981,6 @@ public class PrimaryController implements Initializable {
 
 		lajeComParede.setY(services.doubleEmBigDecimal(x));
 
-		services.imprimeResultados("Y = " + lajeComParede.getY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		numerador = 2 * lajeComParede.getMomentoDeProjetoYLinha().doubleValue();
 
 		raiz = Math.sqrt(1 - (numerador / denominador));
@@ -1987,6 +1989,15 @@ public class PrimaryController implements Initializable {
 
 		lajeComParede.setyLinha(services.doubleEmBigDecimal(x));
 
+		services.imprimeResultados("X = " + lajeComParede.getX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados("Y = " + lajeComParede.getY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
+		services.imprimeResultados("X' = " + lajeComParede.getxLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		
 		services.imprimeResultados("Y' = " + lajeComParede.getyLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
 
@@ -1999,33 +2010,30 @@ public class PrimaryController implements Initializable {
 						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getX(), MathContext.DECIMAL128)
 						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
 
-		services.imprimeResultados(
-				"Area de aco X = " + lajeSemParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		lajeSemParede.setAreaDeAcoXLinha(
 				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
 						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getxLinha(), MathContext.DECIMAL128)
 						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
-
-		services.imprimeResultados(
-				"Area de aco X' = " + lajeSemParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
 
 		lajeSemParede.setAreaDeAcoY(
 				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
 						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getY(), MathContext.DECIMAL128)
 						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
 
-		services.imprimeResultados(
-				"Area de aco Y = " + lajeSemParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		lajeSemParede.setAreaDeAcoYLinha(
 				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
 						.multiply(new BigDecimal(100.0)).multiply(lajeSemParede.getyLinha(), MathContext.DECIMAL128)
 						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
 
+		services.imprimeResultados(
+				"Area de aco X = " + lajeSemParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados(
+				"Area de aco Y = " + lajeSemParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados(
+				"Area de aco X' = " + lajeSemParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 		services.imprimeResultados(
 				"Area de aco Y' = " + lajeSemParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
@@ -2039,34 +2047,31 @@ public class PrimaryController implements Initializable {
 				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
 						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getX(), MathContext.DECIMAL128)
 						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
-
-		services.imprimeResultados(
-				"Area de aco X = " + lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
+		
+		lajeComParede.setAreaDeAcoY(
+				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
+						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getY(), MathContext.DECIMAL128)
+						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
 
 		lajeComParede.setAreaDeAcoXLinha(
 				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
 						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getxLinha(), MathContext.DECIMAL128)
 						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
 
-		services.imprimeResultados(
-				"Area de aco X' = " + lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
-		lajeComParede.setAreaDeAcoY(
-				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
-						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getY(), MathContext.DECIMAL128)
-						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
-
-		services.imprimeResultados(
-				"Area de aco Y = " + lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 		lajeComParede.setAreaDeAcoYLinha(
 				new BigDecimal(0.85).multiply(new BigDecimal(0.8)).multiply(materiais.getFcd(), MathContext.DECIMAL128)
 						.multiply(new BigDecimal(100.0)).multiply(lajeComParede.getyLinha(), MathContext.DECIMAL128)
 						.divide(materiais.getFydAco(), MathContext.DECIMAL128));
-
+		
+		services.imprimeResultados(
+				"Area de aco X = " + lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados(
+				"Area de aco Y = " + lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
+		services.imprimeResultados(
+				"Area de aco X' = " + lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				this.imprimeResultados);
 		services.imprimeResultados(
 				"Area de aco Y' = " + lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
@@ -2075,76 +2080,184 @@ public class PrimaryController implements Initializable {
 
 	public void defineAreaDeAcoSemParede() {
 
-		if (lajeSemParede.getAreaDeAcoX().doubleValue() < lajeSemParede.getAreaDeAcoMinima().doubleValue()) {
+		if (this.lajeDirecao.doubleValue() == 1.0) {
 
-			lajeSemParede.setAreaDeAcoX(lajeSemParede.getAreaDeAcoMinima());
+			if (lajeSemParede.getAreaDeAcoX().doubleValue() < lajeSemParede.getAreaDeAcoMinima().doubleValue()) {
 
-		} 
-		if (lajeSemParede.getAreaDeAcoXLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima()
-				.doubleValue()) {
+				lajeSemParede.setAreaDeAcoX(lajeSemParede.getAreaDeAcoMinima());
 
-			lajeSemParede.setAreaDeAcoXLinha(lajeSemParede.getAreaDeAcoMinima());
+			}
 
-		} 
+			if (lajeSemParede.getAreaDeAcoXLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima().doubleValue()) {
 
-		if (lajeSemParede.getAreaDeAcoYLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima()
-				.doubleValue()) {
+				lajeSemParede.setAreaDeAcoXLinha(lajeSemParede.getAreaDeAcoMinima());
 
-			lajeSemParede.setAreaDeAcoYLinha(lajeSemParede.getAreaDeAcoMinima());
+			}
+
+			if (lajeSemParede.getAreaDeAcoYLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima().doubleValue()) {
+
+				lajeSemParede.setAreaDeAcoYLinha(lajeSemParede.getAreaDeAcoMinima());
+
+			}
+
+			services.imprimeResultados("Área de aço mínima = "
+					+ lajeSemParede.getAreaDeAcoMinima().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final X = "
+					+ lajeSemParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final Y (distribuicao) = "
+					+ lajeSemParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final X' = "
+					+ lajeSemParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final Y' = "
+					+ lajeSemParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+		} else {
+
+			if (lajeSemParede.getAreaDeAcoX().doubleValue() < lajeSemParede.getAreaDeAcoMinimaPositiva().doubleValue()) {
+
+				lajeSemParede.setAreaDeAcoX(lajeSemParede.getAreaDeAcoMinimaPositiva());
+
+			}
+
+			if (lajeSemParede.getAreaDeAcoXLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima()
+					.doubleValue()) {
+
+				lajeSemParede.setAreaDeAcoXLinha(lajeSemParede.getAreaDeAcoMinima());
+
+			}
+
+			if (lajeSemParede.getAreaDeAcoY().doubleValue() < lajeSemParede.getAreaDeAcoMinimaPositiva().doubleValue()) {
+
+				lajeSemParede.setAreaDeAcoY(lajeSemParede.getAreaDeAcoMinimaPositiva());
+
+			}
+
+			if (lajeSemParede.getAreaDeAcoYLinha().doubleValue() < lajeSemParede.getAreaDeAcoMinima()
+					.doubleValue()) {
+
+				lajeSemParede.setAreaDeAcoYLinha(lajeSemParede.getAreaDeAcoMinima());
+
+			}
+
+			services.imprimeResultados("Área de aço mínima = "
+					+ lajeSemParede.getAreaDeAcoMinima().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Área de aço mínima positiva = "
+					+ lajeSemParede.getAreaDeAcoMinimaPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final X = "
+					+ lajeSemParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final Y = "
+					+ lajeSemParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final X' = "
+					+ lajeSemParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final Y' = "
+					+ lajeSemParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
 
 		}
-
-		services.imprimeResultados(
-				"Area de aco final X = " + lajeSemParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-		services.imprimeResultados("Area de aco final X' = "
-				+ lajeSemParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-		services.imprimeResultados(
-				"Area de aco final Y (distribuicao) = "
-						+ lajeSemParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-		services.imprimeResultados("Area de aco final Y' = "
-				+ lajeSemParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 	}
 	
 	public void defineAreaDeAcoComParede() {
 
-		if (lajeComParede.getAreaDeAcoX().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
+		if (this.lajeDirecao.doubleValue() == 1.0) {
 
-			lajeComParede.setAreaDeAcoX(lajeComParede.getAreaDeAcoMinima());
+			if (lajeComParede.getAreaDeAcoX().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
+
+				lajeComParede.setAreaDeAcoX(lajeComParede.getAreaDeAcoMinima());
+
+			}
+			
+			if (lajeComParede.getAreaDeAcoXLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
+
+				lajeComParede.setAreaDeAcoXLinha(lajeComParede.getAreaDeAcoMinima());
+
+			}
+
+			if (lajeComParede.getAreaDeAcoYLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
+
+				lajeComParede.setAreaDeAcoYLinha(lajeComParede.getAreaDeAcoMinima());
+
+			}
+
+			services.imprimeResultados("Área de aço mínima = "
+					+ lajeComParede.getAreaDeAcoMinima().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final X = "
+					+ lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados(
+					"Area de aco final Y (distribuicao) = "
+							+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados(
+					"Area de aco final X' = "
+							+ lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados(
+					"Area de aco final Y' = "
+							+ lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
 
 		}
-		if (lajeComParede.getAreaDeAcoXLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima()
-				.doubleValue()) {
+		else {
+			
+			if (lajeComParede.getAreaDeAcoX().doubleValue() < lajeComParede.getAreaDeAcoMinimaPositiva().doubleValue()) {
 
-			lajeComParede.setAreaDeAcoXLinha(lajeComParede.getAreaDeAcoMinima());
+				lajeComParede.setAreaDeAcoX(lajeComParede.getAreaDeAcoMinimaPositiva());
 
-		} 
+			}
+			
+			if (lajeComParede.getAreaDeAcoXLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
 
-		if (lajeComParede.getAreaDeAcoYLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima()
-				.doubleValue()) {
+				lajeComParede.setAreaDeAcoXLinha(lajeComParede.getAreaDeAcoMinima());
 
-			lajeComParede.setAreaDeAcoYLinha(lajeComParede.getAreaDeAcoMinima());
+			}
+			
+			if (lajeComParede.getAreaDeAcoY().doubleValue() < lajeComParede.getAreaDeAcoMinimaPositiva().doubleValue()) {
 
+				lajeComParede.setAreaDeAcoY(lajeComParede.getAreaDeAcoMinimaPositiva());
+
+			}
+
+			if (lajeComParede.getAreaDeAcoYLinha().doubleValue() < lajeComParede.getAreaDeAcoMinima().doubleValue()) {
+
+				lajeComParede.setAreaDeAcoYLinha(lajeComParede.getAreaDeAcoMinima());
+
+			}
+
+			services.imprimeResultados("Área de aço mínima = "
+					+ lajeComParede.getAreaDeAcoMinima().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Área de aço mínima positiva = "
+					+ lajeComParede.getAreaDeAcoMinimaPositiva().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados("Area de aco final X = "
+					+ lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados(
+					"Area de aco final Y = "
+					+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);			
+			services.imprimeResultados(
+					"Area de aco final X' = "
+					+ lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			services.imprimeResultados(
+					"Area de aco final Y' = "
+					+ lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			
+			
 		}
-
-		services.imprimeResultados(
-				"Area de aco final X = " + lajeComParede.getAreaDeAcoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-		services.imprimeResultados("Area de aco final X' = "
-				+ lajeComParede.getAreaDeAcoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-		services.imprimeResultados(
-				"Area de aco final Y = "
-				+ lajeComParede.getAreaDeAcoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-		services.imprimeResultados("Area de aco final Y' = "
-				+ lajeComParede.getAreaDeAcoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
-				this.imprimeResultados);
-
 	}
 
 	public void calculaArmaduraDeDistribuicao() {
@@ -2230,10 +2343,37 @@ public class PrimaryController implements Initializable {
 									divide(new BigDecimal(10.0)));
 
 		}
+		else {
+			
+			BigDecimal ladoX = lajeSemParede.getLadoX();
+			
+			lajeSemParede.setReacaoX(this.coeficientes.getKx().
+									multiply(lajeSemParede.getCargaTotal()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+			
+			lajeSemParede.setReacaoXLinha(this.coeficientes.getKx1().
+									multiply(lajeSemParede.getCargaTotal()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+			
+			lajeSemParede.setReacaoY(this.coeficientes.getKy().
+									multiply(lajeSemParede.getCargaTotal()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+			
+			lajeSemParede.setReacaoYLinha(this.coeficientes.getKy1().
+									multiply(lajeSemParede.getCargaTotal()).
+									multiply(ladoX).
+									divide(new BigDecimal(10.0)));
+			
+		}
 		
 	}
 	
 	public void decideReacoes() {
+		
+		if(this.paredeSim.selectedProperty().getValue() == true) {
 		
 		if(lajeComParede.getReacaoX().doubleValue() == 0.0) {
 			
@@ -2264,17 +2404,59 @@ public class PrimaryController implements Initializable {
 				this.imprimeResultados);
 		
 		services.imprimeResultados(
-				"Reacao X' = " + lajeComParede.getReacaoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				"Reacao Y = " + lajeComParede.getReacaoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
 		
 		services.imprimeResultados(
-				"Reacao Y = " + lajeComParede.getReacaoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+				"Reacao X' = " + lajeComParede.getReacaoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
 		
 		services.imprimeResultados(
 				"Reacao Y' = " + lajeComParede.getReacaoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
 				this.imprimeResultados);
-		
+		}
+		else {
+			
+			if(lajeSemParede.getReacaoX().doubleValue() == 0.0) {
+				
+				lajeSemParede.setReacaoX(lajeSemParede.getReacaoXLinha());
+				
+			}
+			
+			if(lajeSemParede.getReacaoXLinha().doubleValue() == 0.0) {
+				
+				lajeSemParede.setReacaoXLinha(lajeSemParede.getReacaoX());
+				
+			}
+			
+			if(lajeSemParede.getReacaoY().doubleValue() == 0.0) {
+				
+				lajeSemParede.setReacaoY(lajeSemParede.getReacaoYLinha());
+				
+			}
+			
+			if(lajeSemParede.getReacaoYLinha().doubleValue() == 0.0) {
+				
+				lajeSemParede.setReacaoYLinha(lajeSemParede.getReacaoY());
+				
+			}
+			
+			services.imprimeResultados(
+					"Reacao X = " + lajeSemParede.getReacaoX().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			
+			services.imprimeResultados(
+					"Reacao Y = " + lajeSemParede.getReacaoY().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+			
+			services.imprimeResultados(
+					"Reacao X' = " + lajeSemParede.getReacaoXLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+
+			services.imprimeResultados(
+					"Reacao Y' = " + lajeSemParede.getReacaoYLinha().setScale(2, BigDecimal.ROUND_HALF_EVEN) + "\n",
+					this.imprimeResultados);
+		}
 	}
 
 	public void montaOpcoesDeEspacamentoX() {

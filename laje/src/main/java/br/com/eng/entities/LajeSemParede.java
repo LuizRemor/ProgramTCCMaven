@@ -43,6 +43,7 @@ public class LajeSemParede {
 	BigDecimal areaDeAcoY;
 	BigDecimal areaDeAcoYLinha;
 	BigDecimal areaDeAcoMinima;
+	BigDecimal areaDeAcoMinimaPositiva;
 	BigDecimal reacaoX;
 	BigDecimal reacaoXLinha;
 	BigDecimal reacaoY;
@@ -117,6 +118,17 @@ public class LajeSemParede {
 		this.areaDeAcoMinima = new BigDecimal(0.0015).multiply(new BigDecimal(100.0)).multiply(this.espessura);
 		
 		return areaDeAcoMinima;
+		
+	}
+	
+	public BigDecimal calculaAcoMinimoPositivo() {
+		
+		this.areaDeAcoMinimaPositiva = new BigDecimal(0.67).
+							  multiply(new BigDecimal(0.0015)).
+							  multiply(new BigDecimal(100.0)).
+							  multiply(this.espessura);
+		
+		return areaDeAcoMinimaPositiva;
 		
 	}
 
@@ -430,6 +442,14 @@ public class LajeSemParede {
 
 	public void setReacaoYLinha(BigDecimal reacaoYLinha) {
 		this.reacaoYLinha = reacaoYLinha;
+	}
+
+	public BigDecimal getAreaDeAcoMinimaPositiva() {
+		return areaDeAcoMinimaPositiva;
+	}
+
+	public void setAreaDeAcoMinimaPositiva(BigDecimal areaDeAcoMinimaPositiva) {
+		this.areaDeAcoMinimaPositiva = areaDeAcoMinimaPositiva;
 	}
 	
 }
