@@ -124,6 +124,7 @@
       <Button layoutX="480.0" layoutY="303.0" mnemonicParsing="false" onAction="#btNovaLaje" text="Nova Laje" />
       <Button layoutX="225.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaDuasDirecoesSemParede" text="2D - S/P" />
       <Button layoutX="155.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaDuasDirecoesComParede" text="2D - C/P" />
+      <Button layoutX="435.0" layoutY="659.0" mnemonicParsing="false" onAction="#btDetalhamentoArmaduras" text="Detalhamento das armaduras" />
 	</children>
 
 </AnchorPane>

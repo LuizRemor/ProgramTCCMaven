@@ -56,6 +56,66 @@ public class LajeComParede {
 	public LajeComParede() {
 
 	}
+	
+	
+
+	public LajeComParede(BigDecimal lambda, BigDecimal lambdaInvertido, BigDecimal ladoX, BigDecimal ladoY,
+			BigDecimal caso, BigDecimal area, BigDecimal espessura, BigDecimal alturaPiso, BigDecimal alturaContraPiso,
+			BigDecimal cargaTotalPositiva, BigDecimal cargaTotalNegativa, BigDecimal cargaPermanentePositiva,
+			BigDecimal cargaPermanenteNegativa, BigDecimal cargaDeServico, BigDecimal cargaAcidental, BigDecimal psi,
+			BigDecimal momentoDeFissuracao, BigDecimal momentoDeServico, BigDecimal inercia, BigDecimal coeficienteK,
+			BigDecimal flechaDeCurtaDuracao, BigDecimal flechaDeLongaDuracao, BigDecimal flechaAdmissivel,
+			BigDecimal momentoDeProjetoX, BigDecimal momentoDeProjetoY, BigDecimal momentoDeProjetoXLinha,
+			BigDecimal momentoDeProjetoYLinha, BigDecimal d, BigDecimal x, BigDecimal y, BigDecimal xLinha,
+			BigDecimal yLinha, BigDecimal areaDeAcoX, BigDecimal areaDeAcoXLinha, BigDecimal areaDeAcoY,
+			BigDecimal areaDeAcoYLinha, BigDecimal areaDeAcoMinima, BigDecimal areaDeAcoMinimaPositiva,
+			BigDecimal reacaoX, BigDecimal reacaoXLinha, BigDecimal reacaoY, BigDecimal reacaoYLinha) {
+
+		this.lambda = lambda;
+		this.lambdaInvertido = lambdaInvertido;
+		this.ladoX = ladoX;
+		this.ladoY = ladoY;
+		this.caso = caso;
+		this.area = area;
+		this.espessura = espessura;
+		this.alturaPiso = alturaPiso;
+		this.alturaContraPiso = alturaContraPiso;
+		this.cargaTotalPositiva = cargaTotalPositiva;
+		this.cargaTotalNegativa = cargaTotalNegativa;
+		this.cargaPermanentePositiva = cargaPermanentePositiva;
+		this.cargaPermanenteNegativa = cargaPermanenteNegativa;
+		this.cargaDeServico = cargaDeServico;
+		this.cargaAcidental = cargaAcidental;
+		this.psi = psi;
+		this.momentoDeFissuracao = momentoDeFissuracao;
+		this.momentoDeServico = momentoDeServico;
+		this.inercia = inercia;
+		this.coeficienteK = coeficienteK;
+		this.flechaDeCurtaDuracao = flechaDeCurtaDuracao;
+		this.flechaDeLongaDuracao = flechaDeLongaDuracao;
+		this.flechaAdmissivel = flechaAdmissivel;
+		this.momentoDeProjetoX = momentoDeProjetoX;
+		this.momentoDeProjetoY = momentoDeProjetoY;
+		this.momentoDeProjetoXLinha = momentoDeProjetoXLinha;
+		this.momentoDeProjetoYLinha = momentoDeProjetoYLinha;
+		this.d = d;
+		this.x = x;
+		this.y = y;
+		this.xLinha = xLinha;
+		this.yLinha = yLinha;
+		this.areaDeAcoX = areaDeAcoX;
+		this.areaDeAcoXLinha = areaDeAcoXLinha;
+		this.areaDeAcoY = areaDeAcoY;
+		this.areaDeAcoYLinha = areaDeAcoYLinha;
+		this.areaDeAcoMinima = areaDeAcoMinima;
+		this.areaDeAcoMinimaPositiva = areaDeAcoMinimaPositiva;
+		this.reacaoX = reacaoX;
+		this.reacaoXLinha = reacaoXLinha;
+		this.reacaoY = reacaoY;
+		this.reacaoYLinha = reacaoYLinha;
+	}
+
+
 
 	public LajeComParede(TextField ladoX, TextField ladoY) {
 

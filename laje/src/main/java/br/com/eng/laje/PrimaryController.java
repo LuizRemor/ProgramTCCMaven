@@ -162,6 +162,13 @@ public class PrimaryController implements Initializable {
 	private BigDecimal lajeDirecao = new BigDecimal(0.0);
 
 	private BigDecimal caso = new BigDecimal(0.0);
+	
+	@FXML
+	private void btDetalhamentoArmaduras() throws IOException {
+		
+		App.setRoot("secondary");
+		
+	}
 
 	public void btNovaLaje() {
 
@@ -3008,6 +3015,86 @@ public class PrimaryController implements Initializable {
 
 	public void setAcoYNegativo(ChoiceBox<EspacamentoAco> acoYNegativo) {
 		this.acoYNegativo = acoYNegativo;
+	}
+
+	public LajeSemParede getLajeSemParede() {
+		return lajeSemParede;
+	}
+
+	public Coeficientes getCoeficientesMxKx() {
+		return coeficientesMxKx;
+	}
+
+	public List<Coeficientes> getCoeficientesMxKxList() {
+		return coeficientesMxKxList;
+	}
+
+	public Label getTijoloFurado() {
+		return tijoloFurado;
+	}
+
+	public Label getTijoloFuradoS() {
+		return tijoloFuradoS;
+	}
+
+	public Label getTijoloFuradoN() {
+		return tijoloFuradoN;
+	}
+
+	public Label getTextEspessuraDaParede() {
+		return textEspessuraDaParede;
+	}
+
+	public Label getTextAlturaDaParede() {
+		return textAlturaDaParede;
+	}
+
+	public BigDecimal getLajeDirecao() {
+		return lajeDirecao;
+	}
+
+	public BigDecimal getCaso() {
+		return caso;
+	}
+
+	public void setLajeSemParede(LajeSemParede lajeSemParede) {
+		this.lajeSemParede = lajeSemParede;
+	}
+
+	public void setCoeficientesMxKx(Coeficientes coeficientesMxKx) {
+		this.coeficientesMxKx = coeficientesMxKx;
+	}
+
+	public void setCoeficientesMxKxList(List<Coeficientes> coeficientesMxKxList) {
+		this.coeficientesMxKxList = coeficientesMxKxList;
+	}
+
+	public void setTijoloFurado(Label tijoloFurado) {
+		this.tijoloFurado = tijoloFurado;
+	}
+
+	public void setTijoloFuradoS(Label tijoloFuradoS) {
+		this.tijoloFuradoS = tijoloFuradoS;
+	}
+
+	public void setTijoloFuradoN(Label tijoloFuradoN) {
+		this.tijoloFuradoN = tijoloFuradoN;
+	}
+
+	public void setTextEspessuraDaParede(Label textEspessuraDaParede) {
+		this.textEspessuraDaParede = textEspessuraDaParede;
+	}
+
+	public void setTextAlturaDaParede(Label textAlturaDaParede) {
+		this.textAlturaDaParede = textAlturaDaParede;
+	}
+
+	public void setLajeDirecao(BigDecimal lajeDirecao) {
+		this.lajeDirecao = lajeDirecao;
+	}
+
+	public void setCaso(BigDecimal caso) {
+		this.caso = caso;
 	}
 
 	@Override
