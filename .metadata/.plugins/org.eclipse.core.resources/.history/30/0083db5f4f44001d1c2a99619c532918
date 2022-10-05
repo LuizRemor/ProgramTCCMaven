@@ -1,0 +1,37 @@
+package br.com.eng.laje;
+
+import java.io.IOException;
+
+import javafx.fxml.FXML;
+import javafx.scene.Group;
+
+public class SecondaryController {
+	
+	PrimaryController primaryController;
+	
+	@FXML
+	Group groupYNegativo = new Group();
+	
+	@FXML
+	Group groupXNegativo = new Group();
+	
+	@FXML
+	Group groupY1Negativo = new Group();
+	
+	@FXML
+	Group groupX1Negativo = new Group();
+
+	@FXML
+	private void btRetornaTelaDeCalculos() throws IOException {
+		
+		App.setRoot("primary");
+		
+	}
+	
+	private void mostraEngastes() {
+		
+		groupYNegativo.setVisible(false);
+		
+	}
+		
+}

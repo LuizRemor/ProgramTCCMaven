@@ -16,8 +16,10 @@ public class App extends Application {
 	public void start(Stage stage) {
 
 		try {
-
-			scene = new Scene(loadFXML("primary"));
+			
+			String tela = "primary";
+			
+			scene = new Scene(loadFXML(tela));
 			
 			stage.setScene(scene);
 			stage.setTitle("Programa para Cálculo de Lajes");

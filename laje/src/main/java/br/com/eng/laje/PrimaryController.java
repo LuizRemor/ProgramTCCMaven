@@ -31,6 +31,8 @@ import javafx.scene.text.Text;
 @SuppressWarnings("deprecation")
 public class PrimaryController implements Initializable {
 
+	private SecondaryController secondaryController = new SecondaryController();
+	
 	private LajeComParede lajeComParede;
 
 	private LajeSemParede lajeSemParede;
@@ -167,6 +169,10 @@ public class PrimaryController implements Initializable {
 	private void btDetalhamentoArmaduras() throws IOException {
 		
 		App.setRoot("secondary");
+		
+		secondaryController.getGroupYNegativo().setVisible(true);
+		
+		//secondaryController.mostraEngastes(true);
 		
 	}
 

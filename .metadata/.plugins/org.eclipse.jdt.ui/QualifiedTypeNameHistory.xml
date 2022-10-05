@@ -5,18 +5,15 @@
     <fullyQualifiedTypeName name="br.com.eng.util.Coeficientes"/>
     <fullyQualifiedTypeName name="java.io.BufferedReader"/>
     <fullyQualifiedTypeName name="java.io.FileReader"/>
-    <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.io.Serializable"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.List"/>
-    <fullyQualifiedTypeName name="br.com.eng.laje.PrimaryController"/>
     <fullyQualifiedTypeName name="javafx.scene.control.TextArea"/>
     <fullyQualifiedTypeName name="java.io.File"/>
     <fullyQualifiedTypeName name="javafx.scene.control.MenuButton"/>
     <fullyQualifiedTypeName name="javafx.scene.control.MenuItem"/>
     <fullyQualifiedTypeName name="br.com.eng.entities.EspacamentoAco"/>
     <fullyQualifiedTypeName name="javafx.scene.control.ChoiceBox"/>
-    <fullyQualifiedTypeName name="br.com.eng.entities.LajeComParede"/>
     <fullyQualifiedTypeName name="br.com.eng.entities.LajeSemParede"/>
     <fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
     <fullyQualifiedTypeName name="javafx.scene.text.Text"/>
@@ -25,4 +22,8 @@
     <fullyQualifiedTypeName name="java.lang.Math"/>
     <fullyQualifiedTypeName name="java.math.MathContext"/>
     <fullyQualifiedTypeName name="java.math.BigDecimal"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="br.com.eng.laje.App"/>
+    <fullyQualifiedTypeName name="br.com.eng.entities.LajeComParede"/>
+    <fullyQualifiedTypeName name="br.com.eng.laje.PrimaryController"/>
 </qualifiedTypeNameHistroy>
