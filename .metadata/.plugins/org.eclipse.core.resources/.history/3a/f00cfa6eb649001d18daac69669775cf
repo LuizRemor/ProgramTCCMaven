@@ -1,0 +1,53 @@
+package br.com.eng.entities;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+import javafx.scene.control.RadioButton;
+
+public class Calculos {
+
+	public void calculaAreaDeAcoMinima(RadioButton parede, LajeComParede lajeComParede, LajeSemParede lajeSemParede) {
+
+		if (parede.selectedProperty().getValue() == true) {
+
+			lajeComParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimo();
+			lajeComParede.calculaAcoMinimoPositivo();
+			lajeSemParede.calculaAcoMinimoPositivo();
+			
+
+		} else {
+
+			lajeSemParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimoPositivo();
+		}
+
+	}
+	
+	public void calculaLambda(LajeComParede lajeComParede, LajeSemParede lajeSemParede) {
+		
+		lajeComParede.setLambda(lajeComParede.getLadoY().divide(lajeComParede.getLadoX(), MathContext.DECIMAL128));
+		lajeSemParede.setLambda(lajeSemParede.getLadoY().divide(lajeSemParede.getLadoX(), MathContext.DECIMAL128));
+		
+		if(lajeComParede.getLambda().doubleValue() > 2.0) {
+			
+			lajeComParede.setLambda(new BigDecimal(99999.0));
+			
+		}
+		if(lajeSemParede.getLambda().doubleValue() > 2.0) {
+			
+			lajeSemParede.setLambda(new BigDecimal(99999.0));
+			
+		}
+		
+	}
+	
+	public void calculaLambdaInvertido(LajeComParede lajeComParede, LajeSemParede lajeSemParede) {
+		
+		lajeComParede.setLambdaInvertido(lajeComParede.getLadoX().divide(lajeComParede.getLadoY(), MathContext.DECIMAL128));
+		lajeSemParede.setLambdaInvertido(lajeSemParede.getLadoX().divide(lajeSemParede.getLadoY(), MathContext.DECIMAL128));
+		
+	}
+	
+}

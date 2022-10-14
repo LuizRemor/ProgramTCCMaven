@@ -1,0 +1,25 @@
+package br.com.eng.entities;
+
+import javafx.scene.control.RadioButton;
+
+public class Calculos {
+
+	public void calculaAreaDeAcoMinima(RadioButton parede, LajeComParede lajeComParede, LajeSemParede lajeSemParede) {
+
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			lajeComParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimo();
+			lajeComParede.calculaAcoMinimoPositivo();
+			lajeSemParede.calculaAcoMinimoPositivo();
+			
+
+		} else {
+
+			lajeSemParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimoPositivo();
+		}
+
+	}
+	
+}

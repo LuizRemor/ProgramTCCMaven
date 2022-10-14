@@ -1,0 +1,57 @@
+package br.com.eng.util;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import br.com.eng.entities.Resultado;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
+public class Services {
+	
+	public BigDecimal conversor(TextField number) {
+		
+		BigDecimal convertido = new BigDecimal(number.getText());
+		
+		return convertido;
+	}
+	
+	public BigDecimal doubleEmBigDecimal(Double number) {
+		
+		BigDecimal convertido = new BigDecimal(number);
+		
+		return convertido;
+	}
+	
+	public BigDecimal metrosEmCentimetros(BigDecimal number) {
+		
+		BigDecimal convertido = number.multiply(new BigDecimal(100.0));
+				
+		return convertido;
+		
+	}
+	
+	public BigDecimal CentimetrosEmMetros(BigDecimal number) {
+		
+		BigDecimal convertido = number.divide(new BigDecimal(100.0));
+				
+		return convertido;
+		
+	}
+	
+	public BigDecimal mpaParakNPorCmQuadrado(BigDecimal number) {
+		
+		BigDecimal convertido = number.divide(new BigDecimal(10.0));
+		
+		return convertido;
+	}
+	
+	public void imprimeResultados(String string, TextArea textArea, List<Resultado> lista) {
+		
+		lista.add(new Resultado(string));	
+		
+		textArea.appendText(string);
+		
+	}
+
+}

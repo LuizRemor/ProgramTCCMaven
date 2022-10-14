@@ -1,0 +1,154 @@
+package br.com.eng.laje;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.control.CheckBox;
+
+public class SecondaryController {
+	
+	private CheckBox checkYCima = new CheckBox();
+
+	private CheckBox checkYBaixo = new CheckBox();
+
+	private CheckBox checkXEsquerda = new CheckBox();
+
+	private CheckBox checkXDireita = new CheckBox();
+	
+	@FXML
+    private Group groupXDireita = new Group();
+
+    @FXML
+    private Group groupXEsquerda = new Group();
+
+    @FXML
+    private Group groupYBaixo = new Group();
+
+    @FXML
+    private Group groupYCima = new Group();
+    
+	@FXML
+	protected void initialize() {
+		App.addOnChangeScreenListener(new App.OnChangeScreen() {
+			
+			@Override
+			public void onScreenChanged(String novaTela, Object userData) {
+				
+			}
+		});
+	}
+    
+	public SecondaryController() {
+    	
+    }
+
+    public SecondaryController(CheckBox checkYCima, CheckBox checkYBaixo, CheckBox checkXEsquerda, CheckBox checkXDireita) {
+		super();
+
+		this.checkYCima = checkYCima;
+//		this.checkYBaixo = checkYBaixo;
+//		this.checkXEsquerda = checkXEsquerda;
+//		this.checkXDireita = checkXDireita;
+	}
+
+    public void btRetornaTelaDeCalculos() throws IOException {
+    	
+       	App.escolheTela("primary");
+    	
+    }
+    
+    public void mostraEngastes() {
+    	
+    		System.out.println("checkYCima " + this.checkYCima.selectedProperty().getValue().toString());
+    	
+			groupXDireita.setVisible(this.checkXDireita.selectedProperty().getValue());
+			groupXEsquerda.setVisible(this.checkXEsquerda.selectedProperty().getValue());
+			groupYBaixo.setVisible(this.checkYBaixo.selectedProperty().getValue());
+			groupYCima.setVisible(this.checkYCima.selectedProperty().getValue());
+			groupYCima.setVisible(false);
+			
+    }
+
+	public Group getGroupYCima() {
+		return groupYCima;
+	}
+
+	public Group getGroupXEsquerda() {
+		return groupXEsquerda;
+	}
+
+	public Group getGroupYBaixo() {
+		return groupYBaixo;
+	}
+
+	public Group getGroupXDireita() {
+		return groupXDireita;
+	}
+
+	public void setGroupYCima(Group groupYCima) {
+		this.groupYCima = groupYCima;
+	}
+
+	public void setGroupXEsquerda(Group groupXEsquerda) {
+		this.groupXEsquerda = groupXEsquerda;
+	}
+
+	public void setGroupYBaixo(Group groupYBaixo) {
+		this.groupYBaixo = groupYBaixo;
+	}
+
+	public void setGroupXDireita(Group groupXDireita) {
+		this.groupXDireita = groupXDireita;
+	}
+	
+	public CheckBox getCheckYCima() {
+		return checkYCima;
+	}
+
+
+
+	public CheckBox getCheckYBaixo() {
+		return checkYBaixo;
+	}
+
+
+
+	public CheckBox getCheckXEsquerda() {
+		return checkXEsquerda;
+	}
+
+
+
+	public CheckBox getCheckXDireita() {
+		return checkXDireita;
+	}
+
+
+
+	public void setCheckYCima(CheckBox checkYCima) {
+		this.checkYCima = checkYCima;
+	}
+
+
+
+	public void setCheckYBaixo(CheckBox checkYBaixo) {
+		this.checkYBaixo = checkYBaixo;
+	}
+
+
+
+	public void setCheckXEsquerda(CheckBox checkXEsquerda) {
+		this.checkXEsquerda = checkXEsquerda;
+	}
+
+
+
+	public void setCheckXDireita(CheckBox checkXDireita) {
+		this.checkXDireita = checkXDireita;
+	}
+	
+}

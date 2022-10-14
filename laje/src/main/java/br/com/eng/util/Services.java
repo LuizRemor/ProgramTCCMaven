@@ -1,7 +1,9 @@
 package br.com.eng.util;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import br.com.eng.entities.Resultado;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -44,7 +46,9 @@ public class Services {
 		return convertido;
 	}
 	
-	public void imprimeResultados(String string, TextArea textArea) {
+	public void imprimeResultados(String string, TextArea textArea, List<Resultado> lista) {
+		
+		lista.add(new Resultado(string));
 		
 		textArea.appendText(string);
 		

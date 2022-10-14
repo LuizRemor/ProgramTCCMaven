@@ -1,0 +1,23 @@
+package br.com.eng.entities;
+
+public class Calculos {
+
+	public void calculaAreaDeAcoMinima() {
+
+		if (paredeSim.selectedProperty().getValue() == true) {
+
+			lajeComParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimo();
+			lajeComParede.calculaAcoMinimoPositivo();
+			lajeSemParede.calculaAcoMinimoPositivo();
+			
+
+		} else {
+
+			lajeSemParede.calculaAcoMinimo();
+			lajeSemParede.calculaAcoMinimoPositivo();
+		}
+
+	}
+	
+}

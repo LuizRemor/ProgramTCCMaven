@@ -1,0 +1,85 @@
+package br.com.eng.laje;
+
+import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class App extends Application {
+
+	private static Stage stage;
+	
+	private static Scene primaryScene;
+	
+	private static Scene secondaryScene;
+		
+	@Override
+	public void start(Stage primaryStage) throws IOException {
+		
+		Parent fxmlPrimary = FXMLLoader.load(getClass().getResource("/src/main/resources/br/com/eng/laje/primary.fxml"));
+		primaryScene = new Scene(fxmlPrimary);
+		
+		Parent fxmlSecondary = FXMLLoader.load(getClass().getResource("/src/main/resources/br/com/eng/laje/secondary.fxml"));
+		secondaryScene = new Scene(fxmlSecondary);
+		
+		primaryStage.setScene(primaryScene);
+		primaryStage.show();
+		
+	}
+	
+	public static void escolheTela(String tela) {
+		
+		switch (tela) {
+			case "primary":
+				stage.setScene(primaryScene);
+			break;
+			case "secondary":
+				stage.setScene(secondaryScene);
+			break;
+		}
+		
+	}
+	
+	/*@Override
+	public void start(Stage stage) {
+
+		try {
+			
+			String tela = "primary";
+			
+			scene = new Scene(loadFXML(tela));
+			
+			stage.setScene(scene);
+			stage.setTitle("Programa para Cálculo de Lajes");
+			stage.show();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+	}
+	
+	static void setRoot(String fxml) throws IOException {
+		scene.setRoot(loadFXML(fxml));
+    }
+	
+    private static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        return fxmlLoader.load();
+    }
+
+	public static Scene getMainScene() {
+		
+		return scene;
+	}*/
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+}

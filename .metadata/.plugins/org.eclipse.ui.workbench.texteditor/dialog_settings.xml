@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="define"/>
-		<item key="wrap" value="true"/>
+		<item key="selection" value=""/>
+		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="secon"/>
+			<item value="Sec"/>
+			<item value="monta"/>
+			<item value="mostra"/>
+			<item value="init"/>
+			<item value="Inici"/>
 			<item value="define"/>
 			<item value="carga"/>
 			<item value="comparede"/>
@@ -17,10 +23,6 @@
 			<item value="espessura"/>
 			<item value="setEspessura"/>
 			<item value="laje."/>
-			<item value="laje"/>
-			<item value="System.out.printf("/>
-			<item value="System.out.println("/>
-			<item value="lambda"/>
 		</list>
 		<list key="replacehistory">
 			<item value="lajeComParede."/>
@@ -29,8 +31,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1214"/>
-		<item key="DIALOG_Y_ORIGIN" value="410"/>
+		<item key="DIALOG_X_ORIGIN" value="1460"/>
+		<item key="DIALOG_Y_ORIGIN" value="472"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

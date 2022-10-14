@@ -13,6 +13,8 @@
     <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="br.com.eng.laje.Main"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="laje"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:\Java-libs\javafx-sdk-18.0.2\lib"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="laje"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="--module-path C:\Java-libs\javafx-sdk-18.0.2\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,java.se"/>
 </launchConfiguration>
