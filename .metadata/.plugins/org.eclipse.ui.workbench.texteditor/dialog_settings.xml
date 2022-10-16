@@ -8,21 +8,21 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="secon"/>
-			<item value="Sec"/>
+			<item value="captura"/>
+			<item value="combo"/>
+			<item value="selected"/>
 			<item value="monta"/>
-			<item value="mostra"/>
-			<item value="init"/>
-			<item value="Inici"/>
-			<item value="define"/>
-			<item value="carga"/>
-			<item value="comparede"/>
-			<item value="CentimetrosEmMetros"/>
-			<item value="espessuralaje"/>
-			<item value="lajeComParede.setEs"/>
-			<item value="espessura"/>
-			<item value="setEspessura"/>
-			<item value="laje."/>
+			<item value="espacamento"/>
+			<item value="ajustaLambda"/>
+			<item value="ajusta"/>
+			<item value="lambda"/>
+			<item value="calculaLambda"/>
+			<item value="espacamentoAcoList"/>
+			<item value="populaEspacamentoAco()"/>
+			<item value="populaEspacamentoAco"/>
+			<item value="espacamentoList"/>
+			<item value="invalidaCamposParede"/>
+			<item value="acoPositivoEmXComParede"/>
 		</list>
 		<list key="replacehistory">
 			<item value="lajeComParede."/>
@@ -31,8 +31,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1460"/>
-		<item key="DIALOG_Y_ORIGIN" value="472"/>
+		<item key="DIALOG_X_ORIGIN" value="1443"/>
+		<item key="DIALOG_Y_ORIGIN" value="531"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

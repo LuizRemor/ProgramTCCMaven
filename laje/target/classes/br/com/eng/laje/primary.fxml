@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
@@ -117,10 +117,10 @@
       <Label layoutX="409.0" layoutY="477.0" text="Aço negativo em X" />
       <Label layoutX="409.0" layoutY="533.0" text="Aço positivo em Y" />
       <Label layoutX="409.0" layoutY="589.0" text="Aço negativo em Y" />
-      <ChoiceBox fx:id="acoXPositivo" layoutX="409.0" layoutY="444.0" prefHeight="26.0" prefWidth="309.0" />
-      <ChoiceBox fx:id="acoXNegativo" layoutX="409.0" layoutY="495.0" prefHeight="26.0" prefWidth="309.0" />
-      <ChoiceBox fx:id="acoYPositivo" layoutX="409.0" layoutY="551.0" prefHeight="26.0" prefWidth="309.0" />
-      <ChoiceBox fx:id="acoYNegativo" layoutX="409.0" layoutY="607.0" prefHeight="26.0" prefWidth="309.0" />
+      <ComboBox fx:id="acoXPositivo" layoutX="409.0" layoutY="444.0" onAction="#capturaSelecaoComboBox" prefHeight="26.0" prefWidth="309.0" />
+      <ComboBox fx:id="acoXNegativo" layoutX="409.0" layoutY="495.0" prefHeight="26.0" prefWidth="309.0" />
+      <ComboBox fx:id="acoYPositivo" layoutX="409.0" layoutY="551.0" prefHeight="26.0" prefWidth="309.0" />
+      <ComboBox fx:id="acoYNegativo" layoutX="409.0" layoutY="607.0" prefHeight="26.0" prefWidth="309.0" />
       <Button layoutX="134.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaUmaDirecaoSemParede" text="1D - S/P" />
       <Button layoutX="686.0" layoutY="295.0" mnemonicParsing="false" onAction="#btNovaLaje" text="Nova Laje" />
       <Button layoutX="274.0" layoutY="308.0" mnemonicParsing="false" onAction="#btMontaDuasDirecoesSemParede" text="2D - S/P" />
@@ -131,10 +131,10 @@
       <Label fx:id="acoNegativoEmXComParede" layoutX="815.0" layoutY="478.0" text="Aço negativo em X" visible="false" />
       <Label fx:id="acoPositivoEmYComParede" layoutX="815.0" layoutY="534.0" text="Aço positivo em Y" visible="false" />
       <Label fx:id="acoNegativoEmYComParede" layoutX="815.0" layoutY="590.0" text="Aço negativo em Y" visible="false" />
-      <ChoiceBox fx:id="acoXPositivoComParede" layoutX="815.0" layoutY="445.0" prefHeight="26.0" prefWidth="309.0" visible="false" />
-      <ChoiceBox fx:id="acoXNegativoComParede" layoutX="815.0" layoutY="496.0" prefHeight="26.0" prefWidth="309.0" visible="false" />
-      <ChoiceBox fx:id="acoYPositivoComParede" layoutX="815.0" layoutY="552.0" prefHeight="26.0" prefWidth="309.0" visible="false" />
-      <ChoiceBox fx:id="acoYNegativoComParede" layoutX="815.0" layoutY="608.0" prefHeight="26.0" prefWidth="309.0" visible="false" />
+      <ComboBox fx:id="acoXPositivoComParede" layoutX="815.0" layoutY="445.0" prefHeight="26.0" prefWidth="309.0" visible="false" />
+      <ComboBox fx:id="acoXNegativoComParede" layoutX="815.0" layoutY="496.0" prefHeight="26.0" prefWidth="309.0" visible="false" />
+      <ComboBox fx:id="acoYPositivoComParede" layoutX="815.0" layoutY="552.0" prefHeight="26.0" prefWidth="309.0" visible="false" />
+      <ComboBox fx:id="acoYNegativoComParede" layoutX="815.0" layoutY="608.0" onAction="#capturaSelecaoComboBox" prefHeight="26.0" prefWidth="309.0" visible="false" />
       <Label fx:id="labelEscolhaBitolaEspacamento" layoutX="424.0" layoutY="353.0" text="Escolha a bitola e os espaçamentos">
          <font>
             <Font size="18.0" />

@@ -3,7 +3,9 @@ package br.com.eng.entities;
 import java.math.BigDecimal;
 
 public class EspacamentoAco {
-
+	
+	private String eixo;
+	private BigDecimal quantidade;
 	private BigDecimal bitola;
 	private BigDecimal espacamento;
 	private BigDecimal areaDeAco;
@@ -43,9 +45,26 @@ public class EspacamentoAco {
 		this.areaDeAco = areaDeAco;
 	}
 
+	public BigDecimal getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(BigDecimal quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public String getEixo() {
+		return eixo;
+	}
+
+	public void setEixo(String eixo) {
+		this.eixo = eixo;
+	}
+
 	@Override
 	public String toString() {
-		return "Φ = " + bitola + "mm esp. c/ " + espacamento + "cm A. Aço = " + areaDeAco;
+		return "EspacamentoAco [eixo=" + eixo + ", quantidade=" + quantidade + ", bitola=" + bitola + ", espacamento="
+				+ espacamento + ", areaDeAco=" + areaDeAco + "]";
 	}
 
 }

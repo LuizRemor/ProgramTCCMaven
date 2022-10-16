@@ -20,9 +20,11 @@ import br.com.eng.entities.Materiais;
 import br.com.eng.entities.Parede;
 import br.com.eng.entities.Resultado;
 import br.com.eng.util.Services;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -166,28 +168,28 @@ public class PrimaryController {
 	private TextArea imprimeResultados = new TextArea();
 
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoXPositivo = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoXPositivo = new ComboBox<EspacamentoAco>();
 
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoXNegativo = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoXNegativo = new ComboBox<EspacamentoAco>();
 
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoYPositivo = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoYPositivo = new ComboBox<EspacamentoAco>();
 
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoYNegativo = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoYNegativo = new ComboBox<EspacamentoAco>();
 	
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoXPositivoComParede = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoXPositivoComParede = new ComboBox<EspacamentoAco>();
 
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoXNegativoComParede = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoXNegativoComParede = new ComboBox<EspacamentoAco>();
 
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoYPositivoComParede = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoYPositivoComParede = new ComboBox<EspacamentoAco>();
 
 	@FXML
-	private ChoiceBox<EspacamentoAco> acoYNegativoComParede = new ChoiceBox<EspacamentoAco>();
+	private ComboBox<EspacamentoAco> acoYNegativoComParede = new ComboBox<EspacamentoAco>();
 	
 	@FXML
 	private Rectangle retanguloComParede = new Rectangle();
@@ -235,15 +237,26 @@ public class PrimaryController {
 		
 	    String caminhoJasper = "";
 		
-		if(this.paredeSim.selectedProperty().getValue() == false) {
-			
-			caminhoJasper = "semparede.jasper";
+		if (this.paredeSim.selectedProperty().getValue() == false) {
+
+			if (this.caso.doubleValue() == 1.0) {
+
+				caminhoJasper = "semengaste.jasper";
+
+			} else {
+				caminhoJasper = "semparede.jasper";
+			}
 			
 		}
 		else {
-			caminhoJasper = "comparede.jasper";
+			if (this.caso.doubleValue() == 1.0) {
+				caminhoJasper = "semengastecomparede.jasper";
+			} else {
+				caminhoJasper = "comparede.jasper";
+			}
+
 		}
-				
+		
 		@SuppressWarnings("rawtypes")
 		Map parametros = new HashMap<String, Object>();
 		parametros.put("acoXPositivo", this.acoXPositivo.getValue().toString());
@@ -258,11 +271,15 @@ public class PrimaryController {
 		
 		//Variáveis novas - Preencher quando for com parede em cima
 		
-		parametros.put("acoXPositivoSemParede", this.acoXPositivo.getValue().toString());
-		parametros.put("acoYPositivoSemParede", this.acoYPositivo.getValue().toString());
-		parametros.put("acoXNegativoSemParede", this.acoXNegativo.getValue().toString());
-		parametros.put("acoYNegativoSemParede", this.acoYNegativo.getValue().toString());
-						
+		if (this.paredeSim.selectedProperty().getValue() == true) {
+
+			parametros.put("acoXPositivoComParede", this.acoXPositivoComParede.getValue().toString());
+			parametros.put("acoYPositivoComParede", this.acoYPositivoComParede.getValue().toString());
+			parametros.put("acoXNegativoComParede", this.acoXNegativoComParede.getValue().toString());
+			parametros.put("acoYNegativoComParede", this.acoYNegativoComParede.getValue().toString());
+			
+		}
+		
 		InputStream relJasper = getClass().getResourceAsStream(caminhoJasper);
 		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(this.resultados);
 		
@@ -294,6 +311,10 @@ public class PrimaryController {
 		this.acoXNegativo.getItems().clear();
 		this.acoYPositivo.getItems().clear();
 		this.acoYNegativo.getItems().clear();
+		this.acoXPositivoComParede.getItems().clear();
+		this.acoXNegativoComParede.getItems().clear();
+		this.acoYPositivoComParede.getItems().clear();
+		this.acoYNegativoComParede.getItems().clear();
 		
 		this.checkYCima.setSelected(false);
 		this.engasteCheckYCima.setVisible(false);
@@ -2630,25 +2651,49 @@ public class PrimaryController {
 
 		if(paredeSim.selectedProperty().getValue() == true) {
 		
+			List<EspacamentoAco> espacamentoX = new ArrayList<>();
+			ObservableList<EspacamentoAco> observableList;
+			
+			
 		for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
 			if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoX().doubleValue()
 					&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoX().doubleValue()
 							+ 0.3) {
-
-				acoXPositivoComParede.getItems().add(espacamentoAco);
+				
+				Double quantidade = calculaQuantidadeDeBarras(parede.getAreaDeInfluenciaPositiva().doubleValue(), 
+						                                      espacamentoAco.getEspacamento().doubleValue());
+				
+				espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+				espacamentoAco.setEixo("XComparede");
+						
+				espacamentoX.add(espacamentoAco);
+				
 
 				}
 			}
+		
+		observableList = FXCollections.observableArrayList(espacamentoX);
+		
+		acoXPositivoComParede.setItems(observableList);
+		
 		}
 		else {
+			
 			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoX().doubleValue()
 						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoX().doubleValue()
 								+ 0.3) {
-
+					
+					Double quantidade = calculaQuantidadeDeBarras(lajeSemParede.getLadoY().doubleValue(),
+                            espacamentoAco.getEspacamento().doubleValue());
+					
+					espacamentoAco.setEixo("XSemparede");
+					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+										
 					acoXPositivo.getItems().add(espacamentoAco);
 
 					}
+				
 				}
 		}
 
@@ -2661,7 +2706,13 @@ public class PrimaryController {
 			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoXLinha().doubleValue()	&&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoXLinha().doubleValue() + 0.3) {
-
+					
+					Double quantidade = calculaQuantidadeDeBarras(parede.getAreaDeInfluenciaNegativa().doubleValue(),
+                            espacamentoAco.getEspacamento().doubleValue());
+					
+					espacamentoAco.setEixo("XNegativoComParede");
+					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+					
 					acoXNegativoComParede.getItems().add(espacamentoAco);
 
 				}
@@ -2672,7 +2723,13 @@ public class PrimaryController {
 			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoXLinha().doubleValue()	&&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoXLinha().doubleValue() + 0.3) {
-
+					
+					Double quantidade = calculaQuantidadeDeBarras(lajeSemParede.getLadoY().doubleValue(),
+                            espacamentoAco.getEspacamento().doubleValue());
+					
+					espacamentoAco.setEixo("XNegativoSemParede");
+					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+					
 					acoXNegativo.getItems().add(espacamentoAco);
 
 				}
@@ -2688,7 +2745,13 @@ public class PrimaryController {
 			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoY().doubleValue()
 						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoY().doubleValue() + 0.3) {
-
+					
+					Double quantidade = calculaQuantidadeDeBarras(lajeComParede.getLadoX().divide(new BigDecimal(100.0)).doubleValue(),
+                            	                                  espacamentoAco.getEspacamento().doubleValue());
+					
+					espacamentoAco.setEixo("YComParede");
+					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+					
 					acoYPositivoComParede.getItems().add(espacamentoAco);
 
 				}
@@ -2700,6 +2763,12 @@ public class PrimaryController {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoY().doubleValue()
 						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoY().doubleValue() + 0.3) {
 
+					Double quantidade = calculaQuantidadeDeBarras(lajeComParede.getLadoX().divide(new BigDecimal(100.0)).doubleValue(),
+                                                                  espacamentoAco.getEspacamento().doubleValue());
+					
+					espacamentoAco.setEixo("YSemParede");
+					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+					
 					acoYPositivo.getItems().add(espacamentoAco);
 
 				}
@@ -2715,7 +2784,13 @@ public class PrimaryController {
 			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoYLinha().doubleValue() &&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoYLinha().doubleValue() + 0.3) {
+					
+					Double quantidade = calculaQuantidadeDeBarras(lajeComParede.getLadoX().divide(new BigDecimal(100.0)).doubleValue(),
+                            espacamentoAco.getEspacamento().doubleValue());
 
+					espacamentoAco.setEixo("YNegativoComParede");
+					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+					
 					acoYNegativoComParede.getItems().add(espacamentoAco);
 
 				}
@@ -2727,6 +2802,12 @@ public class PrimaryController {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoYLinha().doubleValue() &&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoYLinha().doubleValue() + 0.3) {
 
+					Double quantidade = calculaQuantidadeDeBarras(lajeSemParede.getLadoX().doubleValue(),
+                            espacamentoAco.getEspacamento().doubleValue());
+					
+					espacamentoAco.setEixo("YNegativoSemParede");
+					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
+					
 					acoYNegativo.getItems().add(espacamentoAco);
 
 				}
@@ -2734,6 +2815,23 @@ public class PrimaryController {
 			
 		}
 
+	}
+	
+	public void capturaSelecaoComboBox() {
+		
+		acoXPositivo.toString();
+		
+	}
+	
+	public Double calculaQuantidadeDeBarras(Double comprimento, Double espacamento) {
+
+		comprimento = comprimento * 100;
+		
+		Double quantidade = comprimento / espacamento;
+		
+		quantidade = Math.ceil(quantidade);
+		
+		return quantidade;
 	}
 
 	public void mostraEngastes() {
@@ -3009,22 +3107,6 @@ public class PrimaryController {
 		return imprimeResultados;
 	}
 
-	public ChoiceBox<EspacamentoAco> getAcoXPositivo() {
-		return acoXPositivo;
-	}
-
-	public ChoiceBox<EspacamentoAco> getAcoXNegativo() {
-		return acoXNegativo;
-	}
-
-	public ChoiceBox<EspacamentoAco> getAcoYPositivo() {
-		return acoYPositivo;
-	}
-
-	public ChoiceBox<EspacamentoAco> getAcoYNegativo() {
-		return acoYNegativo;
-	}
-
 	public void setLajeComParede(LajeComParede lajeComParede) {
 		this.lajeComParede = lajeComParede;
 	}
@@ -3161,22 +3243,6 @@ public class PrimaryController {
 		this.imprimeResultados = imprimeResultados;
 	}
 
-	public void setAcoXPositivo(ChoiceBox<EspacamentoAco> acoXPositivo) {
-		this.acoXPositivo = acoXPositivo;
-	}
-
-	public void setAcoXNegativo(ChoiceBox<EspacamentoAco> acoXNegativo) {
-		this.acoXNegativo = acoXNegativo;
-	}
-
-	public void setAcoYPositivo(ChoiceBox<EspacamentoAco> acoYPositivo) {
-		this.acoYPositivo = acoYPositivo;
-	}
-
-	public void setAcoYNegativo(ChoiceBox<EspacamentoAco> acoYNegativo) {
-		this.acoYNegativo = acoYNegativo;
-	}
-
 	public LajeSemParede getLajeSemParede() {
 		return lajeSemParede;
 	}
@@ -3255,6 +3321,150 @@ public class PrimaryController {
 
 	public void setCaso(BigDecimal caso) {
 		this.caso = caso;
+	}
+
+	public Label getAcoPositivoEmXComParede() {
+		return acoPositivoEmXComParede;
+	}
+
+	public Label getAcoNegativoEmXComParede() {
+		return acoNegativoEmXComParede;
+	}
+
+	public Label getAcoPositivoEmYComParede() {
+		return acoPositivoEmYComParede;
+	}
+
+	public Label getAcoNegativoEmYComParede() {
+		return acoNegativoEmYComParede;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoXPositivo() {
+		return acoXPositivo;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoXNegativo() {
+		return acoXNegativo;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoYPositivo() {
+		return acoYPositivo;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoYNegativo() {
+		return acoYNegativo;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoXPositivoComParede() {
+		return acoXPositivoComParede;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoXNegativoComParede() {
+		return acoXNegativoComParede;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoYPositivoComParede() {
+		return acoYPositivoComParede;
+	}
+
+	public ComboBox<EspacamentoAco> getAcoYNegativoComParede() {
+		return acoYNegativoComParede;
+	}
+
+	public Rectangle getRetanguloComParede() {
+		return retanguloComParede;
+	}
+
+	public Label getLabelEscolhaBitolaEspacamento() {
+		return labelEscolhaBitolaEspacamento;
+	}
+
+	public Label getLabelEscolhaBitolaEspacamentoComParede() {
+		return labelEscolhaBitolaEspacamentoComParede;
+	}
+
+	public Label getArmadurasForaDaZonaDeInflucencia() {
+		return armadurasForaDaZonaDeInflucencia;
+	}
+
+	public Label getArmadurasNaZonaDeInflucencia() {
+		return armadurasNaZonaDeInflucencia;
+	}
+
+	public List<Resultado> getResultados() {
+		return resultados;
+	}
+
+	public void setAcoPositivoEmXComParede(Label acoPositivoEmXComParede) {
+		this.acoPositivoEmXComParede = acoPositivoEmXComParede;
+	}
+
+	public void setAcoNegativoEmXComParede(Label acoNegativoEmXComParede) {
+		this.acoNegativoEmXComParede = acoNegativoEmXComParede;
+	}
+
+	public void setAcoPositivoEmYComParede(Label acoPositivoEmYComParede) {
+		this.acoPositivoEmYComParede = acoPositivoEmYComParede;
+	}
+
+	public void setAcoNegativoEmYComParede(Label acoNegativoEmYComParede) {
+		this.acoNegativoEmYComParede = acoNegativoEmYComParede;
+	}
+
+	public void setAcoXPositivo(ComboBox<EspacamentoAco> acoXPositivo) {
+		this.acoXPositivo = acoXPositivo;
+	}
+
+	public void setAcoXNegativo(ComboBox<EspacamentoAco> acoXNegativo) {
+		this.acoXNegativo = acoXNegativo;
+	}
+
+	public void setAcoYPositivo(ComboBox<EspacamentoAco> acoYPositivo) {
+		this.acoYPositivo = acoYPositivo;
+	}
+
+	public void setAcoYNegativo(ComboBox<EspacamentoAco> acoYNegativo) {
+		this.acoYNegativo = acoYNegativo;
+	}
+
+	public void setAcoXPositivoComParede(ComboBox<EspacamentoAco> acoXPositivoComParede) {
+		this.acoXPositivoComParede = acoXPositivoComParede;
+	}
+
+	public void setAcoXNegativoComParede(ComboBox<EspacamentoAco> acoXNegativoComParede) {
+		this.acoXNegativoComParede = acoXNegativoComParede;
+	}
+
+	public void setAcoYPositivoComParede(ComboBox<EspacamentoAco> acoYPositivoComParede) {
+		this.acoYPositivoComParede = acoYPositivoComParede;
+	}
+
+	public void setAcoYNegativoComParede(ComboBox<EspacamentoAco> acoYNegativoComParede) {
+		this.acoYNegativoComParede = acoYNegativoComParede;
+	}
+
+	public void setRetanguloComParede(Rectangle retanguloComParede) {
+		this.retanguloComParede = retanguloComParede;
+	}
+
+	public void setLabelEscolhaBitolaEspacamento(Label labelEscolhaBitolaEspacamento) {
+		this.labelEscolhaBitolaEspacamento = labelEscolhaBitolaEspacamento;
+	}
+
+	public void setLabelEscolhaBitolaEspacamentoComParede(Label labelEscolhaBitolaEspacamentoComParede) {
+		this.labelEscolhaBitolaEspacamentoComParede = labelEscolhaBitolaEspacamentoComParede;
+	}
+
+	public void setArmadurasForaDaZonaDeInflucencia(Label armadurasForaDaZonaDeInflucencia) {
+		this.armadurasForaDaZonaDeInflucencia = armadurasForaDaZonaDeInflucencia;
+	}
+
+	public void setArmadurasNaZonaDeInflucencia(Label armadurasNaZonaDeInflucencia) {
+		this.armadurasNaZonaDeInflucencia = armadurasNaZonaDeInflucencia;
+	}
+
+	public void setResultados(List<Resultado> resultados) {
+		this.resultados = resultados;
 	}
 
 }
