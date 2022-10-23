@@ -1,0 +1,15 @@
+br\com\eng\entities\Materiais.class
+br\com\eng\laje\App$OnChangeScreen.class
+br\com\eng\entities\EspacamentoAco.class
+br\com\eng\entities\Parede.class
+br\com\eng\entities\Resultado.class
+br\com\eng\entities\LajeComParede.class
+br\com\eng\laje\App.class
+br\com\eng\laje\AppTestes.class
+br\com\eng\laje\PrimaryController.class
+br\com\eng\entities\LajeSemParede.class
+br\com\eng\laje\PrimaryController$1.class
+br\com\eng\laje\Testes.class
+br\com\eng\laje\Main.class
+br\com\eng\entities\Coeficientes.class
+br\com\eng\util\Services.class

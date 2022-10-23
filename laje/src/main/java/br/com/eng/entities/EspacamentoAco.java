@@ -10,8 +10,14 @@ public class EspacamentoAco {
 	private BigDecimal espacamento;
 	private BigDecimal areaDeAco;
 
-	public EspacamentoAco(){
+	public EspacamentoAco(EspacamentoAco espacamentoAco){
 		
+		this.eixo        = espacamentoAco.getEixo();
+		this.quantidade  = espacamentoAco.getQuantidade();
+		this.bitola      = espacamentoAco.getBitola();
+		this.espacamento = espacamentoAco.getEspacamento();
+		this.areaDeAco   = espacamentoAco.getAreaDeAco();
+
 	}
 
 	public EspacamentoAco(BigDecimal bitola, BigDecimal espacamento, BigDecimal areaDeAco) {
@@ -63,8 +69,7 @@ public class EspacamentoAco {
 
 	@Override
 	public String toString() {
-		return "EspacamentoAco [eixo=" + eixo + ", quantidade=" + quantidade + ", bitola=" + bitola + ", espacamento="
-				+ espacamento + ", areaDeAco=" + areaDeAco + "]";
+		return eixo + " " + quantidade + " barras de Φ " + bitola + "mm com "+ espacamento + "cm";
 	}
 
 }

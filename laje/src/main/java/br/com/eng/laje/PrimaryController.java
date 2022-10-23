@@ -2646,6 +2646,23 @@ public class PrimaryController {
 					this.imprimeResultados, resultados);
 		}
 	}
+	
+	private List<EspacamentoAco>  clonarListaEspacamentoAco() {
+		
+		
+		ArrayList<EspacamentoAco> lista = new ArrayList<>();
+		
+		for (EspacamentoAco espacamentoAco : this.espacamentoAcoList) {
+			
+			EspacamentoAco temp = new EspacamentoAco(espacamentoAco);	
+			
+			lista.add(temp);
+			
+		}
+
+		return lista;
+		
+	}
 
 	public void montaOpcoesDeEspacamentoX() {
 
@@ -2654,8 +2671,9 @@ public class PrimaryController {
 			List<EspacamentoAco> espacamentoX = new ArrayList<>();
 			ObservableList<EspacamentoAco> observableList;
 			
+
+		for (EspacamentoAco espacamentoAco : this.clonarListaEspacamentoAco()) {
 			
-		for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
 			if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoX().doubleValue()
 					&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoX().doubleValue()
 							+ 0.3) {
@@ -2671,15 +2689,18 @@ public class PrimaryController {
 
 				}
 			}
+		   
+		       
 		
-		observableList = FXCollections.observableArrayList(espacamentoX);
+		       observableList = FXCollections.observableArrayList(espacamentoX);
 		
-		acoXPositivoComParede.setItems(observableList);
+		       acoXPositivoComParede.setItems(observableList);
 		
 		}
+		
 		else {
 			
-			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+			for (EspacamentoAco espacamentoAco : this.clonarListaEspacamentoAco()) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoX().doubleValue()
 						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoX().doubleValue()
 								+ 0.3) {
@@ -2689,21 +2710,24 @@ public class PrimaryController {
 					
 					espacamentoAco.setEixo("XSemparede");
 					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
-										
+									
 					acoXPositivo.getItems().add(espacamentoAco);
 
 					}
 				
 				}
 		}
+		
 
 	}
 
 	public void montaOpcoesDeEspacamentoXNegativo() {
+		
+
 
 		if (paredeSim.selectedProperty().getValue() == true) {
 
-			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+			for (EspacamentoAco espacamentoAco : this.clonarListaEspacamentoAco()) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoXLinha().doubleValue()	&&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoXLinha().doubleValue() + 0.3) {
 					
@@ -2720,7 +2744,8 @@ public class PrimaryController {
 		}
 		else {
 			
-			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+
+			for (EspacamentoAco espacamentoAco : this.clonarListaEspacamentoAco()) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoXLinha().doubleValue()	&&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoXLinha().doubleValue() + 0.3) {
 					
@@ -2735,14 +2760,18 @@ public class PrimaryController {
 				}
 			}
 		}
+		
+
 
 	}
 
 	public void montaOpcoesDeEspacamentoY() {
+		
+
 
 		if (paredeSim.selectedProperty().getValue() == true) {
 
-			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+			for (EspacamentoAco espacamentoAco : this.clonarListaEspacamentoAco()) {
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoY().doubleValue()
 						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoY().doubleValue() + 0.3) {
 					
@@ -2759,7 +2788,9 @@ public class PrimaryController {
 		}
 		else {
 			
-			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+
+			for (EspacamentoAco espacamentoAco : this.clonarListaEspacamentoAco()) {
+				
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoY().doubleValue()
 						&& espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoY().doubleValue() + 0.3) {
 
@@ -2775,30 +2806,52 @@ public class PrimaryController {
 			}
 			
 		}
+		
+
 	}
 
 	public void montaOpcoesDeEspacamentoYNegativo() {
 		
-		if (paredeSim.selectedProperty().getValue() == true) {
 
-			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+
+		if (paredeSim.selectedProperty().getValue() == true) {
+			
+		    ArrayList<EspacamentoAco> espacamentoAcoListTemp = new ArrayList<>();
+		    espacamentoAcoListTemp.addAll(espacamentoAcoList);
+
+			for (EspacamentoAco espacamentoAco : espacamentoAcoListTemp) {
+				
+		
+				
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeComParede.getAreaDeAcoYLinha().doubleValue() &&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeComParede.getAreaDeAcoYLinha().doubleValue() + 0.3) {
 					
+					
+                   
 					Double quantidade = calculaQuantidadeDeBarras(lajeComParede.getLadoX().divide(new BigDecimal(100.0)).doubleValue(),
                             espacamentoAco.getEspacamento().doubleValue());
 
 					espacamentoAco.setEixo("YNegativoComParede");
 					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
-					
-					acoYNegativoComParede.getItems().add(espacamentoAco);
 
+					acoYNegativoComParede.getItems().add(espacamentoAco);
+					 
 				}
+		
+				
 			}
 		}
+		
+		
 		else {
 			
-			for (EspacamentoAco espacamentoAco : espacamentoAcoList) {
+			
+		    ArrayList<EspacamentoAco> espacamentoAcoListTemp = new ArrayList<>();
+		    espacamentoAcoListTemp.addAll(espacamentoAcoList);
+			
+			
+			for (EspacamentoAco espacamentoAco : espacamentoAcoListTemp) {
+				
 				if (espacamentoAco.getAreaDeAco().doubleValue() >= lajeSemParede.getAreaDeAcoYLinha().doubleValue() &&
 						espacamentoAco.getAreaDeAco().doubleValue() <= lajeSemParede.getAreaDeAcoYLinha().doubleValue() + 0.3) {
 
@@ -2808,12 +2861,14 @@ public class PrimaryController {
 					espacamentoAco.setEixo("YNegativoSemParede");
 					espacamentoAco.setQuantidade(services.doubleEmBigDecimal(quantidade));
 					
+					
 					acoYNegativo.getItems().add(espacamentoAco);
 
 				}
 			}
 			
 		}
+
 
 	}
 	
